@@ -18,7 +18,7 @@ class Bahan_model extends CI_Model
 
     public function insert_bahan($data)
     {
-        $sql = "CALL sp_insert_tb_master_bahan(?, ?, ?)";
+        $sql = "CALL sp_insert_master_bahan(?, ?, ?)";
         $this->db->query($sql, [
             $data['kode_bahan'],
             $data['uraian_bahan'],

@@ -1,33 +1,60 @@
 <script>
     // tambah 
-    $(document).on('click', '#link-simpan', function(e) {
-        swal({
-                title: "Apakah anda yakin data sudah terisi dengan benar?",
-                text: "Proses Simpan Data",
-                type: "info",
-                confirmButtonText: "Simpan Data",
-                showCancelButton: true
-            })
-            .then((result) => {
-                if (result.value) {
-                    // simpan ---->
-                    $('form').submit();
-                } else if (result.dismiss === 'cancel') {
-                    swal(
-                        'Batal Menyimpan',
-                        'Silahkan isi data dengan lengkap',
-                        'error'
-                    )
-                }
-            })
-        $('#staticBackdrop-tambah-supplier').on('show.bs.modal', function() {
-            $.get("<?= site_url('Administrator/Master_data/Master_supplier/Master_data_supplier') ?>", function(data) {
-                const tokenName = "<?= $this->security->get_csrf_token_name(); ?>";
-                const tokenValue = $(data).find('input[name="<?= $this->security->get_csrf_token_name(); ?>"]').val();
-                $('input[name="' + tokenName + '"]').val(tokenValue);
-            });
+    $(document).ready(function() {
+
+        // === Validasi Input ===
+        function cekInput() {
+            let nama = $('#nama_supplier').val().trim();
+            let pic = $('#pic_supplier').val().trim();
+            let alamat = $('#alamat_supplier').val().trim();
+
+            if (nama !== '' && pic !== '' && alamat !== '') {
+                $('#link-simpan').prop('disabled', false);
+            } else {
+                $('#link-simpan').prop('disabled', true);
+            }
+        }
+
+        cekInput();
+
+        // Cek ulang
+        $('#nama_supplier, #pic_supplier, #alamat_supplier').on('keyup change', function() {
+            cekInput();
         });
 
+        // === Tombol Simpan Klik ===
+        $(document).on('click', '#link-simpan', function(e) {
+            e.preventDefault(); // stop form langsung submit
+
+            let nama = $('#nama_supplier').val().trim();
+            let pic = $('#pic_supplier').val().trim();
+            let alamat = $('#alamat_supplier').val().trim();
+
+            // Validasi manual sebelum swal
+            if (nama === '' || pic === '' || alamat === '') {
+                swal({
+                    title: "Data Belum Lengkap",
+                    text: "Pastikan semua field sudah diisi dengan benar.",
+                    icon: "warning",
+                    button: "OK"
+                });
+                return;
+            }
+
+            swal({
+                title: "Apakah anda yakin?",
+                text: "Data alat akan disimpan ke database.",
+                icon: "info",
+                buttons: ["Batal", "Simpan Data"],
+            })
+            .then((willSave) => {
+                if (willSave) {
+                    $('#form-tambah-supplier').submit();
+                } else {
+                    swal("Batal Menyimpan", "Silakan periksa kembali data anda.", "error");
+                }
+            });
+        });
     });
 
     $(document).ready(function () {

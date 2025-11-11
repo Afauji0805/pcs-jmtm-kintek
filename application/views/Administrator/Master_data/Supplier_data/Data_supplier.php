@@ -228,10 +228,8 @@
                             <div class="card-body">
                                 <div class="row align-items-start">
                                     <div class="col-12 col-sm-12">
-                                        <form class="row g-1" method="post" action="<?= site_url('Administrator/Master_data/Master_supplier/Master_data_supplier/tambah') ?>">
-                                            <input type="hidden"
-                                                name="<?= $this->security->get_csrf_token_name(); ?>"
-                                                value="<?= $this->security->get_csrf_hash(); ?>">
+                                        <form  id="form-tambah-supplier" class="row g-1" method="post" action="<?= site_url('Administrator/Master_data/Master_supplier/Master_data_supplier/tambah') ?>">
+                                            <input type="hidden" name="<?= $this->security->get_csrf_token_name(); ?>" value="<?= $this->security->get_csrf_hash(); ?>" id="csrf_token_tambah" />
 
                                             <div class="col-md-3">
                                                 <div class="input-group">

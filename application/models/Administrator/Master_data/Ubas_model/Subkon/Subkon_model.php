@@ -18,7 +18,7 @@ class Subkon_model extends CI_Model
 
     public function insert_subkon($data)
     {
-        $sql = "CALL sp_insert_tb_master_subkon(?, ?, ?)";
+        $sql = "CALL sp_insert_master_subkon(?, ?, ?)";
         $this->db->query($sql, [
             $data['kode_subkon'],
             $data['uraian_subkon'],

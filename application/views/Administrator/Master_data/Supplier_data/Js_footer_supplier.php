@@ -30,26 +30,7 @@
 <!-- Sweet Alert 2 -->
 <script src="<?php echo base_url(); ?>/assets/template-custom/js/sweetalert2.all.min.js"></script>
 
-<script>
-const toggleBtn = document.getElementById('navToggleBtn');
-const navMenu = document.getElementById('navmenu');
-if (toggleBtn) {
-    toggleBtn.addEventListener('click', () => {
-        navMenu.classList.toggle('show-menu');
-    });
-}
 
-// Biarkan dropdown di mobile bisa dibuka
-document.querySelectorAll('.dropdown-toggle').forEach(btn => {
-    btn.addEventListener('click', (e) => {
-        if (window.innerWidth <= 768) {
-            e.preventDefault();
-            const submenu = btn.nextElementSibling;
-            submenu.classList.toggle('show');
-        }
-    });
-});
-</script>
 
 
 </body>

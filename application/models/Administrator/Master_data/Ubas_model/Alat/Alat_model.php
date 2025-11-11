@@ -18,7 +18,7 @@ class Alat_model extends CI_Model
 
     public function insert_alat($data)
     {
-        $sql = "CALL sp_insert_tb_master_alat(?, ?, ?)";
+        $sql = "CALL sp_insert_master_alat(?, ?, ?)";
         $this->db->query($sql, [
             $data['kode_alat'],
             $data['uraian_alat'],
