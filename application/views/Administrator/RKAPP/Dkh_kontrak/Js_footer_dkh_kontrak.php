@@ -354,7 +354,7 @@ addNewRow();
 
 
 
-<script>
+<!-- <script>
 const table = $('#example').DataTable({
     lengthChange: false,
     ordering: false,
@@ -551,7 +551,188 @@ $('#example tbody').on('click', '.btn-hapus', function(e) {
 
 // Tambah 1 divisi awal
 addNewRow();
+</script> -->
+
+
+<script>
+const table = $('#example').DataTable({
+    lengthChange: false,
+    ordering: false,
+    responsive: true,
+    searching: false,
+    paging: false,
+    info: false,
+});
+
+// ================== TAMBAH DIVISI ==================
+function addNewRow() {
+    const newRow = $(`
+        <tr class="row-divisi">
+            <td class="kode-ma"></td>
+            <td><input style="width:100%" type="text" placeholder="Nama Divisi"></td>
+
+            <!-- kolom Sat / Qty / Harga Satuan / Jumlah -->
+            <td></td><td></td><td></td><td></td>
+
+            <!-- ✅ Keterangan divisi -->
+            <td></td>
+
+            <td>
+                <div class="btn-group">
+                    <button type="button" class="btn btn-sm btn-primary dropdown-toggle" data-bs-toggle="dropdown">
+                        <i class="fa-solid fa-gears fa-lg px-1"></i> Aksi
+                    </button>
+                    <ul class="dropdown-menu">
+                        <li><a class="dropdown-item btn-sub" href="#"><i class="fa-solid fa-circle-plus fa-sm px-1"></i>Tambah Sub</a></li>
+                        <li><a class="dropdown-item btn-hapus" href="#"><i class="fa-solid fa-ban fa-sm px-1"></i>Hapus Divisi</a></li>
+                    </ul>
+                </div>
+            </td>
+        </tr>
+    `);
+
+    $('#example tbody').append(newRow);
+    table.row.add(newRow[0]);
+    updateDivisiCodes();
+}
+
+// ================== PENOMORAN DIVISI ==================
+function updateDivisiCodes() {
+    let divisiCount = 0;
+
+    $('#example tbody tr').each(function() {
+        const tr = $(this);
+        if (tr.hasClass('row-divisi')) {
+            divisiCount++;
+            tr.find('.kode-ma').text(divisiCount);
+            tr.data('kode', divisiCount.toString());
+        }
+    });
+}
+
+// ================== TAMBAH SUB (LEVEL 2 SAJA) ==================
+function addSubRow(afterRow) {
+    const divisiRow = $(afterRow);
+    const divCode = divisiRow.data('kode');
+    if (!divCode) return;
+
+    let maxSub = 0;
+
+    $('#example tbody tr').each(function() {
+        const code = $(this).find('.kode-ma').text();
+        if (code.startsWith(divCode + '.') && code.split('.').length === 2) {
+            const num = parseInt(code.split('.')[1]);
+            maxSub = Math.max(maxSub, num);
+        }
+    });
+
+    const newCode = `${divCode}.${maxSub + 1}`;
+    const newSub = createSubRow(newCode);
+
+    let insertAfter = divisiRow;
+    divisiRow.nextAll().each(function() {
+        const nextCode = $(this).find('.kode-ma').text();
+        if (!nextCode.startsWith(divCode + '.')) return false;
+        insertAfter = $(this);
+    });
+
+    insertAfter.after(newSub);
+    table.row.add(newSub[0]);
+}
+
+// ================== OPEN MODAL UBAS ==================
+$('#example tbody').on('click', '.btn-ubas', function(e) {
+    e.preventDefault();
+
+    const tr = $(this).closest('tr');
+
+    // ✅ Kode sub row
+    const kodeSub = tr.find('.kode-ma').text();
+
+    // ✅ Uraian sub row
+    const uraian = tr.find('input[type="text"]').first().val() || '-';
+
+    // ✅ Cari kode divisi (row-divisi sebelumnya)
+    let kodeDivisi = '-';
+    tr.prevAll('.row-divisi').each(function() {
+        kodeDivisi = $(this).find('.kode-ma').text();
+        return false;
+    });
+
+    // ✅ Tampilkan ke modal
+    $('#modalUbasKodeDivisi').text(kodeDivisi);
+    $('#modalUbasKodeSub').text(kodeSub);
+    $('#modalUbasUraian').text(uraian);
+
+    // ✅ Buka modal
+    $('#modalDataUBAS').modal('show');
+});
+
+// ================== GENERATE SUB ROW ==================
+function createSubRow(kode) {
+    return $(`
+        <tr class="row-sub">
+            <td class="kode-ma">${kode}</td>
+
+            <td><input style="width:100%" type="text" placeholder="Uraian Pekerjaan"></td>
+
+            <td><input type="text" placeholder="Sat" style="width:100%"></td>
+            <td><input type="number" placeholder="Qty" style="width:100%"></td>
+            <td><input type="number" placeholder="Harga Satuan" style="width:100%; background-color:#E5E7EB;" readonly></td>
+            <td><input type="number" placeholder="Jumlah" style="width:100%; background-color:#E5E7EB;" readonly></td>
+
+            <td><input style="width:100%" type="text" placeholder="Keterangan"></td>
+
+            <td>
+                <div class="btn-group">
+                    <button type="button" class="btn btn-sm btn-secondary dropdown-toggle" data-bs-toggle="dropdown">
+                        <i class="fa-solid fa-gears fa-lg px-1"></i> Aksi
+                    </button>
+                    <ul class="dropdown-menu">
+                        <li><a class="dropdown-item btn-ubas" href="#"><i class="fa-solid fa-screwdriver-wrench fa-sm px-1"></i>Data UBAS</a></li>
+                        <li><a class="dropdown-item btn-hapus" href="#"><i class="fa-solid fa-ban fa-sm px-1"></i>Hapus Sub</a></li>
+                    </ul>
+                </div>
+            </td>
+        </tr>
+    `);
+}
+
+// ================== EVENT HANDLER ==================
+$('#addRow').on('click', addNewRow);
+
+$('#example tbody').on('click', '.btn-sub', function(e) {
+    e.preventDefault();
+    addSubRow($(this).closest('tr')[0]);
+});
+
+$('#example tbody').on('click', '.btn-ubas', function(e) {
+    e.preventDefault();
+    openUbasModal($(this).closest('tr')[0]);
+});
+
+$('#example tbody').on('click', '.btn-hapus', function(e) {
+    e.preventDefault();
+
+    const $row = $(this).closest('tr');
+    const kode = $row.find('.kode-ma').text();
+
+    $('#example tbody tr').each(function() {
+        if ($(this).find('.kode-ma').text().startsWith(kode + '.')) $(this).remove();
+    });
+
+    $row.remove();
+    table.row($row).remove();
+
+    if ($row.hasClass('row-divisi')) updateDivisiCodes();
+});
+
+// Tambah divisi pertama
+addNewRow();
 </script>
+
+
+
 
 
 </body>

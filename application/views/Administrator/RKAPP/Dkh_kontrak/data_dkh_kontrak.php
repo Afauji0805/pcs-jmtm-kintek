@@ -225,7 +225,7 @@
                                                         Kode MA
                                                     </small>
                                                 </th>
-                                                <th scope="col" class="col-4 text-center">
+                                                <th scope="col" class="col-3 text-center">
                                                     <small>
                                                         Uraian Pekerjaan
                                                     </small>
@@ -240,14 +240,19 @@
                                                         Qty
                                                     </small>
                                                 </th>
-                                                <th scope="col" class="col-2 text-center">
+                                                <th scope="col" class="col-1,5 text-center">
                                                     <small>
-                                                        Harga Satuan
+                                                        Unit Price
+                                                    </small>
+                                                </th>
+                                                <th scope="col" class="col-1,5 text-center">
+                                                    <small>
+                                                        Jumlah
                                                     </small>
                                                 </th>
                                                 <th scope="col" class="col-2 text-center">
                                                     <small>
-                                                        Jumlah
+                                                        Keterangan
                                                     </small>
                                                 </th>
                                                 <th scope="col" class="col-1 text-center">
@@ -277,4 +282,44 @@
             </div>
         </div>
     </div>
+
+
+    <!-- MODAL UBAS -->
+    <div class="modal fade" id="modalDataUBAS" tabindex="-1">
+        <div class="modal-dialog modal-xl">
+            <div class="modal-content">
+
+                <div class="modal-header bg-primary text-white">
+                    <h5 class="modal-title">
+                        Data UBAS
+                    </h5>
+                </div>
+
+                <div class="modal-body" style="overflow-y:auto; max-height: calc(100vh - 120px);">
+
+                    <div class="alert alert-info">
+                        <strong>Divisi:</strong> <span id="modalUbasKodeDivisi"></span><br>
+                        <strong>Kode Sub:</strong> <span id="modalUbasKodeSub"></span><br>
+                        <strong>Uraian:</strong> <span id="modalUbasUraian"></span>
+                    </div>
+
+                    <!-- tempat form UBAS -->
+                    <div class="p-3 border rounded bg-light">
+                        <h6>Form UBAS</h6>
+                        <p>Silakan isi data UBAS di sini...</p>
+                    </div>
+
+                </div>
+
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-danger" data-bs-dismiss="modal">
+                        Tutup Modal
+                    </button>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+
 </main>
