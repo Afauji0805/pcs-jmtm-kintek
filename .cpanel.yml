@@ -1,0 +1,4 @@
+deployment:
+  tasks:
+    - export DEPLOYPATH=/home/u1064384/public_html/wla-jmtm.kintekindo.net/
+    - /bin/rsync -av --exclude '.git' --exclude '.gitignore' --exclude '.cpanel.yml' ./ $DEPLOYPATH
