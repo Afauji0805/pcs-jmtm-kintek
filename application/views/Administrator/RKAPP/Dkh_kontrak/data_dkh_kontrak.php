@@ -286,7 +286,7 @@
 
     <!-- MODAL UBAS -->
     <div class="modal fade" id="modalDataUBAS" tabindex="-1">
-        <div class="modal-dialog modal-xl">
+        <div class="modal-dialog modal-fullscreen">
             <div class="modal-content">
 
                 <div class="modal-header bg-primary text-white">
