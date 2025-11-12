@@ -76,30 +76,7 @@ $(document).on('click', '#link-simpan', function(e) {
             }
         })
 });
-$(document).on('click', '#link-ubah', function(e) {
-    swal({
-            title: "Apakah anda yakin data sudah terisi dengan benar?",
-            text: "Proses Ubah Data",
-            type: "warning",
-            confirmButtonText: "Ubah Data",
-            showCancelButton: true
-        })
-        .then((result) => {
-            if (result.value) {
-                swal(
-                    'Ubah Data',
-                    'Anda berhasil mengubah data. :)',
-                    'success'
-                )
-            } else if (result.dismiss === 'cancel') {
-                swal(
-                    'Batal Mengubah',
-                    'Silahkan isi data dengan lengkap',
-                    'error'
-                )
-            }
-        })
-});
+
 $(document).on('click', '#link-hapus', function(e) {
     swal({
             title: "Apakah anda yakin Menon-Aktifkan data ini?",

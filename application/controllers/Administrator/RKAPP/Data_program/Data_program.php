@@ -80,8 +80,7 @@ class Data_program extends CI_Controller
 	// ================================================================================
 public function get_detail_program()
 {
-    $id = $this->input->post('id_program');
-
+    $id = $this->input->get('id_program');
     $this->db->where('id_program', $id);
     $query = $this->db->get('tb_data_program');
 
@@ -96,3 +95,4 @@ public function get_detail_program()
 
 	// ======================================================================================
 }
+

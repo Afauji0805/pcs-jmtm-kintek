@@ -506,6 +506,7 @@ $(document).ready(function() {
 </script>
 
 <!-- ========================================================================================== -->
+<!-- detail program -->
 <script>
 $(document).on('click', '.btn-detail-program', function() {
     const id = $(this).data('id');
@@ -514,7 +515,7 @@ $(document).on('click', '.btn-detail-program', function() {
     $('#staticBackdrop-detail-program small.text-muted').text('-');
 
     $.ajax({
-        url: "<?= base_url('Administrator/Rkapp/Data_program/data_program/get_detail_program'); ?>",
+        url: "<?= base_url('Administrator/RKAPP/Data_program/data_program/get_detail_program'); ?>",
         type: "POST",
         data: {
             id_program: id,
@@ -546,7 +547,7 @@ $(document).on('click', '.btn-detail-program', function() {
                 $('#detail_insert_date').text(d.insert_date);
                 $('#detail_update_date').text(d.update_date);
             } else {
-                swal("Gagal", "Data tidak ditemukan!", "error");
+                               swal("Gagal", "Data tidak ditemukan!", "error");
             }
         },
         error: function(xhr) {
@@ -558,6 +559,33 @@ $(document).on('click', '.btn-detail-program', function() {
 
 </script>
 
+<!-- disini yan ll-->
+
+<script>
+    // Ubah Data
+    $( document).on('click', '#btn-detail-ubah', function(e) {
+        e.preventDefault();
+
+        var idProgram = $('#staticBackdrop-detail-program').data('id');
+        if (!idProgram) {
+            swal("Error!", "ID program tidak ditemukan.", "error");
+            return;
+        }
+
+        $ajax({
+            url: "<?= site_url('Administrator/Rkapp/Data_program/data_program/get_detail_program') ?>",
+            type: "GET",
+            data: {
+                id_program: idProgram
+            },
+            dataType: "json",
+            success: function (argument) {
+                // body...
+            }
+            )
+        }
+    }
+</script>
 
 <!-- ========================================================================================== -->
 <script>

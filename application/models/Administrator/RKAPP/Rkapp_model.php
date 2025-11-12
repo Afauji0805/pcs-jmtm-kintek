@@ -48,4 +48,5 @@ class Rkapp_model extends CI_Model
         return "PK.$tahun.$new_number";
     }
 
+
 }
