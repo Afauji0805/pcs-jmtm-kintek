@@ -78,19 +78,27 @@ class Data_program extends CI_Controller
 	}
 
 	// ================================================================================
-public function get_detail_program()
-{
-    $id = $this->input->get('id_program');
-    $this->db->where('id_program', $id);
-    $query = $this->db->get('tb_data_program');
+	public function get_detail_program($id_program)
+	{
+	    $this->db->select('*');
+	    $this->db->from('tb_data_program_tanpa_curent_date_view'); // gunakan view agar lengkap
+	    $this->db->where('id_program', $id_program);
+	    $query = $this->db->get();
 
-    if ($query->num_rows() > 0) {
-        $data = $query->row_array();
-        echo json_encode(['status' => 'success', 'data' => $data]);
-    } else {
-        echo json_encode(['status' => 'error', 'message' => 'Data tidak ditemukan']);
-    }
-}
+	    if ($query->num_rows() > 0) {
+	        echo json_encode([
+	            'status' => 'success',
+	            'data' => $query->row_array()
+	        ]);
+	    } else {
+	        echo json_encode([
+	            'status' => 'error',
+	            'message' => 'Data program tidak ditemukan.'
+	        ]);
+	    }
+	}
+
+
 
 
 	// ======================================================================================

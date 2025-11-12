@@ -506,86 +506,70 @@ $(document).ready(function() {
 </script>
 
 <!-- ========================================================================================== -->
-<!-- detail program -->
 <script>
-$(document).on('click', '.btn-detail-program', function() {
-    const id = $(this).data('id');
+$(document).ready(function() {
 
-    // Reset isi dulu
-    $('#staticBackdrop-detail-program small.text-muted').text('-');
+    $(document).on('click', '.btn-detail-program', function() {
+        const id_program = $(this).data('id');
 
-    $.ajax({
-        url: "<?= base_url('Administrator/RKAPP/Data_program/data_program/get_detail_program'); ?>",
-        type: "POST",
-        data: {
-            id_program: id,
-            '<?= $this->security->get_csrf_token_name(); ?>': '<?= $this->security->get_csrf_hash(); ?>'
-        },
-        dataType: "json",
-        success: function(res) {
-            if (res.status === 'success') {
-                const d = res.data;
+        $('#staticBackdrop-detail-program small[id^="detail_"]').text('-');
 
-                $('#detail_kode_program').text(d.kode_program);
-                $('#detail_tanggal_program').text(d.tanggal_program);
-                $('#detail_nama_program').text(d.nama_program);
-                $('#detail_unit_kerja').text(d.unit_kerja);
-                $('#detail_lokasi_pekerjaan').text(d.lokasi_pekerjaan);
-                $('#detail_nilai_kontrak').text(d.nilai_kontrak);
-                $('#detail_tanggal_mulai_kontrak').text(d.tanggal_mulai_kontrak);
-                $('#detail_durasi_kontrak').text(d.durasi_kontrak + ' Hari');
-                $('#detail_tanggal_selesai_kontrak').text(d.tanggal_selesai_kontrak);
-                $('#detail_tanggal_mulai_pho').text(d.tanggal_mulai_pho);
-                $('#detail_durasi_pho').text(d.durasi_pho + ' Hari');
-                $('#detail_tanggal_selesai_pho').text(d.tanggal_selesai_pho);
-                $('#detail_tanggal_fho').text(d.tanggal_fho);
-                $('#detail_owner').text(d.owner);
-                $('#detail_pm_pusat').text(d.pm_pusat);
-                $('#detail_gs').text(d.gs);
-                $('#detail_insert_by').text(d.insert_by);
-                $('#detail_update_by').text(d.update_by);
-                $('#detail_insert_date').text(d.insert_date);
-                $('#detail_update_date').text(d.update_date);
-            } else {
-                               swal("Gagal", "Data tidak ditemukan!", "error");
-            }
-        },
-        error: function(xhr) {
-            swal("Error", "Gagal memuat detail data.", "error");
-            console.log(xhr.responseText);
-        }
-    });
-});
-
-</script>
-
-<!-- disini yan ll-->
-
-<script>
-    // Ubah Data
-    $( document).on('click', '#btn-detail-ubah', function(e) {
-        e.preventDefault();
-
-        var idProgram = $('#staticBackdrop-detail-program').data('id');
-        if (!idProgram) {
-            swal("Error!", "ID program tidak ditemukan.", "error");
-            return;
-        }
-
-        $ajax({
-            url: "<?= site_url('Administrator/Rkapp/Data_program/data_program/get_detail_program') ?>",
+        $.ajax({
+            url: "<?= base_url('Administrator/Rkapp/Data_program/data_program/get_detail_program/'); ?>" + id_program,
             type: "GET",
-            data: {
-                id_program: idProgram
-            },
             dataType: "json",
-            success: function (argument) {
-                // body...
+            success: function(res) {
+                if (res.status === 'success') {
+                    const d = res.data;
+
+                    function formatDate(tgl) {
+                        if (!tgl) return '-';
+                        const date = new Date(tgl);
+                        if (isNaN(date)) return tgl;
+                        const day = ('0' + date.getDate()).slice(-2);
+                        const month = ('0' + (date.getMonth() + 1)).slice(-2);
+                        const year = date.getFullYear();
+                        return `${day}/${month}/${year}`;
+                    }
+
+                    $('#detail_kode_program').text(d.kode_program || '-');
+                    $('#detail_tanggal_program').text(formatDate(d.tanggal_program));
+                    $('#detail_nama_program').text(d.nama_program || '-');
+                    $('#detail_unit_kerja').text(d.unit_kerja || '-');
+                    $('#detail_lokasi_pekerjaan').text(d.lokasi_pekerjaan || '-');
+                    $('#detail_nilai_kontrak').text('Rp ' + parseInt(d.nilai_kontrak || 0).toLocaleString('id-ID'));
+                    $('#detail_tanggal_mulai_kontrak').text(formatDate(d.tanggal_mulai_kontrak));
+                    $('#detail_tanggal_selesai_kontrak').text(formatDate(d.tanggal_selesai_kontrak));
+                    $('#detail_durasi_kontrak').text((d.durasi_kontrak || 0) + ' Hari');
+                    $('#detail_tanggal_mulai_pho').text(formatDate(d.tanggal_mulai_pho));
+                    $('#detail_tanggal_selesai_pho').text(formatDate(d.tanggal_selesai_pho));
+                    $('#detail_durasi_pho').text((d.durasi_pho || 0) + ' Hari');
+                    $('#detail_tanggal_fho').text(formatDate(d.date_fho));
+                    $('#detail_owner').text(d.owner || '-');
+                    $('#detail_pm_pusat').text(d.pm_pusat || '-');
+                    $('#detail_gs').text(d.gs || '-');
+                } else {
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'Gagal',
+                        text: res.message,
+                    });
+                }
+            },
+            error: function(xhr, status, error) {
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Error ' + xhr.status,
+                    text: xhr.statusText,
+                });
             }
-            )
-        }
-    }
+        });
+    });
+
+});
 </script>
+
+
 
 <!-- ========================================================================================== -->
 <script>
