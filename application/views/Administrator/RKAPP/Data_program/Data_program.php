@@ -176,7 +176,8 @@
                                                     title="Detail & Ubah Data">
                                                     <i class="fa-solid fa-users-viewfinder fa-lg px-1"></i>
                                                 </a>
-                                            </button><!-- <small>Detail</small> -->
+                                            </button>
+                                            <!-- <small>Detail</small> -->
                                             <a id="link-dhk-r" type="button" class="btn btn-sm btn-success"
                                                 href="<? base_url()?>Administrator/RKAPP/data_dkh_kontrak/data_dkh_kontrak"
                                                 data-bs-toggle="tooltip" data-bs-placement="top"
@@ -695,7 +696,7 @@
     </div><!-- End Modal Tambah Program -->
 
     <!-- Modal Detail Data Program -->
-    <div class="modal fade" id="staticBackdrop-detail-program" data-bs-backdrop="static" data-bs-keyboard="false"
+    <div class="modal fade"  id="staticBackdrop-detail-program" data-bs-backdrop="static" data-bs-keyboard="false"
         tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
         <div class="modal-dialog modal-xl modal-dialog-scrollable">
             <div class="modal-content">
@@ -758,7 +759,7 @@
                                                         </td>
                                                         <td class="text-muted">
                                                             <div class="d-flex justify-content-start">
-                                                                <small>PK.25.0001</small>
+                                                                <small id="detail_kode_program">PK.25.0001</small>
                                                             </div>
                                                         </td>
                                                         <td>
@@ -777,7 +778,7 @@
                                                         </td>
                                                         <td class="text-muted">
                                                             <div class="d-flex justify-content-start">
-                                                                <small>07/11/2025</small>
+                                                                <small id="detail_tanggal_program">07/11/2025</small>
                                                             </div>
                                                         </td>
                                                     </tr>
@@ -798,7 +799,7 @@
                                                         </td colspan=2>
                                                         <td class="text-muted">
                                                             <div class="d-flex justify-content-start">
-                                                                <small>
+                                                                <small id="detail_nama_program">
                                                                     Pekerjaan Struktur dan Pengadaan Material Geodipa
                                                                     Patuha
                                                                 </small>
@@ -822,7 +823,7 @@
                                                         </td>
                                                         <td class="text-muted">
                                                             <div class="d-flex justify-content-start">
-                                                                <small>AMP-HE</small>
+                                                                <small id="detail_unit_kerja">AMP-HE</small>
                                                             </div>
                                                         </td>
                                                         <td>
@@ -841,7 +842,7 @@
                                                         </td>
                                                         <td class="text-muted">
                                                             <div class="d-flex justify-content-start">
-                                                                <small>Ciwiday Bandung</small>
+                                                                <small id="detail_lokasi_pekerjaan">Ciwiday Bandung</small>
                                                             </div>
                                                         </td>
                                                     </tr>
@@ -874,7 +875,7 @@
                                                         </td>
                                                         <td class="text-muted">
                                                             <div class="d-flex justify-content-start">
-                                                                <small>0</small>
+                                                                <small id="detail_nilai_kontrak">0</small>
                                                             </div>
                                                         </td>
                                                         <td>
@@ -893,7 +894,7 @@
                                                         </td>
                                                         <td class="text-muted">
                                                             <div class="d-flex justify-content-start">
-                                                                <small>15/11/2025</small>
+                                                                <small id="detail_tanggal_mulai_kontrak">15/11/2025</small>
                                                             </div>
                                                         </td>
                                                     </tr>
@@ -914,7 +915,7 @@
                                                         </td>
                                                         <td class="text-muted">
                                                             <div class="d-flex justify-content-start">
-                                                                <small>90 Hari</small>
+                                                                <small id="detail_durasi_kontrak">90 Hari</small>
                                                             </div>
                                                         </td>
                                                         <td>
@@ -933,7 +934,7 @@
                                                         </td>
                                                         <td class="text-muted">
                                                             <div class="d-flex justify-content-start">
-                                                                <small>01/02/2026</small>
+                                                                <small id="detail_tanggal_selesai_kontrak">01/02/2026</small>
                                                             </div>
                                                         </td>
                                                     </tr>
@@ -966,7 +967,7 @@
                                                         </td>
                                                         <td class="text-muted">
                                                             <div class="d-flex justify-content-start">
-                                                                <small>07/02/2026</small>
+                                                                <small id="detail_tanggal_mulai_pho">07/02/2026</small>
                                                             </div>
                                                         </td>
                                                         <td>
@@ -985,7 +986,7 @@
                                                         </td>
                                                         <td class="text-muted">
                                                             <div class="d-flex justify-content-start">
-                                                                <small>365 Hari</small>
+                                                                <small id="detail_durasi_pho">365 Hari</small>
                                                             </div>
                                                         </td>
                                                     </tr>
@@ -1006,7 +1007,7 @@
                                                         </td>
                                                         <td class="text-muted">
                                                             <div class="d-flex justify-content-start">
-                                                                <small>08/02/2027</small>
+                                                                <small id="detail_tanggal_selesai_pho">08/02/2027</small>
                                                             </div>
                                                         </td>
                                                         <td>
@@ -1025,7 +1026,7 @@
                                                         </td>
                                                         <td>
                                                             <div class="d-flex justify-content-start">
-                                                                <small>
+                                                                <small id="detail_tanggal_fho">
                                                                     <b>15/02/2027</b>
                                                                 </small>
                                                             </div>
@@ -1060,7 +1061,7 @@
                                                         </td>
                                                         <td class="text-muted">
                                                             <div class="d-flex justify-content-start">
-                                                                <small>Owner 123</small>
+                                                                <small id="detail_owner">Owner 123</small>
                                                             </div>
                                                         </td>
                                                         <td>
@@ -1079,7 +1080,7 @@
                                                         </td>
                                                         <td class="text-muted">
                                                             <div class="d-flex justify-content-start">
-                                                                <small>PM Pusat 123</small>
+                                                                <small id="detail_pm_pusat">PM Pusat 123</small>
                                                             </div>
                                                         </td>
                                                         <td>
@@ -1098,7 +1099,7 @@
                                                         </td>
                                                         <td class="text-muted">
                                                             <div class="d-flex justify-content-start">
-                                                                <small>GS 123</small>
+                                                                <small id="detail_gs">GS 123</small>
                                                             </div>
                                                         </td>
                                                     </tr>

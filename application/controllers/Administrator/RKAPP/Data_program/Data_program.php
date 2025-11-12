@@ -76,4 +76,23 @@ class Data_program extends CI_Controller
 			'csrf_token' => $new_token
 		]);
 	}
+
+	// ================================================================================
+public function get_detail_program()
+{
+    $id = $this->input->post('id_program');
+
+    $this->db->where('id_program', $id);
+    $query = $this->db->get('tb_data_program');
+
+    if ($query->num_rows() > 0) {
+        $data = $query->row_array();
+        echo json_encode(['status' => 'success', 'data' => $data]);
+    } else {
+        echo json_encode(['status' => 'error', 'message' => 'Data tidak ditemukan']);
+    }
+}
+
+
+	// ======================================================================================
 }
