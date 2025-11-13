@@ -20,6 +20,21 @@ class Data_program extends CI_Controller
 		$this->load->view('Administrator/Rkapp/Data_program/ajax');
 	}
 
+
+	function indo_tanggal($tgl)
+	{
+		if (!$tgl || $tgl == "0000-00-00") return "-";
+
+		$bulan = [
+			1 => 'Januari', 'Februari', 'Maret', 'April',
+			'Mei', 'Juni', 'Juli', 'Agustus',
+			'September', 'Oktober', 'November', 'Desember'
+		];
+
+		$exp = explode('-', $tgl);
+		return $exp[2] . ' ' . $bulan[(int) $exp[1]] . ' ' . $exp[0];
+	}
+
 	public function get_data_program()
 	{
 		$draw   = intval($this->input->post('draw'));
@@ -29,6 +44,7 @@ class Data_program extends CI_Controller
 
 		$data = [];
 		$no = $start;
+
 
 		foreach ($list as $rs) {
 
@@ -59,13 +75,14 @@ class Data_program extends CI_Controller
             </a>
         ';
 
+
 			// ROW SUDAH SAMLIN RAPI
 			$row = [
 				"<small style='font-size: 12px'>$rs->kode_program</small>",
 				"<small style='font-size: 12px'>$rs->nama_program</small>",
 				"<small style='font-size: 12px'>$rs->nilai_kontrak</small>",
-				"<small style='font-size: 12px'>{$rs->tanggal_mulai_kontrak} || {$rs->durasi_kontrak} Hari</small>",
-				"<small style='font-size: 12px'>{$rs->tanggal_mulai_pho} || {$rs->durasi_pho} Hari</small>",
+				"<small style='font-size: 12px'>" . $this->indo_tanggal($rs->tanggal_mulai_kontrak) . " || {$rs->durasi_kontrak} Hari</small>",
+				"<small style='font-size: 12px'>" . $this->indo_tanggal($rs->tanggal_mulai_pho) . " || {$rs->durasi_pho} Hari</small>",
 				"<small style='font-size: 12px'>{$status}</small>",
 				"<small style='font-size: 12px'>{$aksi}</small>"
 			];
