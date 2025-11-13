@@ -14,8 +14,7 @@
     </div>
     <div class="my-2 p-3 bg-body rounded shadow-lg">
         <div class="card border-dark shadow-lg">
-            <div class="card-header border-dark d-flex justify-content-between align-items-center"
-                style="background: #373B44;  /* fallback for old browsers */
+            <div class="card-header border-dark d-flex justify-content-between align-items-center" style="background: #373B44;  /* fallback for old browsers */
                 background: -webkit-linear-gradient(to right, #4286f4, #373B44);  /* Chrome 10-25, Safari 5.1-6 */
                 background: linear-gradient(to right, #4286f4, #373B44); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */">
                 <div class="flex-grow-1 bd-highlight">
@@ -29,8 +28,7 @@
                 <div class="row align-items-center">
                     <div class="col-6 col-sm-6">
                         <div class="text-center">
-                            <img src="<?php echo base_url();?>/assets/brand/hero-img2.png" alt="" width="400"
-                                height="300"><br>
+                            <img src="<?php echo base_url(); ?>/assets/brand/hero-img2.png" alt="" width="400" height="300"><br>
                         </div>
                     </div>
                     <div class="col-sm-6">
@@ -49,8 +47,7 @@
                                                     <i class="fa-regular fa-pen-to-square fa-lg"></i>
                                                 </span>
                                                 <div class="form-floating">
-                                                    <input type="text" class="form-control border-dark form-control-sm"
-                                                        id="user_id" placeholder="Email / NPWP" value="">
+                                                    <input type="text" class="form-control border-dark form-control-sm" id="user_id" placeholder="Email / NPWP" value="">
                                                     <label>
                                                         <i class="fa-solid fa-user-lock fa-sm"></i>&nbsp;
                                                         <small>Username</small>
@@ -66,16 +63,13 @@
                                                     <i class="fa-regular fa-pen-to-square fa-lg"></i>
                                                 </span>
                                                 <div class="form-floating">
-                                                    <input type="Password"
-                                                        class="form-control border-dark form-control-sm" id="pass_id"
-                                                        placeholder="Password" value="">
+                                                    <input type="Password" class="form-control border-dark form-control-sm" id="pass_id" placeholder="Password" value="">
                                                     <label>
                                                         <i class="fa-solid fa-key fa-sm"></i>&nbsp;
                                                         <small>Password</small>
                                                     </label>
                                                 </div>
-                                                <button class="btn btn-sm btn-outline-secondary" type="button"
-                                                    id="button-addon2">
+                                                <button class="btn btn-sm btn-outline-secondary" type="button" id="button-addon2">
                                                     <i class="fa-solid fa-eye"></i>
                                                 </button>
                                             </div>
@@ -88,15 +82,13 @@
                                                     <i class="fa-regular fa-pen-to-square fa-lg"></i>
                                                 </span>
                                                 <div class="form-floating">
-                                                    <input type="text" class="form-control border-dark form-control-sm"
-                                                        id="recap_id" value="667989" disabled>
+                                                    <input type="text" class="form-control border-dark form-control-sm" id="recap_id" value="667989" disabled>
                                                     <label>
                                                         <i class="fa-solid fa-laptop-code fa-sm"></i>&nbsp;
                                                         <small>ReCaptCha</small>
                                                     </label>
                                                 </div>
-                                                <button class="btn btn-sm btn-outline-secondary" type="button"
-                                                    id="button-addon2">
+                                                <button class="btn btn-sm btn-outline-secondary" type="button" id="button-addon2">
                                                     <i class="fa-solid fa-arrows-rotate"></i>
                                                 </button>
                                             </div>
@@ -107,9 +99,7 @@
                                                     <i class="fa-regular fa-pen-to-square fa-lg"></i>
                                                 </span>
                                                 <div class="form-floating">
-                                                    <input type="text" class="form-control border-dark form-control-sm"
-                                                        id="textrecap_id" placeholder="Ketikkan Kode ReCaptCha"
-                                                        value="">
+                                                    <input type="text" class="form-control border-dark form-control-sm" id="textrecap_id" placeholder="Ketikkan Kode ReCaptCha" value="">
                                                     <label>
                                                         <i class="fa-solid fa-laptop-code fa-sm"></i>&nbsp;
                                                         <small>Ketikkan Kode ReCaptCha </small>
@@ -120,9 +110,7 @@
                                     </div>
                                     <br>
                                     <div class="d-grid col-sm-12">
-                                        <a href="http://localhost/pcs-jmtm/Administrator/Dashboard/Admin_dashboard"
-                                            class="btn text-dark"
-                                            style="background: #f46b45;  /* fallback for old browsers */
+                                        <a href="<?= base_url() ?>Administrator/Dashboard/Admin_dashboard" class="btn text-dark" style="background: #f46b45;  /* fallback for old browsers */
                                             background: -webkit-linear-gradient(to right, #eea849, #f46b45);  /* Chrome 10-25, Safari 5.1-6 */
                                             background: linear-gradient(to right, #eea849, #f46b45); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */">
                                             <i class="fa-solid fa-lock-open px-1"></i>
@@ -136,8 +124,7 @@
                 </div>
             </div>
         </div>
-        <div class="d-flex align-items-center p-3 my-2 text-white rounded shadow-lg"
-            style="background: #44A08D;  /* fallback for old browsers */
+        <div class="d-flex align-items-center p-3 my-2 text-white rounded shadow-lg" style="background: #44A08D;  /* fallback for old browsers */
                                     background: -webkit-linear-gradient(to right, #093637, #44A08D);  /* Chrome 10-25, Safari 5.1-6 */
                                     background: linear-gradient(to right, #093637, #44A08D); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */">
             <div class="lh-1 fst-italic">
