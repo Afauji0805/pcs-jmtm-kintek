@@ -16,8 +16,7 @@
         </h6>
         <div class="pt-3">
             <div class="card shadow-lg">
-                <div class="card-header d-flex justify-content-between align-items-center"
-                    style="background: #373B44;  /* fallback for old browsers */
+                <div class="card-header d-flex justify-content-between align-items-center" style="background: #373B44;  /* fallback for old browsers */
                     background: -webkit-linear-gradient(to right, #4286f4, #373B44);  /* Chrome 10-25, Safari 5.1-6 */
                     background: linear-gradient(to right, #4286f4, #373B44); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */">
                     <div class="flex-grow-1 bd-highlight">
@@ -31,8 +30,7 @@
                         </span>
                     </div>
                     <div class="p-2 bd-highlight">
-                        <a type="button" class="btn btn-sm btn-warning text-dark"
-                            href="http://localhost:8888/pcs-jmtm/Administrator/RKAPP/Data_program/Data_program">
+                        <a type="button" class="btn btn-sm btn-warning text-dark" href="<?= base_url() ?>Administrator/Rkapp/Data_program/Data_program">
                             <i class="fa-solid fa-angles-left fa-lg px-1"></i>
                             Kembali Kepage Data Program
                         </a>
@@ -44,9 +42,7 @@
                             <div class="card shadow-lg border-dark">
                                 <div class="card-body">
                                     <h6 class="border-bottom border-dark pb-2 mb-0">
-                                        <button id="" type="button" data-bs-toggle="collapse"
-                                            data-bs-target="#collapseExample"
-                                            class="btn btn-secondary btn-sm rounded shadow-lg">
+                                        <button id="" type="button" data-bs-toggle="collapse" data-bs-target="#collapseExample" class="btn btn-secondary btn-sm rounded shadow-lg">
                                             <i class="fa-solid fa-sort fa-lg"></i>
                                         </button>
                                         <i class="fa-solid fa-circle-info px-1"></i>
@@ -215,9 +211,7 @@
                                             Add New Divisi
                                         </button>
                                     </div>
-                                    <table id="example"
-                                        class="table-bordered table-sm table-hover align-middle border-dark"
-                                        style="width:100%">
+                                    <table id="example" class="table-bordered table-sm table-hover align-middle border-dark" style="width:100%">
                                         <thead class="bg-secondary text-white shadow-lg">
                                             <tr>
                                                 <th scope="col" class="col-1 text-center">
@@ -269,8 +263,7 @@
                     </div>
                 </div>
                 <div class="card-footer">
-                    <a type="button" class="btn btn-sm btn-warning text-dark"
-                        href="http://localhost:8888/pcs-jmtm/Administrator/RKAPP/Data_program/Data_program">
+                    <a type="button" class="btn btn-sm btn-warning text-dark" href="<?= base_url() ?>Administrator/Rkapp/Data_program/Data_program">
                         <i class="fa-solid fa-angles-left fa-lg px-1"></i>
                         Kembali Kepage Data Program
                     </a>

@@ -1,5 +1,15 @@
 <main class="container">
-
+    <style>
+        .ellipsis-200 {
+            display: inline-block;
+            max-width: 300px;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            position: relative;
+            cursor: pointer;
+        }
+    </style>
     <div class="d-flex align-items-center p-3 my-2 text-dark rounded shadow-lg" style="background: #ADA996;  /* fallback for old browsers */
                 background: -webkit-linear-gradient(to right, #EAEAEA, #DBDBDB, #F2F2F2, #ADA996);  /* Chrome 10-25, Safari 5.1-6 */
                 background: linear-gradient(to right, #EAEAEA, #DBDBDB, #F2F2F2, #ADA996); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */       
@@ -17,8 +27,7 @@
         </h6>
         <div class="pt-3">
             <div class="card shadow-lg">
-                <div class="card-header d-flex justify-content-between align-items-center"
-                    style="background: #373B44;  /* fallback for old browsers */
+                <div class="card-header d-flex justify-content-between align-items-center" style="background: #373B44;  /* fallback for old browsers */
                     background: -webkit-linear-gradient(to right, #4286f4, #373B44);  /* Chrome 10-25, Safari 5.1-6 */
                     background: linear-gradient(to right, #4286f4, #373B44); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */">
                     <div class="flex-grow-1 bd-highlight">
@@ -64,8 +73,7 @@
                                             <option value="4">Masa Pemeliharaan</option>
                                             <option value="5">Pekerjaan Selesai</option>
                                         </select>
-                                        <button class="btn btn-outline-info btn-sm text-dark border-dark" type="button"
-                                            id="btn_fillter_prg">
+                                        <button class="btn btn-outline-info btn-sm text-dark border-dark" type="button" id="btn_fillter_prg">
                                             <i class="fa-solid fa-magnifying-glass fa-sm"></i>
                                             <strong>Filter Data</strong>
                                         </button>
@@ -73,50 +81,48 @@
                                 </div>
                             </td>
                             <td scope="col align-baseline" class="text-end">
-                                <button class="btn btn-sm btn-primary" type="button" data-bs-toggle="modal"
-                                    data-bs-target="#staticBackdrop-tambah-program">
+                                <button class="btn btn-sm btn-primary" type="button" data-bs-toggle="modal" data-bs-target="#staticBackdrop-tambah-program">
                                     <i class="fa-solid fa-folder-plus fa-lg"></i>&nbsp;
                                     <small><b>Tambah Data</b></small>
                                 </button>
                             </td>
                         </tr>
                     </table>
-                    <table class="table-bordered table-sm table-hover align-middle border-dark tbl_program"
-                        style="width:100%">
+                    <table class="table-bordered table-sm table-hover align-middle border-dark tbl_program" style="width:100%">
                         <thead class="bg-warning text-dark shadow-lg">
                             <tr>
                                 <th scope="col" class="col-1 text-center">
-                                    <small>
+                                    <small style="font-size: 12px">
                                         Kode
                                     </small>
                                 </th>
                                 <th scope="col" class="col-3 text-center">
-                                    <small>
+                                    <small style="font-size: 12px">
                                         Nama Pekerjaan
                                     </small>
                                 </th>
                                 <th scope="col" class="col-2 text-center">
-                                    <small>
+                                    <small style="font-size: 12px">
                                         Nilai Kontrak
                                     </small>
                                 </th>
                                 <th scope="col" class="col-2 text-center">
-                                    <small>
+                                    <small style="font-size: 12px">
                                         Tanggal & Durasi Kontrak
                                     </small>
                                 </th>
                                 <th scope="col" class="col-2 text-center">
-                                    <small>
+                                    <small style="font-size: 12px">
                                         Tanggal & Durasi PHO
                                     </small>
                                 </th>
                                 <th scope="col" class="col-1 text-center">
-                                    <small>
+                                    <small style="font-size: 12px">
                                         Status Data
                                     </small>
                                 </th>
                                 <th scope="col" class="col-1 text-center">
-                                    <small>
+                                    <small style="font-size: 12px">
                                         .:: Aksi ::.
                                     </small>
                                 </th>
@@ -170,10 +176,7 @@
                                     <small>
                                         <div class="btn-group" role="group" aria-label="Basic mixed styles example">
                                             <!-- <small>Detail</small> -->
-                                            <a id="link-dhk-r" type="button" class="btn btn-sm btn-success"
-                                                href="<? base_url() ?>Administrator/RKAPP/data_dkh_kontrak/data_dkh_kontrak"
-                                                data-bs-toggle="tooltip" data-bs-placement="top"
-                                                title="Halaman Pengisian DKH Kontrak">
+                                            <a id="link-dhk-r" type="button" class="btn btn-sm btn-success" href="<? base_url() ?>Administrator/RKAPP/data_dkh_kontrak/data_dkh_kontrak" data-bs-toggle="tooltip" data-bs-placement="top" title="Halaman Pengisian DKH Kontrak">
                                                 <i class="fa-solid fa-share-from-square fa-lg px-1"></i>
                                             </a>
                                             </a>
@@ -186,8 +189,7 @@
                 </div>
             </div>
         </div>
-        <div class="d-flex align-items-center p-3 my-2 text-white rounded shadow-lg"
-            style="background: #44A08D;  /* fallback for old browsers */
+        <div class="d-flex align-items-center p-3 my-2 text-white rounded shadow-lg" style="background: #44A08D;  /* fallback for old browsers */
                                     background: -webkit-linear-gradient(to right, #093637, #44A08D);  /* Chrome 10-25, Safari 5.1-6 */
                                     background: linear-gradient(to right, #093637, #44A08D); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */">
             <div class="lh-1">
@@ -214,13 +216,11 @@
     </div>
 
     <!-- Modal Tambah Program -->
-    <div class="modal fade" id="staticBackdrop-tambah-program" data-bs-backdrop="static" data-bs-keyboard="false"
-        tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+    <div class="modal fade" id="staticBackdrop-tambah-program" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
         <div class="modal-dialog modal-xl modal-dialog-scrollable">
             <div class="modal-content">
                 <div class="modal-body">
-                    <div class="d-flex align-items-center p-2 my-2 text-white rounded shadow-lg"
-                        style="background: #36D1DC;  /* fallback for old browsers */
+                    <div class="d-flex align-items-center p-2 my-2 text-white rounded shadow-lg" style="background: #36D1DC;  /* fallback for old browsers */
                                 background: -webkit-linear-gradient(to right, #5B86E5, #36D1DC);  /* Chrome 10-25, Safari 5.1-6 */
                                 background: linear-gradient(to right, #5B86E5, #36D1DC); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */">
                         <i class="fa-regular fa-folder-open fa-xl px-1"></i>
@@ -237,8 +237,7 @@
                     <!-- buatkan insert nya dengan form pake ajax dan sweetalert dan juga controler dan model serta store prosedur saya yang tadi insert -->
                     <div class="my-2 p-2 bg-body rounded shadow-lg">
                         <div class="card shadow-lg">
-                            <div class="card-header d-flex justify-content-between align-items-center"
-                                style="background: #232526;  /* fallback for old browsers */
+                            <div class="card-header d-flex justify-content-between align-items-center" style="background: #232526;  /* fallback for old browsers */
                                         background: -webkit-linear-gradient(to right, #c1c7ccff, #232526);  /* Chrome 10-25, Safari 5.1-6 */
                                         background: linear-gradient(to right, #c1c7ccff, #232526); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */">
                                 <div class="flex-grow-1 bd-highlight">
@@ -252,8 +251,7 @@
                             </div>
                             <form action="javascript:;" id="formData_tambah_program" method="post">
                                 <!-- TOKEN CSRF -->
-                                <input type="hidden" name="<?= $this->security->get_csrf_token_name(); ?>"
-                                    value="<?= $this->security->get_csrf_hash(); ?>" id="csrf_token" />
+                                <input type="hidden" name="<?= $this->security->get_csrf_token_name(); ?>" value="<?= $this->security->get_csrf_hash(); ?>" id="csrf_token" />
 
                                 <div class="card-body">
                                     <div class="row align-items-start">
@@ -275,16 +273,9 @@
                                                                                 Kode Program
                                                                             </span>
                                                                             <span class="input-group-text border-dark">
-                                                                                <i
-                                                                                    class="fa-solid fa-barcode fa-lg"></i>
+                                                                                <i class="fa-solid fa-barcode fa-lg"></i>
                                                                             </span>
-                                                                            <input type="text"
-                                                                                class="form-control text-end border-dark"
-                                                                                name="kd_prg" id="kd_prg"
-                                                                                aria-label="Sizing example input"
-                                                                                aria-describedby="inputGroup-sizing-sm"
-                                                                                value="PK.25.1" readonly
-                                                                                style="background-color: #c1c7ccff">
+                                                                            <input type="text" class="form-control text-end border-dark" name="kd_prg" id="kd_prg" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-sm" value="PK.25.1" readonly style="background-color: #c1c7ccff">
                                                                         </div>
                                                                     </div>
                                                                 </div>
@@ -297,18 +288,9 @@
                                                                                 Date Program
                                                                             </span>
                                                                             <span class="input-group-text border-dark">
-                                                                                <i
-                                                                                    class="fa-solid fa-calendar-days fa-lg"></i>
+                                                                                <i class="fa-solid fa-calendar-days fa-lg"></i>
                                                                             </span>
-                                                                            <input type="date"
-                                                                                class="form-control border-dark text-end"
-                                                                                id="date_prg"
-                                                                                value="<?= date('Y-m-d') ?>"
-                                                                                name="date_prg"
-                                                                                aria-label="Sizing example input"
-                                                                                readonly
-                                                                                style="background-color: #c1c7ccff"
-                                                                                aria-describedby="inputGroup-sizing-sm">
+                                                                            <input type="date" class="form-control border-dark text-end" id="date_prg" value="<?= date('Y-m-d') ?>" name="date_prg" aria-label="Sizing example input" readonly style="background-color: #c1c7ccff" aria-describedby="inputGroup-sizing-sm">
                                                                         </div>
                                                                     </div>
                                                                 </div>
@@ -322,15 +304,9 @@
                                                                             Nama Program Pekerjaan
                                                                         </span>
                                                                         <span class="input-group-text border-dark">
-                                                                            <i
-                                                                                class="fa-solid fa-person-digging fa-lg"></i>
+                                                                            <i class="fa-solid fa-person-digging fa-lg"></i>
                                                                         </span>
-                                                                        <input type="text"
-                                                                            class="form-control border-dark" id="nd_prg"
-                                                                            name="nd_prg"
-                                                                            aria-label="Sizing example input"
-                                                                            aria-describedby="inputGroup-sizing-sm"
-                                                                            placeholder="Input data..." value="">
+                                                                        <input type="text" class="form-control border-dark" id="nd_prg" name="nd_prg" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-sm" placeholder="Input data..." value="">
                                                                     </div>
                                                                 </div>
                                                             </td>
@@ -345,12 +321,7 @@
                                                                         <span class="input-group-text border-dark">
                                                                             <i class="fa-solid fa-building fa-lg"></i>
                                                                         </span>
-                                                                        <input type="text"
-                                                                            class="form-control border-dark"
-                                                                            id="unit_prg" name="unit_prg"
-                                                                            aria-label="Sizing example input"
-                                                                            aria-describedby="inputGroup-sizing-sm"
-                                                                            placeholder="Input data..." value="">
+                                                                        <input type="text" class="form-control border-dark" id="unit_prg" name="unit_prg" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-sm" placeholder="Input data..." value="">
                                                                     </div>
                                                                 </div>
                                                             </td>
@@ -361,15 +332,9 @@
                                                                             Lokasi Pekerjaan
                                                                         </span>
                                                                         <span class="input-group-text border-dark">
-                                                                            <i
-                                                                                class="fa-solid fa-map-location-dot fa-lg"></i>
+                                                                            <i class="fa-solid fa-map-location-dot fa-lg"></i>
                                                                         </span>
-                                                                        <input type="text"
-                                                                            class="form-control border-dark"
-                                                                            id="lokasi_prg" name="lokasi_prg"
-                                                                            aria-label="Sizing example input"
-                                                                            aria-describedby="inputGroup-sizing-sm"
-                                                                            placeholder="Input data..." value="">
+                                                                        <input type="text" class="form-control border-dark" id="lokasi_prg" name="lokasi_prg" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-sm" placeholder="Input data..." value="">
                                                                     </div>
                                                                 </div>
                                                             </td>
@@ -395,16 +360,9 @@
                                                                             Nilai Kontrak
                                                                         </span>
                                                                         <span class="input-group-text border-dark">
-                                                                            <i
-                                                                                class="fa-solid fa-money-bill-wave fa-lg"></i>
+                                                                            <i class="fa-solid fa-money-bill-wave fa-lg"></i>
                                                                         </span>
-                                                                        <input type="text"
-                                                                            class="form-control border-dark text-end"
-                                                                            id="nilai_prg" name="nilai_prg"
-                                                                            aria-label="Sizing example input" readonly
-                                                                            style="background-color: #c1c7ccff"
-                                                                            value="0"
-                                                                            readaria-describedby="inputGroup-sizing-sm">
+                                                                        <input type="text" class="form-control border-dark text-end" id="nilai_prg" name="nilai_prg" aria-label="Sizing example input" readonly style="background-color: #c1c7ccff" value="0" readaria-describedby="inputGroup-sizing-sm">
                                                                     </div>
                                                                 </div>
                                                             </td>
@@ -415,15 +373,9 @@
                                                                             Start Date
                                                                         </span>
                                                                         <span class="input-group-text border-dark">
-                                                                            <i
-                                                                                class="fa-solid fa-calendar-days fa-lg"></i>
+                                                                            <i class="fa-solid fa-calendar-days fa-lg"></i>
                                                                         </span>
-                                                                        <input type="date" name="date_awal_kontrak_prg"
-                                                                            class="form-control border-dark"
-                                                                            id="date_awal_kontrak_prg"
-                                                                            aria-label="Sizing example input"
-                                                                            aria-describedby="inputGroup-sizing-sm"
-                                                                            value="">
+                                                                        <input type="date" name="date_awal_kontrak_prg" class="form-control border-dark" id="date_awal_kontrak_prg" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-sm" value="">
                                                                     </div>
                                                                 </div>
                                                             </td>
@@ -434,15 +386,9 @@
                                                                             Durasi
                                                                         </span>
                                                                         <span class="input-group-text border-dark">
-                                                                            <i
-                                                                                class="fa-solid fa-calendar-days fa-lg"></i>
+                                                                            <i class="fa-solid fa-calendar-days fa-lg"></i>
                                                                         </span>
-                                                                        <input type="number" name="durasi_kontrak_prg"
-                                                                            class="form-control border-dark"
-                                                                            id="durasi_kontrak_prg"
-                                                                            aria-label="Sizing example input"
-                                                                            aria-describedby="inputGroup-sizing-sm"
-                                                                            placeholder="Input number..." value="">
+                                                                        <input type="number" name="durasi_kontrak_prg" class="form-control border-dark" id="durasi_kontrak_prg" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-sm" placeholder="Input number..." value="">
                                                                         <span class="input-group-text border-dark">
                                                                             Hari
                                                                         </span>
@@ -456,18 +402,10 @@
                                                                             End Date
                                                                         </span>
                                                                         <span class="input-group-text border-dark">
-                                                                            <i
-                                                                                class="fa-solid fa-calendar-days fa-lg"></i>
+                                                                            <i class="fa-solid fa-calendar-days fa-lg"></i>
                                                                         </span>
 
-                                                                        <input readonly type="text"
-                                                                            name="date_akhir_kontrak_prg"
-                                                                            class="form-control border-dark"
-                                                                            id="date_akhir_kontrak_prg"
-                                                                            style="background-color: #c1c7ccff"
-                                                                            aria-label="Sizing example input"
-                                                                            aria-describedby="inputGroup-sizing-sm"
-                                                                            value="">
+                                                                        <input readonly type="text" name="date_akhir_kontrak_prg" class="form-control border-dark" id="date_akhir_kontrak_prg" style="background-color: #c1c7ccff" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-sm" value="">
                                                                     </div>
                                                                 </div>
                                                             </td>
@@ -492,15 +430,9 @@
                                                                             Date PHO
                                                                         </span>
                                                                         <span class="input-group-text border-dark">
-                                                                            <i
-                                                                                class="fa-solid fa-calendar-days fa-lg"></i>
+                                                                            <i class="fa-solid fa-calendar-days fa-lg"></i>
                                                                         </span>
-                                                                        <input type="date" name="date_awal_pho_prg"
-                                                                            class="form-control border-dark"
-                                                                            id="date_awal_pho_prg"
-                                                                            aria-label="Sizing example input"
-                                                                            aria-describedby="inputGroup-sizing-sm"
-                                                                            value="">
+                                                                        <input type="date" name="date_awal_pho_prg" class="form-control border-dark" id="date_awal_pho_prg" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-sm" value="">
                                                                     </div>
                                                                 </div>
                                                             </td>
@@ -511,15 +443,9 @@
                                                                             Durasi
                                                                         </span>
                                                                         <span class="input-group-text border-dark">
-                                                                            <i
-                                                                                class="fa-solid fa-calendar-days fa-lg"></i>
+                                                                            <i class="fa-solid fa-calendar-days fa-lg"></i>
                                                                         </span>
-                                                                        <input type="number" name="durasi_pho_prg"
-                                                                            class="form-control border-dark"
-                                                                            id="durasi_pho_prg"
-                                                                            aria-label="Sizing example input"
-                                                                            aria-describedby="inputGroup-sizing-sm"
-                                                                            placeholder="Input number..." value="">
+                                                                        <input type="number" name="durasi_pho_prg" class="form-control border-dark" id="durasi_pho_prg" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-sm" placeholder="Input number..." value="">
                                                                         <span class="input-group-text border-dark">
                                                                             Hari
                                                                         </span>
@@ -533,17 +459,10 @@
                                                                             End Date
                                                                         </span>
                                                                         <span class="input-group-text border-dark">
-                                                                            <i
-                                                                                class="fa-solid fa-calendar-days fa-lg"></i>
+                                                                            <i class="fa-solid fa-calendar-days fa-lg"></i>
                                                                         </span>
 
-                                                                        <input type="text" name="date_akhir_pho_prg"
-                                                                            class="form-control border-dark"
-                                                                            id="date_akhir_pho_prg"
-                                                                            aria-label="Sizing example input"
-                                                                            aria-describedby="inputGroup-sizing-sm"
-                                                                            readonly style="background-color: #c1c7ccff"
-                                                                            value="">
+                                                                        <input type="text" name="date_akhir_pho_prg" class="form-control border-dark" id="date_akhir_pho_prg" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-sm" readonly style="background-color: #c1c7ccff" value="">
                                                                     </div>
                                                                 </div>
                                                             </td>
@@ -554,14 +473,9 @@
                                                                             Date FHO
                                                                         </span>
                                                                         <span class="input-group-text border-dark">
-                                                                            <i
-                                                                                class="fa-solid fa-calendar-days fa-lg"></i>
+                                                                            <i class="fa-solid fa-calendar-days fa-lg"></i>
                                                                         </span>
-                                                                        <input type="date" name="date_awal_fho_prg"
-                                                                            class="form-control border-dark"
-                                                                            id="date_awal_fho_prg" value=""
-                                                                            aria-label="Sizing example input"
-                                                                            aria-describedby="inputGroup-sizing-sm">
+                                                                        <input type="date" name="date_awal_fho_prg" class="form-control border-dark" id="date_awal_fho_prg" value="" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-sm">
                                                                     </div>
                                                                 </div>
                                                             </td>
@@ -588,12 +502,7 @@
                                                                         <span class="input-group-text border-dark">
                                                                             <i class="fa-solid fa-user-tie fa-lg"></i>
                                                                         </span>
-                                                                        <input name="owner_prg" type="text"
-                                                                            class="form-control border-dark"
-                                                                            id="owner_prg"
-                                                                            aria-label="Sizing example input"
-                                                                            aria-describedby="inputGroup-sizing-sm"
-                                                                            placeholder="Input data..." value="">
+                                                                        <input name="owner_prg" type="text" class="form-control border-dark" id="owner_prg" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-sm" placeholder="Input data..." value="">
                                                                     </div>
                                                                 </div>
                                                             </td>
@@ -606,12 +515,7 @@
                                                                         <span class="input-group-text border-dark">
                                                                             <i class="fa-solid fa-user-tie fa-lg"></i>
                                                                         </span>
-                                                                        <input type="text" name="pusat_prg"
-                                                                            class="form-control border-dark"
-                                                                            id="pusat_prg"
-                                                                            aria-label="Sizing example input"
-                                                                            aria-describedby="inputGroup-sizing-sm"
-                                                                            placeholder="Input data..." value="">
+                                                                        <input type="text" name="pusat_prg" class="form-control border-dark" id="pusat_prg" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-sm" placeholder="Input data..." value="">
                                                                     </div>
                                                                 </div>
                                                             </td>
@@ -624,11 +528,7 @@
                                                                         <span class="input-group-text border-dark">
                                                                             <i class="fa-solid fa-user-tie fa-lg"></i>
                                                                         </span>
-                                                                        <input type="text" name="gs"
-                                                                            class="form-control border-dark" id="gs_prg"
-                                                                            aria-label="Sizing example input"
-                                                                            aria-describedby="inputGroup-sizing-sm"
-                                                                            placeholder="Input data..." value="">
+                                                                        <input type="text" name="gs" class="form-control border-dark" id="gs_prg" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-sm" placeholder="Input data..." value="">
                                                                     </div>
                                                                 </div>
                                                             </td>
@@ -640,13 +540,11 @@
                                     </div>
                                 </div>
                                 <div class="card-footer">
-                                    <button type="button" class="btn btn-danger btn-sm rounded shadow-lg"
-                                        data-bs-dismiss="modal">
+                                    <button type="button" class="btn btn-danger btn-sm rounded shadow-lg" data-bs-dismiss="modal">
                                         <i class="fa-regular fa-rectangle-xmark fa-lg px-1"></i>
                                         Tutup Halaman
                                     </button>
-                                    <button id="btn-simpan" type="submit"
-                                        class="btn btn-success btn-sm rounded shadow-lg">
+                                    <button id="btn-simpan" type="submit" class="btn btn-success btn-sm rounded shadow-lg">
                                         <i class="fa-regular fa-floppy-disk fa-lg px-1"></i>
                                         Simpan Data
                                     </button>
@@ -654,8 +552,7 @@
                             </form>
                         </div>
                         <!-- Catatan Pengguna -->
-                        <div class="d-flex align-items-center p-3 my-2 text-white rounded shadow-lg"
-                            style="background: #44A08D;  /* fallback for old browsers */
+                        <div class="d-flex align-items-center p-3 my-2 text-white rounded shadow-lg" style="background: #44A08D;  /* fallback for old browsers */
                                                 background: -webkit-linear-gradient(to right, #093637, #44A08D);  /* Chrome 10-25, Safari 5.1-6 */
                                                 background: linear-gradient(to right, #093637, #44A08D); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */">
                             <div class="lh-1">
@@ -688,13 +585,11 @@
     </div><!-- End Modal Tambah Program -->
 
     <!-- Modal Detail Data Program -->
-    <div class="modal fade" id="staticBackdrop-detail-program" data-bs-backdrop="static" data-bs-keyboard="false"
-        tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+    <div class="modal fade" id="staticBackdrop-detail-program" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
         <div class="modal-dialog modal-xl modal-dialog-scrollable">
             <div class="modal-content">
                 <div class="modal-body">
-                    <div class="d-flex align-items-center p-2 my-2 text-white rounded shadow-lg"
-                        style="background: #36D1DC;  /* fallback for old browsers */
+                    <div class="d-flex align-items-center p-2 my-2 text-white rounded shadow-lg" style="background: #36D1DC;  /* fallback for old browsers */
                                 background: -webkit-linear-gradient(to right, #5B86E5, #36D1DC);  /* Chrome 10-25, Safari 5.1-6 */
                                 background: linear-gradient(to right, #5B86E5, #36D1DC); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */">
                         <i class="fa-regular fa-folder-open fa-xl px-1"></i>
@@ -710,8 +605,7 @@
                     </div>
                     <div class="my-2 p-2 bg-body rounded shadow-lg">
                         <div class="card shadow-lg">
-                            <div class="card-header d-flex justify-content-between align-items-center"
-                                style="background: #232526;  /* fallback for old browsers */
+                            <div class="card-header d-flex justify-content-between align-items-center" style="background: #232526;  /* fallback for old browsers */
                                                         background: -webkit-linear-gradient(to right, #c1c7ccff, #232526);  /* Chrome 10-25, Safari 5.1-6 */
                                                         background: linear-gradient(to right, #c1c7ccff, #232526); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */">
                                 <div class="flex-grow-1 bd-highlight">
@@ -887,8 +781,7 @@
                                                         </td>
                                                         <td class="text-muted">
                                                             <div class="d-flex justify-content-start">
-                                                                <small
-                                                                    id="detail_tanggal_mulai_kontrak">15/11/2025</small>
+                                                                <small id="detail_tanggal_mulai_kontrak">15/11/2025</small>
                                                             </div>
                                                         </td>
                                                     </tr>
@@ -928,8 +821,7 @@
                                                         </td>
                                                         <td class="text-muted">
                                                             <div class="d-flex justify-content-start">
-                                                                <small
-                                                                    id="detail_tanggal_selesai_kontrak">01/02/2026</small>
+                                                                <small id="detail_tanggal_selesai_kontrak">01/02/2026</small>
                                                             </div>
                                                         </td>
                                                     </tr>
@@ -1002,8 +894,7 @@
                                                         </td>
                                                         <td class="text-muted">
                                                             <div class="d-flex justify-content-start">
-                                                                <small
-                                                                    id="detail_tanggal_selesai_pho">08/02/2027</small>
+                                                                <small id="detail_tanggal_selesai_pho">08/02/2027</small>
                                                             </div>
                                                         </td>
                                                         <td>
@@ -1198,14 +1089,11 @@
                                 </div>
                             </div>
                             <div class="card-footer">
-                                <button type="button" class="btn btn-danger btn-sm rounded shadow-lg"
-                                    data-bs-dismiss="modal">
+                                <button type="button" class="btn btn-danger btn-sm rounded shadow-lg" data-bs-dismiss="modal">
                                     <i class="fa-regular fa-rectangle-xmark fa-lg px-1"></i>
                                     Tutup Halaman
                                 </button>
-                                <button type="button" class="btn btn-warning btn-sm rounded shadow-lg"
-                                    id="btn-ubah-program" data-id="" data-bs-toggle="modal"
-                                    data-bs-target="#staticBackdrop-ubah-program">
+                                <button type="button" class="btn btn-warning btn-sm rounded shadow-lg" id="btn-ubah-program" data-id="" data-bs-toggle="modal" data-bs-target="#staticBackdrop-ubah-program">
                                     <i class="fa-solid fa-pen-to-square fa-lg px-1"></i>
                                     Ubah Data
                                 </button>
@@ -1218,13 +1106,11 @@
     </div><!-- End Modal Detail Data Program -->
 
     <!-- Modal Ubah Program -->
-    <div class="modal fade" id="staticBackdrop-ubah-program" data-bs-backdrop="static" data-bs-keyboard="false"
-        tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+    <div class="modal fade" id="staticBackdrop-ubah-program" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
         <div class="modal-dialog modal-xl modal-dialog-scrollable">
             <div class="modal-content">
                 <div class="modal-body">
-                    <div class="d-flex align-items-center p-2 my-2 text-white rounded shadow-lg"
-                        style="background: #36D1DC;  /* fallback for old browsers */
+                    <div class="d-flex align-items-center p-2 my-2 text-white rounded shadow-lg" style="background: #36D1DC;  /* fallback for old browsers */
                                 background: -webkit-linear-gradient(to right, #5B86E5, #36D1DC);  /* Chrome 10-25, Safari 5.1-6 */
                                 background: linear-gradient(to right, #5B86E5, #36D1DC); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */">
                         <i class="fa-regular fa-folder-open fa-xl px-1"></i>
@@ -1240,8 +1126,7 @@
                     </div>
                     <div class="my-2 p-2 bg-body rounded shadow-lg">
                         <div class="card shadow-lg">
-                            <div class="card-header d-flex justify-content-between align-items-center"
-                                style="background: #232526;  /* fallback for old browsers */
+                            <div class="card-header d-flex justify-content-between align-items-center" style="background: #232526;  /* fallback for old browsers */
                                         background: -webkit-linear-gradient(to right, #c1c7ccff, #232526);  /* Chrome 10-25, Safari 5.1-6 */
                                         background: linear-gradient(to right, #c1c7ccff, #232526); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */">
                                 <div class="flex-grow-1 bd-highlight">
@@ -1255,8 +1140,7 @@
                             </div>
                             <form method="post">
                                 <!-- TOKEN CSRF -->
-                                <input type="hidden" name="<?= $this->security->get_csrf_token_name(); ?>"
-                                    value="<?= $this->security->get_csrf_hash(); ?>" id="csrf_token_ubah" />
+                                <input type="hidden" name="<?= $this->security->get_csrf_token_name(); ?>" value="<?= $this->security->get_csrf_hash(); ?>" id="csrf_token_ubah" />
 
                                 <div class="card-body">
                                     <div class="row align-items-start">
@@ -1273,23 +1157,15 @@
                                                             <td>
                                                                 <div class="d-flex justify-content-start">
                                                                     <div class="col-md-6">
-                                                                        <input type="hidden" id="ubah_id_program"
-                                                                            name="id_program">
+                                                                        <input type="hidden" id="ubah_id_program" name="id_program">
                                                                         <div class="input-group input-group-sm">
                                                                             <span class="input-group-text border-dark">
                                                                                 Kode Program
                                                                             </span>
                                                                             <span class="input-group-text border-dark">
-                                                                                <i
-                                                                                    class="fa-solid fa-barcode fa-lg"></i>
+                                                                                <i class="fa-solid fa-barcode fa-lg"></i>
                                                                             </span>
-                                                                            <input type="text"
-                                                                                class="form-control text-end border-dark"
-                                                                                id="kd_ubah_program"
-                                                                                aria-label="Sizing example input"
-                                                                                aria-describedby="inputGroup-sizing-sm"
-                                                                                value="PK.25.1" readonly
-                                                                                style="background-color: #c1c7ccff">
+                                                                            <input type="text" class="form-control text-end border-dark" id="kd_ubah_program" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-sm" value="PK.25.1" readonly style="background-color: #c1c7ccff">
                                                                         </div>
                                                                     </div>
                                                                 </div>
@@ -1302,17 +1178,9 @@
                                                                                 Date Program
                                                                             </span>
                                                                             <span class="input-group-text border-dark">
-                                                                                <i
-                                                                                    class="fa-solid fa-calendar-days fa-lg"></i>
+                                                                                <i class="fa-solid fa-calendar-days fa-lg"></i>
                                                                             </span>
-                                                                            <input type="date"
-                                                                                class="form-control border-dark text-end"
-                                                                                id="ubah_tanggal_program"
-                                                                                value="<?= date('Y-m-d') ?>"
-                                                                                aria-label="Sizing example input"
-                                                                                readonly
-                                                                                style="background-color: #c1c7ccff"
-                                                                                aria-describedby="inputGroup-sizing-sm">
+                                                                            <input type="date" class="form-control border-dark text-end" id="ubah_tanggal_program" value="<?= date('Y-m-d') ?>" aria-label="Sizing example input" readonly style="background-color: #c1c7ccff" aria-describedby="inputGroup-sizing-sm">
                                                                         </div>
                                                                     </div>
                                                                 </div>
@@ -1326,16 +1194,9 @@
                                                                             Nama Program Pekerjaan
                                                                         </span>
                                                                         <span class="input-group-text border-dark">
-                                                                            <i
-                                                                                class="fa-solid fa-person-digging fa-lg"></i>
+                                                                            <i class="fa-solid fa-person-digging fa-lg"></i>
                                                                         </span>
-                                                                        <input type="text"
-                                                                            class="form-control border-dark"
-                                                                            id="ubah_nama_program"
-                                                                            aria-label="Sizing example input"
-                                                                            aria-describedby="inputGroup-sizing-sm"
-                                                                            placeholder="Input data..."
-                                                                            value="Pekerjaan Kintek Dev App Web PCS-1">
+                                                                        <input type="text" class="form-control border-dark" id="ubah_nama_program" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-sm" placeholder="Input data..." value="Pekerjaan Kintek Dev App Web PCS-1">
                                                                     </div>
                                                                 </div>
                                                             </td>
@@ -1350,12 +1211,7 @@
                                                                         <span class="input-group-text border-dark">
                                                                             <i class="fa-solid fa-building fa-lg"></i>
                                                                         </span>
-                                                                        <input type="text"
-                                                                            class="form-control border-dark"
-                                                                            id="ubah_unit_kerja"
-                                                                            aria-label="Sizing example input"
-                                                                            aria-describedby="inputGroup-sizing-sm"
-                                                                            placeholder="Input data..." value="AMP">
+                                                                        <input type="text" class="form-control border-dark" id="ubah_unit_kerja" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-sm" placeholder="Input data..." value="AMP">
                                                                     </div>
                                                                 </div>
                                                             </td>
@@ -1366,15 +1222,9 @@
                                                                             Lokasi Pekerjaan
                                                                         </span>
                                                                         <span class="input-group-text border-dark">
-                                                                            <i
-                                                                                class="fa-solid fa-map-location-dot fa-lg"></i>
+                                                                            <i class="fa-solid fa-map-location-dot fa-lg"></i>
                                                                         </span>
-                                                                        <input type="text"
-                                                                            class="form-control border-dark"
-                                                                            id="ubah_lokasi_pekerjaan"
-                                                                            aria-label="Sizing example input"
-                                                                            aria-describedby="inputGroup-sizing-sm"
-                                                                            placeholder="Input data..." value="Jakarta">
+                                                                        <input type="text" class="form-control border-dark" id="ubah_lokasi_pekerjaan" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-sm" placeholder="Input data..." value="Jakarta">
                                                                     </div>
                                                                 </div>
                                                             </td>
@@ -1400,16 +1250,9 @@
                                                                             Nilai Kontrak
                                                                         </span>
                                                                         <span class="input-group-text border-dark">
-                                                                            <i
-                                                                                class="fa-solid fa-money-bill-wave fa-lg"></i>
+                                                                            <i class="fa-solid fa-money-bill-wave fa-lg"></i>
                                                                         </span>
-                                                                        <input type="text"
-                                                                            class="form-control border-dark text-end"
-                                                                            id="ubah_nilai_kontrak"
-                                                                            aria-label="Sizing example input" readonly
-                                                                            style="background-color: #c1c7ccff"
-                                                                            value="0"
-                                                                            readaria-describedby="inputGroup-sizing-sm">
+                                                                        <input type="text" class="form-control border-dark text-end" id="ubah_nilai_kontrak" aria-label="Sizing example input" readonly style="background-color: #c1c7ccff" value="0" readaria-describedby="inputGroup-sizing-sm">
                                                                     </div>
                                                                 </div>
                                                             </td>
@@ -1420,15 +1263,9 @@
                                                                             Start Date
                                                                         </span>
                                                                         <span class="input-group-text border-dark">
-                                                                            <i
-                                                                                class="fa-solid fa-calendar-days fa-lg"></i>
+                                                                            <i class="fa-solid fa-calendar-days fa-lg"></i>
                                                                         </span>
-                                                                        <input type="date"
-                                                                            class="form-control border-dark"
-                                                                            id="ubah_tanggal_mulai_kontrak"
-                                                                            aria-label="Sizing example input"
-                                                                            aria-describedby="inputGroup-sizing-sm"
-                                                                            value="11/11/2025">
+                                                                        <input type="date" class="form-control border-dark" id="ubah_tanggal_mulai_kontrak" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-sm" value="11/11/2025">
                                                                     </div>
                                                                 </div>
                                                             </td>
@@ -1439,15 +1276,9 @@
                                                                             Durasi
                                                                         </span>
                                                                         <span class="input-group-text border-dark">
-                                                                            <i
-                                                                                class="fa-solid fa-calendar-days fa-lg"></i>
+                                                                            <i class="fa-solid fa-calendar-days fa-lg"></i>
                                                                         </span>
-                                                                        <input type="number"
-                                                                            class="form-control border-dark"
-                                                                            id="ubah_durasi_kontrak"
-                                                                            aria-label="Sizing example input"
-                                                                            aria-describedby="inputGroup-sizing-sm"
-                                                                            placeholder="Input number..." value="90">
+                                                                        <input type="number" class="form-control border-dark" id="ubah_durasi_kontrak" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-sm" placeholder="Input number..." value="90">
                                                                         <span class="input-group-text border-dark">
                                                                             Hari
                                                                         </span>
@@ -1461,17 +1292,10 @@
                                                                             End Date
                                                                         </span>
                                                                         <span class="input-group-text border-dark">
-                                                                            <i
-                                                                                class="fa-solid fa-calendar-days fa-lg"></i>
+                                                                            <i class="fa-solid fa-calendar-days fa-lg"></i>
                                                                         </span>
 
-                                                                        <input readonly type="text"
-                                                                            class="form-control border-dark"
-                                                                            id="ubah_tanggal_selesai_kontrak"
-                                                                            style="background-color: #c1c7ccff"
-                                                                            aria-label="Sizing example input"
-                                                                            aria-describedby="inputGroup-sizing-sm"
-                                                                            value="11/02/2026">
+                                                                        <input readonly type="text" class="form-control border-dark" id="ubah_tanggal_selesai_kontrak" style="background-color: #c1c7ccff" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-sm" value="11/02/2026">
                                                                     </div>
                                                                 </div>
                                                             </td>
@@ -1496,15 +1320,9 @@
                                                                             Date PHO
                                                                         </span>
                                                                         <span class="input-group-text border-dark">
-                                                                            <i
-                                                                                class="fa-solid fa-calendar-days fa-lg"></i>
+                                                                            <i class="fa-solid fa-calendar-days fa-lg"></i>
                                                                         </span>
-                                                                        <input type="date"
-                                                                            class="form-control border-dark"
-                                                                            id="ubah_tanggal_mulai_pho"
-                                                                            aria-label="Sizing example input"
-                                                                            aria-describedby="inputGroup-sizing-sm"
-                                                                            value="12/02/2026">
+                                                                        <input type="date" class="form-control border-dark" id="ubah_tanggal_mulai_pho" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-sm" value="12/02/2026">
                                                                     </div>
                                                                 </div>
                                                             </td>
@@ -1515,15 +1333,9 @@
                                                                             Durasi
                                                                         </span>
                                                                         <span class="input-group-text border-dark">
-                                                                            <i
-                                                                                class="fa-solid fa-calendar-days fa-lg"></i>
+                                                                            <i class="fa-solid fa-calendar-days fa-lg"></i>
                                                                         </span>
-                                                                        <input type="number"
-                                                                            class="form-control border-dark"
-                                                                            id="ubah_durasi_pho"
-                                                                            aria-label="Sizing example input"
-                                                                            aria-describedby="inputGroup-sizing-sm"
-                                                                            placeholder="Input number..." value="10">
+                                                                        <input type="number" class="form-control border-dark" id="ubah_durasi_pho" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-sm" placeholder="Input number..." value="10">
                                                                         <span class="input-group-text border-dark">
                                                                             Hari
                                                                         </span>
@@ -1537,17 +1349,10 @@
                                                                             End Date
                                                                         </span>
                                                                         <span class="input-group-text border-dark">
-                                                                            <i
-                                                                                class="fa-solid fa-calendar-days fa-lg"></i>
+                                                                            <i class="fa-solid fa-calendar-days fa-lg"></i>
                                                                         </span>
 
-                                                                        <input type="text"
-                                                                            class="form-control border-dark"
-                                                                            id="ubah_tanggal_selesai_pho"
-                                                                            aria-label="Sizing example input"
-                                                                            aria-describedby="inputGroup-sizing-sm"
-                                                                            readonly style="background-color: #c1c7ccff"
-                                                                            value="19/02/2026">
+                                                                        <input type="text" class="form-control border-dark" id="ubah_tanggal_selesai_pho" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-sm" readonly style="background-color: #c1c7ccff" value="19/02/2026">
                                                                     </div>
                                                                 </div>
                                                             </td>
@@ -1558,14 +1363,9 @@
                                                                             Date FHO
                                                                         </span>
                                                                         <span class="input-group-text border-dark">
-                                                                            <i
-                                                                                class="fa-solid fa-calendar-days fa-lg"></i>
+                                                                            <i class="fa-solid fa-calendar-days fa-lg"></i>
                                                                         </span>
-                                                                        <input type="date"
-                                                                            class="form-control border-dark"
-                                                                            id="ubah_tanggal_fho" value="20/02/2026"
-                                                                            aria-label="Sizing example input"
-                                                                            aria-describedby="inputGroup-sizing-sm">
+                                                                        <input type="date" class="form-control border-dark" id="ubah_tanggal_fho" value="20/02/2026" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-sm">
                                                                     </div>
                                                                 </div>
                                                             </td>
@@ -1592,12 +1392,7 @@
                                                                         <span class="input-group-text border-dark">
                                                                             <i class="fa-solid fa-user-tie fa-lg"></i>
                                                                         </span>
-                                                                        <input type="text"
-                                                                            class="form-control border-dark"
-                                                                            id="ubah_owner"
-                                                                            aria-label="Sizing example input"
-                                                                            aria-describedby="inputGroup-sizing-sm"
-                                                                            placeholder="Input data..." value="user 1">
+                                                                        <input type="text" class="form-control border-dark" id="ubah_owner" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-sm" placeholder="Input data..." value="user 1">
                                                                     </div>
                                                                 </div>
                                                             </td>
@@ -1610,12 +1405,7 @@
                                                                         <span class="input-group-text border-dark">
                                                                             <i class="fa-solid fa-user-tie fa-lg"></i>
                                                                         </span>
-                                                                        <input type="text"
-                                                                            class="form-control border-dark"
-                                                                            id="ubah_pm_pusat"
-                                                                            aria-label="Sizing example input"
-                                                                            aria-describedby="inputGroup-sizing-sm"
-                                                                            placeholder="Input data..." value="user 2">
+                                                                        <input type="text" class="form-control border-dark" id="ubah_pm_pusat" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-sm" placeholder="Input data..." value="user 2">
                                                                     </div>
                                                                 </div>
                                                             </td>
@@ -1628,12 +1418,7 @@
                                                                         <span class="input-group-text border-dark">
                                                                             <i class="fa-solid fa-user-tie fa-lg"></i>
                                                                         </span>
-                                                                        <input type="text"
-                                                                            class="form-control border-dark"
-                                                                            id="ubah_gs"
-                                                                            aria-label="Sizing example input"
-                                                                            aria-describedby="inputGroup-sizing-sm"
-                                                                            placeholder="Input data..." value="user 3">
+                                                                        <input type="text" class="form-control border-dark" id="ubah_gs" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-sm" placeholder="Input data..." value="user 3">
                                                                     </div>
                                                                 </div>
                                                             </td>
@@ -1645,13 +1430,11 @@
                                     </div>
                                 </div>
                                 <div class="card-footer">
-                                    <button type="button" class="btn btn-danger btn-sm rounded shadow-lg"
-                                        data-bs-dismiss="modal">
+                                    <button type="button" class="btn btn-danger btn-sm rounded shadow-lg" data-bs-dismiss="modal">
                                         <i class="fa-regular fa-rectangle-xmark fa-lg px-1"></i>
                                         Tutup Halaman
                                     </button>
-                                    <button id="btn-update" type="button"
-                                        class="btn btn-success btn-sm rounded shadow-lg">
+                                    <button id="btn-update" type="button" class="btn btn-success btn-sm rounded shadow-lg">
                                         <i class="fa-regular fa-floppy-disk fa-lg px-1"></i>
                                         Simpan Perubahan Data
                                     </button>
@@ -1659,8 +1442,7 @@
                             </form>
                         </div>
                         <!-- Catatan Pengguna -->
-                        <div class="d-flex align-items-center p-3 my-2 text-white rounded shadow-lg"
-                            style="background: #44A08D;  /* fallback for old browsers */
+                        <div class="d-flex align-items-center p-3 my-2 text-white rounded shadow-lg" style="background: #44A08D;  /* fallback for old browsers */
                             background: -webkit-linear-gradient(to right, #093637, #44A08D);  /* Chrome 10-25, Safari 5.1-6 */
                             background: linear-gradient(to right, #093637, #44A08D); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */">
                             <div class="lh-1">

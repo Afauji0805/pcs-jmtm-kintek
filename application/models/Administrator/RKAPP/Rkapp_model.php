@@ -4,6 +4,76 @@ defined('BASEPATH') or exit('No direct script access allowed');
 class Rkapp_model extends CI_Model
 {
 
+
+    var $table_program = 'tb_data_program_view';
+
+    var $column_order_program = [
+        'kode_program',
+        'nama_program',
+        'nilai_kontrak',
+        'tanggal_mulai_kontrak',
+        'tanggal_mulai_pho',
+        'status_proyek'
+    ];
+
+    var $column_search_program = [
+        'kode_program',
+        'nama_program',
+        'status_proyek'
+    ];
+
+    var $order_program = ['id_program' => 'DES'];
+
+    private function _get_datatables_query_program()
+    {
+        $this->db->from($this->table_program);
+
+        // search global
+        $search = $_POST['search']['value'];
+        if ($search) {
+            $this->db->group_start();
+            foreach ($this->column_search_program as $item) {
+                $this->db->or_like($item, $search);
+            }
+            $this->db->group_end();
+        }
+
+        // ordering
+        if (isset($_POST['order'])) {
+            $col = $_POST['order'][0]['column'];
+            $dir = $_POST['order'][0]['dir'];
+            $this->db->order_by($this->column_order_program[$col], $dir);
+        } else {
+            $this->db->order_by(
+                key($this->order_program),
+                $this->order_program[key($this->order_program)]
+            );
+        }
+    }
+
+    public function get_datatables_program()
+    {
+        $this->_get_datatables_query_program();
+
+        if ($_POST['length'] != -1) {
+            $this->db->limit($_POST['length'], $_POST['start']);
+        }
+
+        return $this->db->get()->result();
+    }
+
+    public function count_filtered_program()
+    {
+        $this->_get_datatables_query_program();
+        return $this->db->count_all_results();
+    }
+
+    public function count_all_program()
+    {
+        return $this->db->count_all($this->table_program);
+    }
+
+
     public function insert_program($data)
     {
         $sql = "CALL sp_insert_tb_data_program(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
@@ -47,9 +117,9 @@ class Rkapp_model extends CI_Model
 
         return "PK.$tahun.$new_number";
     }
-// =================================================================================================================
-    
-public function update_program($id, $data)
+    // =================================================================================================================
+
+    public function update_program($id, $data)
     {
         $sql = "CALL sp_update_tb_data_program(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
         $query = $this->db->query($sql, [
@@ -87,5 +157,4 @@ public function update_program($id, $data)
 
         return true;
     }
-
 }
