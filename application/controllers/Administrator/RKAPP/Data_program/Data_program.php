@@ -80,10 +80,8 @@ class Data_program extends CI_Controller
 				) . "</small>",
 				"{$status}",
 				"<small>{$aksi}</small>"
-			];
+			];			
 			
-			
-
 
 			$data[] = $row;
 		}
