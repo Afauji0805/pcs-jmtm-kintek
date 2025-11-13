@@ -68,12 +68,12 @@ class Detail_bahan_model extends CI_Model
 
     public function insert($data)
     {
-        $sql = "CALL sp_insert_detail_master_bahan(?, ?, ?, ?)";
+        $sql = "CALL sp_insert_detail_master_ubas(?, ?, ?, ?)";
         $this->db->query($sql, [
             $data['kode_bahan'],
-            $data['kode_bahan_detail'],
+            $data['kd_detail_master_ubas'],
             $data['kode_supplier'],
-            $data['harga_satuan']
+            $data['harsat_detail_master_ubas']
         ]);
     }
 

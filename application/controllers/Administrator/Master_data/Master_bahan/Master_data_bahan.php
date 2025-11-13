@@ -215,21 +215,21 @@ class Master_data_bahan extends CI_Controller
 			return;
 		}
 
-		$kode_detail_bahan = $this->Detail_bahan_model->generate_kode_detail_bahan($kode_bahan);
+		$kd_detail_master_ubas = $this->Detail_bahan_model->generate_kode_detail_bahan($kode_bahan);
 
 		$data = [
 			'kode_bahan'         => $kode_bahan,
-			'kode_bahan_detail'  => $kode_detail_bahan,
+			'kd_detail_master_ubas'  => $kd_detail_master_ubas,
 			'kode_supplier'     => $kode_supplier,
-			'harga_satuan'      => $harga_satuan,
+			'harsat_detail_master_ubas'      => $harga_satuan,
 		];
 
 		$this->Detail_bahan_model->insert($data);
 
 		$supplier = $this->db->get_where(
-			'vw_detail_master_bahan',
+			'vw_detail_master_ubas',
 			[
-				'kode_bahan_detail' => $kode_detail_bahan,
+				'kd_detail_master_ubas' => $kd_detail_master_ubas,
 				'kode_bahan' => $kode_bahan,
 				'kode_supplier' => $kode_supplier,
 			]
@@ -240,7 +240,7 @@ class Master_data_bahan extends CI_Controller
 			'message' => 'Data berhasil disimpan.',
 			'data' => [
 				'id_bahan_detail' => $supplier->id_bahan_detail,
-				'kode_bahan_detail' => $kode_detail_bahan,
+				'kode_bahan_detail' => $kd_detail_master_ubas,
 				'kode_supplier' => $kode_supplier,
 				'nama_supplier' => $nama_supplier,
 				'harga_satuan' => $harga_satuan,

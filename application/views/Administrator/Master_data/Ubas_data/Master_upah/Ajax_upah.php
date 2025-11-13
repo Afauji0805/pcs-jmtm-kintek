@@ -1,4 +1,97 @@
 <script>
+    var tbl_upah; // GLOBAL
+
+    $(document).ready(function() {
+
+        function init_upah_table() {
+            tbl_upah = $('.example_ubah').DataTable({ // <-- FIX: SIMPAN INSTANCE
+                destroy: true,
+                responsive: false,
+                processing: true,
+                serverSide: true,
+                lengthChange: false,
+                ordering: false,
+
+                ajax: {
+                    url: "<?= base_url('Administrator/Master_data/Master_upah/Master_data_upah/get_data_upah'); ?>",
+                    type: "POST"
+                },
+
+                columns: [{
+                        data: 0,
+                        className: "text-center",
+                        render: function(data) {
+                            return `
+                          <small>
+                              <span class="d-inline-block text-truncate" style="max-width:250px" title="${data}">
+                                  ${data}
+                              </span>
+                          </small>`;
+                        }
+                    },
+
+                    {
+                        data: 1,
+                        className: "text-start",
+                        render: function(data) {
+                            return `
+                          <small>
+                              <span class="d-inline-block text-truncate" style="max-width:250px" title="${data}">
+                                  ${data}
+                              </span>
+                          </small>`;
+                        }
+                    },
+
+                    {
+                        data: 2,
+                        className: "text-start",
+                        render: function(data) {
+                            return `
+                          <small>
+                              <span class="d-inline-block text-truncate" style="max-width:250px" title="${data}">
+                                  ${data}
+                              </span>
+                          </small>`;
+                        }
+                    },
+
+                    {
+                        data: 3,
+                        className: "text-center"
+                    },
+                    {
+                        data: 4,
+                        className: "text-center"
+                    },
+                    {
+                        data: 5,
+                        className: "text-center"
+                    }
+                ],
+
+                buttons: ['print', 'pdf', 'colvis'],
+
+                initComplete: function() {
+                    this.api().buttons().container()
+                        .appendTo($('.col-md-6:eq(0)', this.api().table().container()));
+                }
+            });
+        }
+
+        // Init pertama kali
+        init_upah_table();
+    });
+
+    // 🔥 Global function untuk reload
+    function reload_upah_table() {
+        if (tbl_upah) {
+            tbl_upah.ajax.reload(null, false);
+        }
+    }
+</script>
+
+<script>
     // tambahhh 
     $(document).ready(function() {
 
@@ -23,12 +116,13 @@
 
         // === Tombol Simpan Klik ===
         $(document).on('click', '#link-simpan', function(e) {
-            e.preventDefault(); // stop form langsung submit
+            e.preventDefault();
 
             let uraian = $('#uraian_upah').val().trim();
             let satuan = $('#satuan_upah').val().trim();
+            let csrfName = $('#csrf_token_tambah').attr('name');
+            let csrfHash = $('#csrf_token_tambah').val();
 
-            // Validasi manual sebelum swal
             if (uraian === '' || satuan === '') {
                 swal({
                     title: "Data Belum Lengkap",
@@ -44,16 +138,49 @@
                 text: "Data upah akan disimpan ke database.",
                 icon: "info",
                 buttons: ["Batal", "Simpan Data"],
-            })
-            .then((willSave) => {
+            }).then((willSave) => {
                 if (willSave) {
-                    $('#form-tambah-upah').submit();
+
+                    $.ajax({
+                        url: '<?= base_url('Administrator/Master_data/Master_upah/Master_data_upah/tambah') ?>',
+                        type: "POST",
+                        data: {
+                            [csrfName]: csrfHash,
+                            uraian_upah: uraian,
+                            satuan_upah: satuan
+                        },
+                        dataType: "json",
+                        success: function(res) {
+
+                            // Update CSRF token
+                            $('#csrf_token_tambah').val(res.csrf);
+
+                            swal("Berhasil!", "Data upah telah disimpan.", "success");
+
+                            // Reset form
+                            $('#form-tambah-upah')[0].reset();
+
+                            // Reload table
+                            reload_upah_table();
+
+                            // Tutup modal
+                            $('#staticBackdrop-tambah-upah').modal('hide');
+                        },
+                        error: function() {
+                            swal("Gagal!", "Terjadi kesalahan sistem.", "error");
+                        }
+                    });
+
                 } else {
                     swal("Batal Menyimpan", "Silakan periksa kembali data anda.", "error");
                 }
             });
         });
+
     });
+
+
+
 
     //   tombol togglel aktif non aktif
     $(document).on('click', '.btn-toggle-status', function(e) {
@@ -145,6 +272,7 @@
 
                 // Load tabel detail supplier
                 loadTable(data.kode_upah);
+                reload_upah_table();
             },
 
             error: function() {
@@ -261,13 +389,14 @@
     $(document).on('click', '#btn-tutup-detail', function() {
         // Tutup modal
         $('#staticBackdrop-detail-upah').modal('hide');
-        setTimeout(() => location.reload(), 200);
+        reload_upah_table();
     });
 
     // Saat tombol "Tambah Detail Upah Per-Supplier" diklik
     $(document).on('click', '.btn-detail-upah', function() {
         const idUpah = $(this).data('id'); // ambil id_upah
         const kodeUpah = $(this).data('kode');
+
 
         // Ambil data master upah via AJAX
         $.ajax({
@@ -301,7 +430,7 @@
 
                 // Load tabel detail supplier
                 loadDetailTable(data.kode_upah);
-
+                reload_upah_table();
                 // Tampilkan modal
                 $('#staticBackdrop-tambah-detail-upah-supplier').modal('show');
             },
@@ -460,8 +589,8 @@
 
                             swal("Berhasil!", res.message, "success");
                             loadDetailTable(kodeUpah);
-                            updateSupplierBadge(kodeUpah); // update badge otomatis
-
+                            updateSupplierBadge(); // update badge otomatis
+                            reload_upah_table();
                             // Reset field
                             $('#search_supplier_upah').val('');
                             $('#nama_detail_supplier').val('');
@@ -500,11 +629,11 @@
                     res.data.forEach(function(row) {
                         tbody += `
                             <tr>
-                                <td class="text-center">${row.kode_upah_detail}</td>
+                                <td class="text-center">${row.kd_detail_master_ubas}</td>
                                 <td class="text-center">${row.kode_supplier}</td>
                                 <td>${row.nama_supplier || '-'}</td>
-                                <td class="text-end">${row.harga_satuan}</td>
-                                <td class="text-center">${row.created_at}</td>>
+                                <td class="text-end">${row.harsat_detail_master_ubas}</td>
+                                <td class="text-center">${row.date_detail}</td>
                             </tr>
                         `;
                     });
@@ -521,6 +650,8 @@
 
     // Fungsi load tabel detail supplier
     function loadDetailTable(kodeUpah) {
+        console.log('angga', kodeUpah);
+
         $.ajax({
             url: "<?= site_url('Administrator/Master_data/Master_upah/Master_data_upah/get_detail_tabel_persuplier') ?>",
             type: "GET",
@@ -534,13 +665,13 @@
                     res.data.forEach(function(row) {
                         tbody += `
                             <tr>
-                                <td class="text-center">${row.kode_upah_detail}</td>
+                                <td class="text-center">${row.kd_detail_master_ubas}</td>
                                 <td class="text-center">${row.kode_supplier}</td>
                                 <td>${row.nama_supplier || '-'}</td>
-                                <td class="text-end">${row.harga_satuan}</td>
-                                <td class="text-center">${row.created_at}</td>
+                                <td class="text-end">${row.harsat_detail_master_ubas}</td>
+                                <td class="text-center">${row.date_detail}</td>
                                 <td class="text-center">
-                                    <button class="btn btn-sm btn-danger hapus-detail" data-id="${row.id_upah_detail}" data-kode="${kodeUpah}">
+                                    <button class="btn btn-sm btn-danger hapus-detail" data-id="${row.kd_detail_master_ubas}" data-kode="${kodeUpah}">
                                         <i class="fa-solid fa-trash-can"></i>
                                     </button>
                                 </td>
@@ -588,7 +719,7 @@
                             swal("Berhasil!", "Data berhasil dihapus.", "success");
                             loadDetailTable(kodeUpah); // refresh tabel
                             updateSupplierBadge(kodeUpah); // update badge otomatis
-
+                            reload_upah_table();
                         } else {
                             swal("Gagal!", res.message || "Gagal menghapus data", "error");
                         }
