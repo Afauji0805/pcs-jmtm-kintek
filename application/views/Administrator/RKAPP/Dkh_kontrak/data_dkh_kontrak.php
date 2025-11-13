@@ -239,12 +239,12 @@
                                                         Unit Price
                                                     </small>
                                                 </th>
-                                                <th scope="col" class="col-1,5 text-center">
+                                                <th scope="col" class="col-2 text-center">
                                                     <small>
                                                         Jumlah
                                                     </small>
                                                 </th>
-                                                <th scope="col" class="col-2 text-center">
+                                                <th scope="col" class="col-1,5 text-center">
                                                     <small>
                                                         Keterangan
                                                     </small>
@@ -278,41 +278,77 @@
 
 
     <!-- MODAL UBAS -->
-    <div class="modal fade" id="modalDataUBAS" tabindex="-1">
-        <div class="modal-dialog modal-fullscreen">
+    <div class="modal fade" id="modalDataUBAS" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
+        aria-labelledby="staticBackdropLabel" aria-hidden="true">
+        <div class="modal-dialog modal-fullscreen modal-dialog-scrollable">
             <div class="modal-content">
-
                 <div class="modal-header bg-primary text-white">
-                    <h5 class="modal-title">
-                        Data UBAS
+                    <h5 class="modal-title text-white">
+                        <small>Page Data UBAS DHK Rencana</small>
                     </h5>
                 </div>
-
                 <div class="modal-body" style="overflow-y:auto; max-height: calc(100vh - 120px);">
-
-                    <div class="alert alert-info">
-                        <strong>Divisi:</strong> <span id="modalUbasKodeDivisi"></span><br>
-                        <strong>Kode Sub:</strong> <span id="modalUbasKodeSub"></span><br>
-                        <strong>Uraian:</strong> <span id="modalUbasUraian"></span>
+                    <div class="d-flex align-items-center p-2 my-2 text-white rounded shadow-lg"
+                        style="background: #36D1DC;  /* fallback for old browsers */
+                                background: -webkit-linear-gradient(to right, #5B86E5, #36D1DC);  /* Chrome 10-25, Safari 5.1-6 */
+                                background: linear-gradient(to right, #5B86E5, #36D1DC); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */">
+                        <i class="fa-regular fa-folder-open fa-xl px-1"></i>
+                        &nbsp;&nbsp;
+                        <div class="lh-1">
+                            <h1 class="h6 mb-0 text-white lh-1">
+                                <b>List Tabel Data UBAS DKH Rencana</b>
+                            </h1>
+                            <small>
+                                Halaman Ini Berfungsi Untuk Menginput Data-data UBAS Pada Setiap Sub Divisi
+                            </small>
+                        </div>
                     </div>
-
-                    <!-- tempat form UBAS -->
-                    <div class="p-3 border rounded bg-light">
-                        <h6>Form UBAS</h6>
-                        <p>Silakan isi data UBAS di sini...</p>
+                    <div class="my-2 p-2 bg-body rounded shadow-lg">
+                        <div class="card shadow-lg">
+                            <div class="card-header d-flex justify-content-between align-items-center"
+                                style="background: #232526;  /* fallback for old browsers */
+                                        background: -webkit-linear-gradient(to right, #c1c7ccff, #232526);  /* Chrome 10-25, Safari 5.1-6 */
+                                        background: linear-gradient(to right, #c1c7ccff, #232526); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */">
+                                <div class="flex-grow-1 bd-highlight">
+                                    <span class="text-dark">
+                                        <i class="fa-solid text-white fa-address-card fa-lg px-1"></i>
+                                        <small>
+                                            Form Data-data UBAS Pada Setiap Sub Divisi
+                                        </small>
+                                    </span>
+                                </div>
+                            </div>
+                            <div class="card-body">
+                                <div class="row align-items-start">
+                                    <div class="col-12 col-sm-12">
+                                        <div class="card shadow-lg border-dark">
+                                            <div class="card-body">
+                                                <h6 class="border-bottom border-dark pb-2 mb-0">
+                                                    <i class="fa-solid fa-circle-info px-1"></i>
+                                                    Form Inputan Data-data UBAS Pada Setiap Sub Divisi
+                                                </h6>
+                                                <h6 class="border-bottom border-white pb-2 mb-0"></h6>
+                                                <strong>Divisi:</strong> <span id="modalUbasKodeDivisi"></span><br>
+                                                <strong>Nama Divisi:</strong> <span id="modalUbasNamaDivisi"></span><br>
+                                                <strong>Kode Sub:</strong> <span id="modalUbasKodeSub"></span><br>
+                                                <strong>Uraian Pekerjaan:</strong> <span id="modalUbasUraian"></span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="card-footer">
+                                <button type="button" class="btn btn-danger btn-sm rounded shadow-lg"
+                                    data-bs-dismiss="modal">
+                                    <i class="fa-regular fa-rectangle-xmark fa-lg px-1"></i>
+                                    Tutup Halaman
+                                </button>
+                            </div>
+                        </div>
                     </div>
-
                 </div>
-
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-danger" data-bs-dismiss="modal">
-                        Tutup Page
-                    </button>
-                </div>
-
             </div>
         </div>
     </div>
-
 
 </main>

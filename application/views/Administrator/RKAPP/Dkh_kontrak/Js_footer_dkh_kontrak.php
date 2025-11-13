@@ -27,6 +27,7 @@
 <script src="<?php echo base_url();?>/assets/template-custom/js//dataTables.responsive.min.js"></script>
 <script src="<?php echo base_url();?>/assets/template-custom/js//responsive.bootstrap5.min.js"></script>
 <script src="<?php echo base_url();?>/assets/template-custom/js////data_table5.js"></script>
+
 <!-- Sweet Alert 2 -->
 <script src="<?php echo base_url();?>/assets/template-custom/js//sweetalert2.all.min.js"></script>
 
@@ -209,351 +210,7 @@ $(document).ready(function() {
 </script>
 
 
-<!-- <script>
-const table = $('#example').DataTable({
-    lengthChange: false,
-    ordering: false,
-    responsive: true,
-    searching: false,
-    paging: false,
-    info: false,
-});
-
-// === TAMBAH DIVISI ===
-function addNewRow() {
-    const newRow = $(`
-        <tr class="row-divisi">
-            <td class="kode-ma"></td>
-            <td><input style="width:100%" type="text" placeholder="Nama Divisi"></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td>
-                <div class="btn-group">
-                    <button type="button" class="btn btn-sm btn-primary dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
-                    <i class="fa-solid fa-gears fa-lg px-1"></i>
-                        Aksi
-                    </button>
-                    <ul class="dropdown-menu">
-                        <li><a class="dropdown-item btn-sub" href="#"><i class="fa-solid fa-circle-plus fa-sm px-1"></i>Tambah Sub</a></li>
-                        <li><a class="dropdown-item btn-hapus" href="#"><i class="fa-solid fa-ban fa-sm px-1"></i>Hapus Divisi</a></li>
-                    </ul>
-                </div>
-            </td>
-        </tr>
-    `);
-    $('#example tbody').append(newRow);
-    table.row.add(newRow[0]);
-    renumberAll();
-}
-
-// === TAMBAH SUB-ROW ===
-function addSubRow(afterRow) {
-    const divisiRow = $(afterRow);
-    let lastSubRow = null;
-
-    divisiRow.nextAll().each(function() {
-        const tr = $(this);
-        if (tr.hasClass('row-divisi')) return false; // stop di divisi berikut
-        if (tr.hasClass('row-sub')) lastSubRow = tr;
-    });
-
-    const newSub = $(`
-        <tr class="row-sub">
-            <td class="kode-ma"></td>
-            <td><input style="width:100%" type="text" placeholder="Uraian Pekerjaan"></td>
-            <td><input type="text" placeholder="Sat" style="width:100%"></td>
-            <td><input type="number" placeholder="Qty" style="width:100%"></td>
-            <td><input type="number" placeholder="Harga Satuan" style="width:100%; background-color: #E5E7EB;" readonly></td>
-            <td><input type="number" placeholder="Jumlah" style="width:100%; background-color: #E5E7EB;" readonly></td>
-            <td>
-                <div class="btn-group">
-                    <button type="button" class="btn btn-sm btn-secondary dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
-                    <i class="fa-solid fa-gears fa-lg px-1"></i>
-                        Aksi
-                    </button>
-                    <ul class="dropdown-menu">
-                        <li><a class="dropdown-item btn-ubas" href="#"><i class="fa-solid fa-screwdriver-wrench fa-sm px-1"></i>Data UBAS</a></li>
-                        <li><a class="dropdown-item btn-hapus" href="#"><i class="fa-solid fa-ban fa-sm px-1"></i>Hapus Sub</a></li>
-                    </ul>
-                </div>
-            </td>
-        </tr>
-    `);
-
-    if (lastSubRow) {
-        lastSubRow.after(newSub);
-    } else {
-        divisiRow.after(newSub);
-    }
-
-    table.row.add(newSub[0]);
-    renumberAll();
-}
-
-// === PENOMORAN ULANG ===
-function renumberAll() {
-    let divisiCounter = 0;
-    $('#example tbody tr').each(function() {
-        const tr = $(this);
-        const kodeCell = tr.find('td.kode-ma');
-
-        if (tr.hasClass('row-divisi')) {
-            divisiCounter++;
-            tr.data('divisi', divisiCounter);
-            tr.data('subCount', 0);
-            kodeCell.text(divisiCounter);
-        } else if (tr.hasClass('row-sub')) {
-            const prevDiv = tr.prevAll('.row-divisi').first();
-            const divNum = prevDiv.data('divisi');
-            let subCount = prevDiv.data('subCount') + 1;
-            prevDiv.data('subCount', subCount);
-            kodeCell.text(divNum + '.' + subCount);
-        }
-    });
-}
-
-// === EVENT HANDLER ===
-$('#addRow').on('click', addNewRow);
-
-$('#example tbody').on('click', '.btn-hapus', function(e) {
-    e.preventDefault();
-    const $row = $(this).closest('tr');
-
-    // jika divisi, hapus juga sub-row nya
-    if ($row.hasClass('row-divisi')) {
-        const divisiNum = $row.find('.kode-ma').text();
-        $(`#example tbody tr.row-sub`).each(function() {
-            if ($(this).find('.kode-ma').text().startsWith(divisiNum + '.')) {
-                $(this).remove();
-            }
-        });
-    }
-
-    table.row($row).remove();
-    $row.remove();
-    renumberAll();
-});
-
-$('#example tbody').on('click', '.btn-sub', function(e) {
-    e.preventDefault();
-    const $row = $(this).closest('tr');
-    addSubRow($row[0]);
-});
-
-$('#example tbody').on('click', '.btn-ubas', function(e) {
-    e.preventDefault();
-    alert('Fungsi Data UBAS belum diimplementasikan.');
-});
-
-// Tambahkan 1 divisi awal otomatis
-addNewRow();
-</script> -->
-
-
-
-
-<!-- <script>
-const table = $('#example').DataTable({
-    lengthChange: false,
-    ordering: false,
-    responsive: true,
-    searching: false,
-    paging: false,
-    info: false,
-});
-
-// ================== TAMBAH DIVISI ==================
-function addNewRow() {
-    const newRow = $(`
-        <tr class="row-divisi">
-            <td class="kode-ma"></td>
-            <td><input style="width:100%" type="text" placeholder="Nama Divisi"></td>
-            <td></td><td></td><td></td><td></td>
-            <td>
-                <div class="btn-group">
-                    <button type="button" class="btn btn-sm btn-primary dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
-                        <i class="fa-solid fa-gears fa-lg px-1"></i> Aksi
-                    </button>
-                    <ul class="dropdown-menu">
-                        <li><a class="dropdown-item btn-sub" href="#"><i class="fa-solid fa-circle-plus fa-sm px-1"></i>Tambah Sub</a></li>
-                        <li><a class="dropdown-item btn-hapus" href="#"><i class="fa-solid fa-ban fa-sm px-1"></i>Hapus Divisi</a></li>
-                    </ul>
-                </div>
-            </td>
-        </tr>
-    `);
-
-    $('#example tbody').append(newRow);
-    table.row.add(newRow[0]);
-    updateDivisiCodes();
-}
-
-// ================== PENOMORAN DIVISI ==================
-function updateDivisiCodes() {
-    let divisiCount = 0;
-    $('#example tbody tr').each(function() {
-        const tr = $(this);
-        if (tr.hasClass('row-divisi')) {
-            divisiCount++;
-            tr.find('.kode-ma').text(divisiCount);
-            tr.data('kode', divisiCount.toString());
-        }
-    });
-}
-
-// ================== TAMBAH SUB ==================
-function addSubRow(afterRow) {
-    const divisiRow = $(afterRow);
-    const divCode = divisiRow.data('kode');
-    if (!divCode) return;
-
-    let maxSub = 0;
-    $('#example tbody tr').each(function() {
-        const code = $(this).find('.kode-ma').text();
-        if (code.startsWith(divCode + '.')) {
-            const parts = code.split('.');
-            if (parts.length === 2) {
-                const num = parseInt(parts[1]);
-                if (num > maxSub) maxSub = num;
-            }
-        }
-    });
-
-    const newCode = divCode + '.' + (maxSub + 1);
-    const newSub = createSubRow(newCode);
-
-    let insertAfter = divisiRow;
-    divisiRow.nextAll().each(function() {
-        const code = $(this).find('.kode-ma').text();
-        if (!code.startsWith(divCode + '.')) return false;
-        insertAfter = $(this);
-    });
-
-    insertAfter.after(newSub);
-    table.row.add(newSub[0]);
-}
-
-// ================== TAMBAH UBAS ==================
-function addUbasRow(afterRow) {
-    const row = $(afterRow);
-    const baseCode = row.find('.kode-ma').text();
-    if (!baseCode) return;
-
-    // Batasi hanya sampai level 3 (contoh: 1.1.1)
-    const baseLevel = baseCode.split('.').length;
-    if (baseLevel >= 3) return; // Tidak bisa lebih dalam
-
-    let maxSub = 0;
-    $('#example tbody tr').each(function() {
-        const code = $(this).find('.kode-ma').text();
-        if (code.startsWith(baseCode + '.')) {
-            const parts = code.split('.');
-            const lastNum = parseInt(parts[parts.length - 1]);
-            if (lastNum > maxSub) maxSub = lastNum;
-        }
-    });
-
-    const newCode = baseCode + '.' + (maxSub + 1);
-    const newRow = createSubRow(newCode, true); // true = ini UBAS
-
-    let insertAfter = row;
-    row.nextAll().each(function() {
-        const nextCode = $(this).find('.kode-ma').text();
-        if (!nextCode.startsWith(baseCode + '.')) return false;
-        insertAfter = $(this);
-    });
-
-    insertAfter.after(newRow);
-    table.row.add(newRow[0]);
-}
-
-// ================== BUAT BARIS SUB GENERIK ==================
-function createSubRow(kode, isUbas = false) {
-    const level = kode.split('.').length;
-
-    // placeholder UBAS
-    const placeholderText = isUbas ?
-        'Uraian Pekerjaan UBAS' :
-        'Uraian Pekerjaan';
-
-    // Jika level 3 (1.1.1) tampilkan hanya tombol hapus
-    let actionButton = '';
-    if (level >= 3) {
-        actionButton = `
-            <button type="button" class="btn btn-sm btn-danger btn-hapus">
-                <i class="fa-solid fa-trash-can fa-sm px-1"></i>Hapus
-            </button>
-        `;
-    } else {
-        actionButton = `
-            <div class="btn-group">
-                <button type="button" class="btn btn-sm btn-secondary dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
-                    <i class="fa-solid fa-gears fa-lg px-1"></i> Aksi
-                </button>
-                <ul class="dropdown-menu">
-                    <li><a class="dropdown-item btn-ubas" href="#"><i class="fa-solid fa-screwdriver-wrench fa-sm px-1"></i>Data UBAS</a></li>
-                    <li><a class="dropdown-item btn-hapus" href="#"><i class="fa-solid fa-ban fa-sm px-1"></i>Hapus Sub</a></li>
-                </ul>
-            </div>
-        `;
-    }
-
-    return $(`
-        <tr class="row-sub">
-            <td class="kode-ma">${kode}</td>
-            <td><input style="width:100%" type="text" placeholder="${placeholderText}"></td>
-            <td><input type="text" placeholder="Sat" style="width:100%"></td>
-            <td><input type="number" placeholder="Qty" style="width:100%"></td>
-            <td><input type="number" placeholder="Harga Satuan" style="width:100%; background-color:#E5E7EB;" readonly></td>
-            <td><input type="number" placeholder="Jumlah" style="width:100%; background-color:#E5E7EB;" readonly></td>
-            <td>${actionButton}</td>
-        </tr>
-    `);
-}
-
-// ================== EVENT HANDLER ==================
-$('#addRow').on('click', addNewRow);
-
-// Tambah Sub
-$('#example tbody').on('click', '.btn-sub', function(e) {
-    e.preventDefault();
-    const row = $(this).closest('tr');
-    addSubRow(row[0]);
-});
-
-// Tambah UBAS
-$('#example tbody').on('click', '.btn-ubas', function(e) {
-    e.preventDefault();
-    const row = $(this).closest('tr');
-    addUbasRow(row[0]);
-});
-
-// Hapus Row
-$('#example tbody').on('click', '.btn-hapus', function(e) {
-    e.preventDefault();
-    const $row = $(this).closest('tr');
-    const kode = $row.find('.kode-ma').text();
-
-    // Hapus semua anak (prefix)
-    $('#example tbody tr').each(function() {
-        const code = $(this).find('.kode-ma').text();
-        if (code.startsWith(kode + '.')) $(this).remove();
-    });
-
-    $row.remove();
-    table.row($row).remove();
-
-    // Jika divisi dihapus → update nomor divisi
-    if ($row.hasClass('row-divisi')) updateDivisiCodes();
-});
-
-// Tambah 1 divisi awal
-addNewRow();
-</script> -->
-
-
+<!-- ===================== TABEL DKH ===================== -->
 <script>
 const table = $('#example').DataTable({
     lengthChange: false,
@@ -562,6 +219,10 @@ const table = $('#example').DataTable({
     searching: false,
     paging: false,
     info: false,
+    language: {
+        emptyTable: "",
+        zeroRecords: ""
+    }
 });
 
 // ================== TAMBAH DIVISI ==================
@@ -570,21 +231,17 @@ function addNewRow() {
         <tr class="row-divisi">
             <td class="kode-ma"></td>
             <td><input style="width:100%" type="text" placeholder="Nama Divisi"></td>
-
-            <!-- kolom Sat / Qty / Harga Satuan / Jumlah -->
-            <td></td><td></td><td></td><td></td>
-
-            <!-- ✅ Keterangan divisi -->
-            <td></td>
-
+            <td></td><td></td><td></td><td></td><td></td>
             <td>
                 <div class="btn-group">
                     <button type="button" class="btn btn-sm btn-primary dropdown-toggle" data-bs-toggle="dropdown">
                         <i class="fa-solid fa-gears fa-lg px-1"></i> Aksi
                     </button>
                     <ul class="dropdown-menu">
-                        <li><a class="dropdown-item btn-sub" href="#"><i class="fa-solid fa-circle-plus fa-sm px-1"></i>Tambah Sub</a></li>
-                        <li><a class="dropdown-item btn-hapus" href="#"><i class="fa-solid fa-ban fa-sm px-1"></i>Hapus Divisi</a></li>
+                        <li><a class="dropdown-item btn-sub" href="#">
+                            <i class="fa-solid fa-circle-plus fa-sm px-1"></i>Tambah Sub</a></li>
+                        <li><a class="dropdown-item btn-hapus" href="#">
+                            <i class="fa-solid fa-ban fa-sm px-1"></i>Hapus Divisi</a></li>
                     </ul>
                 </div>
             </td>
@@ -610,7 +267,7 @@ function updateDivisiCodes() {
     });
 }
 
-// ================== TAMBAH SUB (LEVEL 2 SAJA) ==================
+// ================== TAMBAH SUB DIVISI ==================
 function addSubRow(afterRow) {
     const divisiRow = $(afterRow);
     const divCode = divisiRow.data('kode');
@@ -640,57 +297,27 @@ function addSubRow(afterRow) {
     table.row.add(newSub[0]);
 }
 
-// ================== OPEN MODAL UBAS ==================
-$('#example tbody').on('click', '.btn-ubas', function(e) {
-    e.preventDefault();
-
-    const tr = $(this).closest('tr');
-
-    // ✅ Kode sub row
-    const kodeSub = tr.find('.kode-ma').text();
-
-    // ✅ Uraian sub row
-    const uraian = tr.find('input[type="text"]').first().val() || '-';
-
-    // ✅ Cari kode divisi (row-divisi sebelumnya)
-    let kodeDivisi = '-';
-    tr.prevAll('.row-divisi').each(function() {
-        kodeDivisi = $(this).find('.kode-ma').text();
-        return false;
-    });
-
-    // ✅ Tampilkan ke modal
-    $('#modalUbasKodeDivisi').text(kodeDivisi);
-    $('#modalUbasKodeSub').text(kodeSub);
-    $('#modalUbasUraian').text(uraian);
-
-    // ✅ Buka modal
-    $('#modalDataUBAS').modal('show');
-});
-
 // ================== GENERATE SUB ROW ==================
 function createSubRow(kode) {
     return $(`
         <tr class="row-sub">
             <td class="kode-ma">${kode}</td>
-
             <td><input style="width:100%" type="text" placeholder="Uraian Pekerjaan"></td>
-
             <td><input type="text" placeholder="Sat" style="width:100%"></td>
-            <td><input type="number" placeholder="Qty" style="width:100%"></td>
-            <td><input type="number" placeholder="Harga Satuan" style="width:100%; background-color:#E5E7EB;" readonly></td>
-            <td><input type="number" placeholder="Jumlah" style="width:100%; background-color:#E5E7EB;" readonly></td>
-
+            <td><input type="text" placeholder="Qty" style="width:100%; text-align:right;"></td>
+            <td><input type="text" class="unit-price" placeholder="Unit Price" style="width:100%; text-align:right;"></td>
+            <td><input type="text" placeholder="Jumlah" style="width:100%; text-align:right; background-color:#E5E7EB;" readonly></td>
             <td><input style="width:100%" type="text" placeholder="Keterangan"></td>
-
             <td>
                 <div class="btn-group">
                     <button type="button" class="btn btn-sm btn-secondary dropdown-toggle" data-bs-toggle="dropdown">
                         <i class="fa-solid fa-gears fa-lg px-1"></i> Aksi
                     </button>
                     <ul class="dropdown-menu">
-                        <li><a class="dropdown-item btn-ubas" href="#"><i class="fa-solid fa-screwdriver-wrench fa-sm px-1"></i>Data UBAS</a></li>
-                        <li><a class="dropdown-item btn-hapus" href="#"><i class="fa-solid fa-ban fa-sm px-1"></i>Hapus Sub</a></li>
+                        <li><a class="dropdown-item btn-ubas" href="#">
+                            <i class="fa-solid fa-screwdriver-wrench fa-sm px-1"></i>Data UBAS</a></li>
+                        <li><a class="dropdown-item btn-hapus" href="#">
+                            <i class="fa-solid fa-ban fa-sm px-1"></i>Hapus Sub</a></li>
                     </ul>
                 </div>
             </td>
@@ -706,17 +333,13 @@ $('#example tbody').on('click', '.btn-sub', function(e) {
     addSubRow($(this).closest('tr')[0]);
 });
 
-$('#example tbody').on('click', '.btn-ubas', function(e) {
-    e.preventDefault();
-    openUbasModal($(this).closest('tr')[0]);
-});
-
 $('#example tbody').on('click', '.btn-hapus', function(e) {
     e.preventDefault();
 
     const $row = $(this).closest('tr');
     const kode = $row.find('.kode-ma').text();
 
+    // hapus semua sub yang punya prefix kode ini
     $('#example tbody tr').each(function() {
         if ($(this).find('.kode-ma').text().startsWith(kode + '.')) $(this).remove();
     });
@@ -727,11 +350,198 @@ $('#example tbody').on('click', '.btn-hapus', function(e) {
     if ($row.hasClass('row-divisi')) updateDivisiCodes();
 });
 
-// Tambah divisi pertama
+// Tambah divisi pertama saat load
 addNewRow();
 </script>
+<!-- ===================== END BAGIAN STRUKTUR ===================== -->
 
+<!-- ===================== SCRIPT MODAL UBAS ===================== -->
+<script>
+/* ===============================================================
+   TOMBOL DATA UBAS — GET DATA DARI TABEL KE MODAL (PAKAI MODAL KAMU)
+   =============================================================== */
+$('#example tbody').on('click', '.btn-ubas', function(e) {
+    e.preventDefault();
 
+    const $subRow = $(this).closest('tr'); // baris sub yang diklik
+
+    // ✅ Ambil data dari baris sub
+    const kodeSub = $subRow.find('.kode-ma').text().trim(); // contoh: "1.2"
+    const uraianSub = $subRow.find('input[placeholder="Uraian Pekerjaan"]').val() || '-';
+
+    // ✅ Cari baris divisi induknya (row sebelumnya yang class .row-divisi)
+    let kodeDivisi = '-',
+        namaDivisi = '-';
+    $subRow.prevAll('.row-divisi').each(function() {
+        kodeDivisi = $(this).find('.kode-ma').text().trim();
+        namaDivisi = $(this).find('input[placeholder="Nama Divisi"]').val() || '-';
+        return false; // berhenti di divisi pertama yang ketemu
+    });
+
+    // ✅ Masukkan hasil ke elemen <span> dalam modal kamu
+    $('#modalUbasKodeDivisi').text(kodeDivisi);
+    $('#modalUbasNamaDivisi').text(namaDivisi);
+    $('#modalUbasKodeSub').text(kodeSub);
+    $('#modalUbasUraian').text(uraianSub);
+
+    // ✅ Tampilkan modal fullscreen yang sudah kamu buat
+    const ubasModal = new bootstrap.Modal(document.getElementById('modalDataUBAS'));
+    ubasModal.show();
+});
+</script>
+
+<!-- ===================== END SCRIPT MODAL UBAS ===================== -->
+
+<!-- ===================== HITUNG JUMLAH OTOMATIS (FINAL + DECIMAL SUPPORT) ===================== -->
+<script>
+/* ===========================================================
+   FINAL FIX — SMOOTH INPUT, DECIMAL ENABLED, AUTO FORMAT
+   =========================================================== */
+
+// 🔹 Ubah "Rp 1.234,56" → angka 1234.56
+function parseRupiahToNumber(str) {
+    if (!str) return 0;
+    str = str.replace(/[^\d,]/g, '').replace(/\./g, '').replace(',', '.');
+    return parseFloat(str) || 0;
+}
+
+// 🔹 Format angka → "Rp 1.234,56"
+function formatRupiah(num) {
+    if (isNaN(num)) num = 0;
+    const parts = num.toFixed(2).split('.');
+    let intPart = parts[0];
+    let decPart = parts[1];
+    intPart = intPart.replace(/\B(?=(\d{3})+(?!\d))/g, '.');
+    return 'Rp ' + intPart + ',' + decPart;
+}
+
+// 🔹 Hitung Jumlah otomatis
+function hitungJumlah($row) {
+    const qtyVal = ($row.find('input[placeholder="Qty"]').val() || '0').replace(',', '.');
+    const qty = parseFloat(qtyVal) || 0;
+    const hargaStr = $row.find('.unit-price').val() || '0';
+    const harga = parseRupiahToNumber(hargaStr);
+    const total = qty * harga;
+
+    const jumlahInput = $row.find('input[placeholder="Jumlah"]');
+    jumlahInput.val(formatRupiah(total));
+}
+
+// 🔹 Input Unit Price (support desimal dan tetap smooth)
+$(document).on('input', '.unit-price', function(e) {
+    const input = this;
+    let value = input.value;
+
+    // Simpan posisi kursor sebelum diubah
+    const cursorPos = input.selectionStart;
+    const oldLength = value.length;
+
+    // Biarkan user ketik koma dulu tanpa format
+    if (value.endsWith(',')) return;
+
+    // Ambil angka + koma (jaga agar desimal tidak hilang)
+    let clean = value.replace(/[^0-9,]/g, '');
+
+    // Kalau ada lebih dari satu koma, keep yang pertama
+    if ((clean.match(/,/g) || []).length > 1) {
+        const parts = clean.split(',');
+        clean = parts[0] + ',' + parts[1];
+    }
+
+    // Pisahkan ribuan dan desimal
+    let [intPart, decPart] = clean.split(',');
+    let num = parseInt(intPart || '0', 10);
+    if (isNaN(num)) num = 0;
+
+    let formatted = new Intl.NumberFormat('id-ID').format(num);
+
+    // Kalau user sedang nulis desimal → jangan ubah desimalnya
+    if (typeof decPart !== 'undefined') {
+        formatted += ',' + decPart.substring(0, 2); // max 2 digit desimal
+    }
+
+    input.value = 'Rp ' + formatted;
+
+    // Hitung ulang jumlah otomatis
+    hitungJumlah($(input).closest('tr'));
+
+    // Perbaiki posisi kursor biar gak loncat
+    const newLength = input.value.length;
+    const diff = newLength - oldLength;
+    input.setSelectionRange(cursorPos + diff, cursorPos + diff);
+});
+
+// 🔹 Saat Qty diketik → hitung ulang
+$(document).on('input', 'input[placeholder="Qty"]', function() {
+    hitungJumlah($(this).closest('tr'));
+});
+
+// 🔹 Saat baris baru ditambahkan (Add Sub / Divisi)
+$(document).on('DOMNodeInserted', '#example tbody tr', function() {
+    hitungJumlah($(this));
+});
+
+// 🔹 Jalankan hitung ulang saat halaman load
+$(document).ready(function() {
+    $('#example tbody tr').each(function() {
+        hitungJumlah($(this));
+    });
+});
+</script>
+<!-- ===================== END FINAL + DECIMAL SUPPORT ===================== -->
+
+<script>
+/* ============================================================
+   VALIDASI INPUT QTY — HANYA ANGKA DAN KOMA (ANTI HURUF/SIMBOL)
+   ============================================================ */
+
+// Saat user mengetik di kolom Qty
+$(document).on('input', 'input[placeholder="Qty"]', function() {
+    let val = $(this).val();
+
+    // 🔒 Hapus semua karakter selain angka & koma
+    val = val.replace(/[^0-9,]/g, '');
+
+    // 🔒 Jika ada lebih dari satu koma, sisakan satu saja
+    if ((val.match(/,/g) || []).length > 1) {
+        const parts = val.split(',');
+        val = parts[0] + ',' + parts[1];
+    }
+
+    // Update nilai input dengan hasil bersih
+    $(this).val(val);
+
+    // 🔁 Hitung ulang jumlah otomatis
+    hitungJumlah($(this).closest('tr'));
+});
+
+// Saat user paste di kolom Qty
+$(document).on('paste', 'input[placeholder="Qty"]', function(e) {
+    let pasteData = (e.originalEvent || e).clipboardData.getData('text');
+    // 🔒 Bersihkan dari huruf/simbol
+    pasteData = pasteData.replace(/[^0-9,]/g, '');
+
+    // 🔒 Hapus koma ganda
+    const parts = pasteData.split(',');
+    if (parts.length > 2) pasteData = parts[0] + ',' + parts[1];
+
+    // Masukkan hasil bersih ke input
+    $(this).val(pasteData);
+    e.preventDefault();
+
+    // 🔁 Hitung ulang jumlah otomatis
+    hitungJumlah($(this).closest('tr'));
+});
+
+// Blokir langsung huruf/simbol saat diketik (prevent default)
+$(document).on('keypress', 'input[placeholder="Qty"]', function(e) {
+    const char = String.fromCharCode(e.which);
+    // hanya izinkan angka dan koma
+    if (!/[0-9,]/.test(char)) {
+        e.preventDefault();
+    }
+});
+</script>
 
 
 

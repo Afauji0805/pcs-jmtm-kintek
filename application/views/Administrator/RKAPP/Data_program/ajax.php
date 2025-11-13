@@ -263,7 +263,7 @@
                         data: 0,
                         render: function(data) {
                             return `
-                <small style="font-size: 12px" title="${data}" class="ellipsis-200">
+                <small  title="${data}" class="ellipsis-200">
                     ${data}
                 </small>
             `;
@@ -273,7 +273,7 @@
                         data: 1,
                         render: function(data) {
                             return `
-                <small style="font-size: 12px" title="${data}" class="ellipsis-200">
+                <small  title="${data}" class="ellipsis-200">
                     ${data}
                 </small>
             `;
@@ -283,20 +283,25 @@
                         data: 2,
                         className: 'text-end',
                         render: function(data) {
-                            return `<small style="font-size: 12px">Rp ${(parseInt(data) || 0).toLocaleString('id-ID')}</small>`;
+                            return `<small >Rp ${(parseInt(data) || 0).toLocaleString('id-ID')}</small>`;
                         }
                     },
                     {
-                        data: 3
+                        data: 3,
+                        className: 'text-center',
                     },
                     {
-                        data: 4
+                        data: 4,
+                        className: 'text-center',
+
                     },
                     {
-                        data: 5
+                        data: 5,
+                        className: 'text-center',
                     },
                     {
-                        data: 6
+                        data: 6,
+                        className: 'text-center',
                     }
                 ],
 
@@ -615,7 +620,8 @@
             formData.lokasi_pekerjaan = $('#ubah_lokasi_pekerjaan').val();
             formData.nilai_kontrak = $('#ubah_nilai_kontrak').val().replace(/[^\d]/g, '') || 0;
             formData.tanggal_mulai_kontrak = $('#ubah_tanggal_mulai_kontrak').val();
-            formData.tanggal_selesai_kontrak = ubahKeISOfromDDMMYYYY($('#ubah_tanggal_selesai_kontrak').val());
+            formData.tanggal_selesai_kontrak = ubahKeISOfromDDMMYYYY($('#ubah_tanggal_selesai_kontrak')
+                .val());
             formData.durasi_kontrak = $('#ubah_durasi_kontrak').val();
             formData.tanggal_mulai_pho = $('#ubah_tanggal_mulai_pho').val();
             formData.tanggal_selesai_pho = ubahKeISOfromDDMMYYYY($('#ubah_tanggal_selesai_pho').val());
