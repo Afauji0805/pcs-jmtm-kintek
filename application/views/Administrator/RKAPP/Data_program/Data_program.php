@@ -171,7 +171,7 @@
                                         <div class="btn-group" role="group" aria-label="Basic mixed styles example">
                                             <!-- <small>Detail</small> -->
                                             <a id="link-dhk-r" type="button" class="btn btn-sm btn-success"
-                                                href="<? base_url()?>Administrator/RKAPP/data_dkh_kontrak/data_dkh_kontrak"
+                                                href="<? base_url() ?>Administrator/RKAPP/data_dkh_kontrak/data_dkh_kontrak"
                                                 data-bs-toggle="tooltip" data-bs-placement="top"
                                                 title="Halaman Pengisian DKH Kontrak">
                                                 <i class="fa-solid fa-share-from-square fa-lg px-1"></i>
@@ -688,7 +688,7 @@
     </div><!-- End Modal Tambah Program -->
 
     <!-- Modal Detail Data Program -->
-    <div class="modal fade"  id="staticBackdrop-detail-program" data-bs-backdrop="static" data-bs-keyboard="false"
+    <div class="modal fade" id="staticBackdrop-detail-program" data-bs-backdrop="static" data-bs-keyboard="false"
         tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
         <div class="modal-dialog modal-xl modal-dialog-scrollable">
             <div class="modal-content">
@@ -1251,7 +1251,7 @@
                             <form method="post">
                                 <!-- TOKEN CSRF -->
                                 <input type="hidden" name="<?= $this->security->get_csrf_token_name(); ?>"
-                                    value="<?= $this->security->get_csrf_hash(); ?>" id="csrf_token" />
+                                    value="<?= $this->security->get_csrf_hash(); ?>" id="csrf_token_ubah" />
 
                                 <div class="card-body">
                                     <div class="row align-items-start">
@@ -1302,7 +1302,7 @@
                                                                             <input type="date"
                                                                                 class="form-control border-dark text-end"
                                                                                 id="ubah_tanggal_program"
-                                                                                value="<?= date('Y-m-d') ?>"                        
+                                                                                value="<?= date('Y-m-d') ?>"
                                                                                 aria-label="Sizing example input"
                                                                                 readonly
                                                                                 style="background-color: #c1c7ccff"
