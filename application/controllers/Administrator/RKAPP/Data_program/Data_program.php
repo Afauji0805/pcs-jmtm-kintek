@@ -45,6 +45,7 @@ class Data_program extends CI_Controller
 
 			// AKSI
 			$aksi = '
+			<div class="btn-group" role="group" aria-label="Basic mixed styles example">
             <button type="button" 
                 class="btn btn-sm btn-secondary btn-detail-program"
                 data-id="' . $rs->id_program . '" 
@@ -57,17 +58,18 @@ class Data_program extends CI_Controller
                 class="btn btn-sm btn-success">
                 <i class="fa-solid fa-share-from-square"></i>
             </a>
+			</div>
         ';
 
 			// ROW SUDAH SAMLIN RAPI
 			$row = [
-				"<small style='font-size: 12px'>$rs->kode_program</small>",
-				"<small style='font-size: 12px'>$rs->nama_program</small>",
-				"<small style='font-size: 12px'>$rs->nilai_kontrak</small>",
-				"<small style='font-size: 12px'>{$rs->tanggal_mulai_kontrak} || {$rs->durasi_kontrak} Hari</small>",
-				"<small style='font-size: 12px'>{$rs->tanggal_mulai_pho} || {$rs->durasi_pho} Hari</small>",
-				"<small style='font-size: 12px'>{$status}</small>",
-				"<small style='font-size: 12px'>{$aksi}</small>"
+				"<td class='text-center'><small>$rs->kode_program</small></td>",
+				"<small>$rs->nama_program</small>",
+				"<small>$rs->nilai_kontrak</small>",
+				"<small>{$rs->tanggal_mulai_kontrak} || {$rs->durasi_kontrak} Hari</small>",
+				"<small>{$rs->tanggal_mulai_pho} || {$rs->durasi_pho} Hari</small>",
+				"{$status}",
+				"<small>{$aksi}</small>"
 			];
 
 
