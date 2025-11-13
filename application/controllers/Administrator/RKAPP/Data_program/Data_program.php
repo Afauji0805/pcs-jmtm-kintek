@@ -98,9 +98,61 @@ class Data_program extends CI_Controller
 	    }
 	}
 
+public function update_program()
+{
+    // pastikan model ter-load; biasanya sudah di __construct, tapi aman kita load
+    $this->load->model('Administrator/RKAPP/Rkapp_model');
+
+    $id_program = $this->input->post('id_program');
+    if (empty($id_program)) {
+        echo json_encode([
+            'status' => 'error',
+            'message' => 'ID program tidak ditemukan.',
+            'csrf_token' => $this->security->get_csrf_hash()
+        ]);
+        return;
+    }
+
+    // ambil data dari request
+    $data = [
+        'kode_program' => $this->input->post('kode_program'),
+        'tanggal_program' => $this->input->post('tanggal_program'),
+        'nama_program' => $this->input->post('nama_program'),
+        'unit_kerja' => $this->input->post('unit_kerja'),
+        'lokasi_pekerjaan' => $this->input->post('lokasi_pekerjaan'),
+        'nilai_kontrak' => $this->input->post('nilai_kontrak'),
+        'tanggal_mulai_kontrak' => $this->input->post('tanggal_mulai_kontrak'),
+        'tanggal_selesai_kontrak' => $this->input->post('tanggal_selesai_kontrak'),
+        'durasi_kontrak' => $this->input->post('durasi_kontrak'),
+        'tanggal_mulai_pho' => $this->input->post('tanggal_mulai_pho'),
+        'tanggal_selesai_pho' => $this->input->post('tanggal_selesai_pho'),
+        'durasi_pho' => $this->input->post('durasi_pho'),
+        'date_fho' => $this->input->post('date_fho'),
+        'owner' => $this->input->post('owner'),
+        'pm_pusat' => $this->input->post('pm_pusat'),
+        'gs' => $this->input->post('gs')
+    ];
+
+    // Panggil model (Rkapp_model)
+    $success = $this->Rkapp_model->update_program($id_program, $data);
+
+    if ($success) {
+        echo json_encode([
+            'status' => 'success',
+            'message' => 'Data program berhasil diperbarui!',
+            'csrf_token' => $this->security->get_csrf_hash()
+        ]);
+    } else {
+        echo json_encode([
+            'status' => 'error',
+            'message' => 'Gagal memperbarui data program.',
+            'csrf_token' => $this->security->get_csrf_hash()
+        ]);
+    }
+}
+
 
 
 
 	// ======================================================================================
 }
-
