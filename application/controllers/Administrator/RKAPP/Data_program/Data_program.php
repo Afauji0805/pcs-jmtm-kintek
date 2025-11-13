@@ -61,13 +61,13 @@ class Data_program extends CI_Controller
 
 			// ROW SUDAH SAMLIN RAPI
 			$row = [
-				$rs->kode_program,
-				$rs->nama_program,
-				$rs->nilai_kontrak,
-				"<small>{$rs->tanggal_mulai_kontrak} || {$rs->durasi_kontrak} Hari</small>",
-				"<small>{$rs->tanggal_mulai_pho} || {$rs->durasi_pho} Hari</small>",
-				"<small>{$status}</small>",
-				"<small>{$aksi}</small>"
+				"<small style='font-size: 12px'>$rs->kode_program</small>",
+				"<small style='font-size: 12px'>$rs->nama_program</small>",
+				"<small style='font-size: 12px'>$rs->nilai_kontrak</small>",
+				"<small style='font-size: 12px'>{$rs->tanggal_mulai_kontrak} || {$rs->durasi_kontrak} Hari</small>",
+				"<small style='font-size: 12px'>{$rs->tanggal_mulai_pho} || {$rs->durasi_pho} Hari</small>",
+				"<small style='font-size: 12px'>{$status}</small>",
+				"<small style='font-size: 12px'>{$aksi}</small>"
 			];
 
 

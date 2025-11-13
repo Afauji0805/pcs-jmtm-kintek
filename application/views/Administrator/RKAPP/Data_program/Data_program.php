@@ -92,37 +92,37 @@
                         <thead class="bg-warning text-dark shadow-lg">
                             <tr>
                                 <th scope="col" class="col-1 text-center">
-                                    <small>
+                                    <small style="font-size: 12px">
                                         Kode
                                     </small>
                                 </th>
                                 <th scope="col" class="col-3 text-center">
-                                    <small>
+                                    <small style="font-size: 12px">
                                         Nama Pekerjaan
                                     </small>
                                 </th>
                                 <th scope="col" class="col-2 text-center">
-                                    <small>
+                                    <small style="font-size: 12px">
                                         Nilai Kontrak
                                     </small>
                                 </th>
                                 <th scope="col" class="col-2 text-center">
-                                    <small>
+                                    <small style="font-size: 12px">
                                         Tanggal & Durasi Kontrak
                                     </small>
                                 </th>
                                 <th scope="col" class="col-2 text-center">
-                                    <small>
+                                    <small style="font-size: 12px">
                                         Tanggal & Durasi PHO
                                     </small>
                                 </th>
                                 <th scope="col" class="col-1 text-center">
-                                    <small>
+                                    <small style="font-size: 12px">
                                         Status Data
                                     </small>
                                 </th>
                                 <th scope="col" class="col-1 text-center">
-                                    <small>
+                                    <small style="font-size: 12px">
                                         .:: Aksi ::.
                                     </small>
                                 </th>

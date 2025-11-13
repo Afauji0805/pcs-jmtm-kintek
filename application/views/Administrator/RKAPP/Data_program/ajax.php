@@ -263,7 +263,7 @@
                         data: 0,
                         render: function(data) {
                             return `
-                <small title="${data}" class="ellipsis-200">
+                <small style="font-size: 12px" title="${data}" class="ellipsis-200">
                     ${data}
                 </small>
             `;
@@ -273,7 +273,7 @@
                         data: 1,
                         render: function(data) {
                             return `
-                <small title="${data}" class="ellipsis-200">
+                <small style="font-size: 12px" title="${data}" class="ellipsis-200">
                     ${data}
                 </small>
             `;
@@ -283,7 +283,7 @@
                         data: 2,
                         className: 'text-end',
                         render: function(data) {
-                            return `<small>Rp ${(parseInt(data) || 0).toLocaleString('id-ID')}</small>`;
+                            return `<small style="font-size: 12px">Rp ${(parseInt(data) || 0).toLocaleString('id-ID')}</small>`;
                         }
                     },
                     {
