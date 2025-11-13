@@ -66,11 +66,23 @@ class Data_program extends CI_Controller
 				"<td class='text-center'><small>$rs->kode_program</small></td>",
 				"<small>$rs->nama_program</small>",
 				"<small>$rs->nilai_kontrak</small>",
-				"<small>{$rs->tanggal_mulai_kontrak} || {$rs->durasi_kontrak} Hari</small>",
-				"<small>{$rs->tanggal_mulai_pho} || {$rs->durasi_pho} Hari</small>",
+				"<small>" . (
+					(!empty($rs->tanggal_mulai_kontrak) && $rs->tanggal_mulai_kontrak != '0000-00-00'
+						? date('d/m/Y', strtotime($rs->tanggal_mulai_kontrak))
+						: '-'
+					) . " || {$rs->durasi_kontrak} Hari"
+				) . "</small>",
+				"<small>" . (
+					(!empty($rs->tanggal_mulai_pho) && $rs->tanggal_mulai_pho != '0000-00-00'
+						? date('d/m/Y', strtotime($rs->tanggal_mulai_pho))
+						: '-'
+					) . " || {$rs->durasi_pho} Hari"
+				) . "</small>",
 				"{$status}",
 				"<small>{$aksi}</small>"
 			];
+			
+			
 
 
 			$data[] = $row;

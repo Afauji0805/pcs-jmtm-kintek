@@ -283,16 +283,31 @@ $(document).ready(function() {
                     data: 2,
                     className: 'text-end',
                     render: function(data) {
-                        return `<small >Rp ${(parseInt(data) || 0).toLocaleString('id-ID')}</small>`;
+                        return `<small title="${data}" class="ellipsis-200">  Rp ${(parseInt(data) || 0).toLocaleString('id-ID')} </small>`;
                     }
                 },
                 {
                     data: 3,
                     className: 'text-center',
+                    render: function(data) {
+                        return `
+                <small  title="${data}" class="ellipsis-200">
+                    ${data}
+                </small>
+            `;
+                    }
+
                 },
                 {
                     data: 4,
                     className: 'text-center',
+                    render: function(data) {
+                        return `
+                <small  title="${data}" class="ellipsis-200">
+                    ${data}
+                </small>
+            `;
+                    }
 
                 },
                 {
