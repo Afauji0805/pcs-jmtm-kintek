@@ -47,6 +47,46 @@ class Rkapp_model extends CI_Model
 
         return "PK.$tahun.$new_number";
     }
+// =================================================================================================================
+    
+public function update_program($id, $data)
+    {
+        $sql = "CALL sp_update_tb_data_program(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+        $query = $this->db->query($sql, [
+            $id,
+            $data['kode_program'],
+            $data['tanggal_program'],
+            $data['nama_program'],
+            $data['unit_kerja'],
+            $data['lokasi_pekerjaan'],
+            $data['nilai_kontrak'],
+            $data['tanggal_mulai_kontrak'],
+            $data['tanggal_selesai_kontrak'],
+            $data['durasi_kontrak'],
+            $data['tanggal_mulai_pho'],
+            $data['tanggal_selesai_pho'],
+            $data['durasi_pho'],
+            $data['date_fho'],
+            $data['owner'],
+            $data['pm_pusat'],
+            $data['gs']
+        ]);
+
+        if ($query === false) {
+            return false;
+        }
+
+        if (is_object($query)) {
+            if (method_exists($query, 'next_result')) {
+                $query->next_result();
+            }
+            if (method_exists($query, 'free_result')) {
+                $query->free_result();
+            }
+        }
+
+        return true;
+    }
 
 
 }

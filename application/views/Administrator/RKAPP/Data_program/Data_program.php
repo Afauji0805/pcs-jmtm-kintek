@@ -170,14 +170,6 @@
                                     <small>
                                         <div class="btn-group" role="group" aria-label="Basic mixed styles example">
                                             <!-- <small>Detail</small> -->
-                                            <button type="button" class="btn btn-sm btn-secondary"
-                                                data-bs-toggle="modal" data-bs-target="#staticBackdrop-detail-program">
-                                                <a data-bs-toggle="tooltip" data-bs-placement="top"
-                                                    title="Detail & Ubah Data">
-                                                    <i class="fa-solid fa-users-viewfinder fa-lg px-1"></i>
-                                                </a>
-                                            </button>
-                                            <!-- <small>Detail</small> -->
                                             <a id="link-dhk-r" type="button" class="btn btn-sm btn-success"
                                                 href="<? base_url()?>Administrator/RKAPP/data_dkh_kontrak/data_dkh_kontrak"
                                                 data-bs-toggle="tooltip" data-bs-placement="top"
@@ -1207,8 +1199,8 @@
                                     <i class="fa-regular fa-rectangle-xmark fa-lg px-1"></i>
                                     Tutup Halaman
                                 </button>
-                                <button type="button" class="btn btn-warning btn-sm rounded shadow-lg"
-                                    id="btn-detail-ubah">
+                                <button type="button" class="btn btn-warning btn-sm rounded shadow-lg" id="btn-ubah-program" data-id=""
+                                    data-bs-toggle="modal" data-bs-target="#staticBackdrop-ubah-program">
                                     <i class="fa-solid fa-pen-to-square fa-lg px-1"></i>
                                     Ubah Data
                                 </button>
@@ -1217,7 +1209,7 @@
                     </div>
                 </div>
             </div>
-        </div><!-- End Modal Detail Data Program12121 -->
+        </div>
     </div><!-- End Modal Detail Data Program -->
 
     <!-- Modal Ubah Program -->
@@ -1256,12 +1248,10 @@
                                     </span>
                                 </div>
                             </div>
-                            <form id="formData_ubah_program">
+                            <form method="post">
                                 <!-- TOKEN CSRF -->
                                 <input type="hidden" name="<?= $this->security->get_csrf_token_name(); ?>"
-                                    value="<?= $this->security->get_csrf_hash(); ?>" id="csrf_token_program" />
-                                    <!-- id -->
-                                     <input type="hidden" id="id_program">
+                                    value="<?= $this->security->get_csrf_hash(); ?>" id="csrf_token" />
 
                                 <div class="card-body">
                                     <div class="row align-items-start">
@@ -1278,6 +1268,7 @@
                                                             <td>
                                                                 <div class="d-flex justify-content-start">
                                                                     <div class="col-md-6">
+                                                                        <input type="hidden" id="ubah_id_program" name="id_program">
                                                                         <div class="input-group input-group-sm">
                                                                             <span class="input-group-text border-dark">
                                                                                 Kode Program
@@ -1288,7 +1279,7 @@
                                                                             </span>
                                                                             <input type="text"
                                                                                 class="form-control text-end border-dark"
-                                                                                id="kd_ubah_prg"
+                                                                                id="kd_ubah_program"
                                                                                 aria-label="Sizing example input"
                                                                                 aria-describedby="inputGroup-sizing-sm"
                                                                                 value="PK.25.1" readonly
@@ -1310,8 +1301,8 @@
                                                                             </span>
                                                                             <input type="date"
                                                                                 class="form-control border-dark text-end"
-                                                                                id="date_ubah_prg"
-                                                                                value="<?= date('Y-m-d') ?>" 
+                                                                                id="ubah_tanggal_program"
+                                                                                value="<?= date('Y-m-d') ?>"                        
                                                                                 aria-label="Sizing example input"
                                                                                 readonly
                                                                                 style="background-color: #c1c7ccff"
@@ -1334,7 +1325,7 @@
                                                                         </span>
                                                                         <input type="text"
                                                                             class="form-control border-dark"
-                                                                            id="nd_ubah_prg"
+                                                                            id="ubah_nama_program"
                                                                             aria-label="Sizing example input"
                                                                             aria-describedby="inputGroup-sizing-sm"
                                                                             placeholder="Input data..."
@@ -1355,7 +1346,7 @@
                                                                         </span>
                                                                         <input type="text"
                                                                             class="form-control border-dark"
-                                                                            id="unit_ubah_prg"
+                                                                            id="ubah_unit_kerja"
                                                                             aria-label="Sizing example input"
                                                                             aria-describedby="inputGroup-sizing-sm"
                                                                             placeholder="Input data..." value="AMP">
@@ -1374,7 +1365,7 @@
                                                                         </span>
                                                                         <input type="text"
                                                                             class="form-control border-dark"
-                                                                            id="lokasi_ubah_prg"
+                                                                            id="ubah_lokasi_pekerjaan"
                                                                             aria-label="Sizing example input"
                                                                             aria-describedby="inputGroup-sizing-sm"
                                                                             placeholder="Input data..." value="Jakarta">
@@ -1408,7 +1399,7 @@
                                                                         </span>
                                                                         <input type="text"
                                                                             class="form-control border-dark text-end"
-                                                                            id="nilai_ubah_prg"
+                                                                            id="ubah_nilai_kontrak"
                                                                             aria-label="Sizing example input" readonly
                                                                             style="background-color: #c1c7ccff"
                                                                             value="0"
@@ -1428,7 +1419,7 @@
                                                                         </span>
                                                                         <input type="date"
                                                                             class="form-control border-dark"
-                                                                            id="date_ubah_awal_kontrak_prg"
+                                                                            id="ubah_tanggal_mulai_kontrak"
                                                                             aria-label="Sizing example input"
                                                                             aria-describedby="inputGroup-sizing-sm"
                                                                             value="11/11/2025">
@@ -1447,7 +1438,7 @@
                                                                         </span>
                                                                         <input type="number"
                                                                             class="form-control border-dark"
-                                                                            id="durasi_ubah_kontrak_prg"
+                                                                            id="ubah_durasi_kontrak"
                                                                             aria-label="Sizing example input"
                                                                             aria-describedby="inputGroup-sizing-sm"
                                                                             placeholder="Input number..." value="90">
@@ -1470,7 +1461,7 @@
 
                                                                         <input readonly type="text"
                                                                             class="form-control border-dark"
-                                                                            id="date_ubah_akhir_kontrak_prg"
+                                                                            id="ubah_tanggal_selesai_kontrak"
                                                                             style="background-color: #c1c7ccff"
                                                                             aria-label="Sizing example input"
                                                                             aria-describedby="inputGroup-sizing-sm"
@@ -1504,7 +1495,7 @@
                                                                         </span>
                                                                         <input type="date"
                                                                             class="form-control border-dark"
-                                                                            id="date_ubah_awal_pho_prg"
+                                                                            id="ubah_tanggal_mulai_pho"
                                                                             aria-label="Sizing example input"
                                                                             aria-describedby="inputGroup-sizing-sm"
                                                                             value="12/02/2026">
@@ -1523,7 +1514,7 @@
                                                                         </span>
                                                                         <input type="number"
                                                                             class="form-control border-dark"
-                                                                            id="durasi_ubah_pho_prg"
+                                                                            id="ubah_durasi_pho"
                                                                             aria-label="Sizing example input"
                                                                             aria-describedby="inputGroup-sizing-sm"
                                                                             placeholder="Input number..." value="10">
@@ -1546,7 +1537,7 @@
 
                                                                         <input type="text"
                                                                             class="form-control border-dark"
-                                                                            id="date-Ubah_akhir_pho_prg"
+                                                                            id="ubah_tanggal_selesai_pho"
                                                                             aria-label="Sizing example input"
                                                                             aria-describedby="inputGroup-sizing-sm"
                                                                             readonly style="background-color: #c1c7ccff"
@@ -1566,7 +1557,7 @@
                                                                         </span>
                                                                         <input type="date"
                                                                             class="form-control border-dark"
-                                                                            id="date_ubah_awal_fho_prg"
+                                                                            id="ubah_tanggal_fho"
                                                                             value="20/02/2026"
                                                                             aria-label="Sizing example input"
                                                                             aria-describedby="inputGroup-sizing-sm">
@@ -1598,7 +1589,7 @@
                                                                         </span>
                                                                         <input type="text"
                                                                             class="form-control border-dark"
-                                                                            id="owner_prg"
+                                                                            id="ubah_owner"
                                                                             aria-label="Sizing example input"
                                                                             aria-describedby="inputGroup-sizing-sm"
                                                                             placeholder="Input data..." value="user 1">
@@ -1616,7 +1607,7 @@
                                                                         </span>
                                                                         <input type="text"
                                                                             class="form-control border-dark"
-                                                                            id="pusat_ubah_prg"
+                                                                            id="ubah_pm_pusat"
                                                                             aria-label="Sizing example input"
                                                                             aria-describedby="inputGroup-sizing-sm"
                                                                             placeholder="Input data..." value="user 2">
@@ -1634,7 +1625,7 @@
                                                                         </span>
                                                                         <input type="text"
                                                                             class="form-control border-dark"
-                                                                            id="gs_ubah_prg"
+                                                                            id="ubah_gs"
                                                                             aria-label="Sizing example input"
                                                                             aria-describedby="inputGroup-sizing-sm"
                                                                             placeholder="Input data..." value="user 3">
@@ -1654,7 +1645,7 @@
                                         <i class="fa-regular fa-rectangle-xmark fa-lg px-1"></i>
                                         Tutup Halaman
                                     </button>
-                                    <button id="link-ubah" type="submit"
+                                    <button id="btn-update" type="button"
                                         class="btn btn-success btn-sm rounded shadow-lg">
                                         <i class="fa-regular fa-floppy-disk fa-lg px-1"></i>
                                         Simpan Perubahan Data

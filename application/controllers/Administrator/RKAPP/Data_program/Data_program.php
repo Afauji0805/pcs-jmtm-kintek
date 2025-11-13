@@ -78,19 +78,80 @@ class Data_program extends CI_Controller
 	}
 
 	// ================================================================================
-public function get_detail_program()
-{
-    $id = $this->input->get('id_program');
-    $this->db->where('id_program', $id);
-    $query = $this->db->get('tb_data_program');
+	public function get_detail_program($id_program)
+	{
+	    $this->db->select('*');
+	    $this->db->from('tb_data_program_tanpa_curent_date_view'); // gunakan view agar lengkap
+	    $this->db->where('id_program', $id_program);
+	    $query = $this->db->get();
 
-    if ($query->num_rows() > 0) {
-        $data = $query->row_array();
-        echo json_encode(['status' => 'success', 'data' => $data]);
+	    if ($query->num_rows() > 0) {
+	        echo json_encode([
+	            'status' => 'success',
+	            'data' => $query->row_array()
+	        ]);
+	    } else {
+	        echo json_encode([
+	            'status' => 'error',
+	            'message' => 'Data program tidak ditemukan.'
+	        ]);
+	    }
+	}
+
+public function update_program()
+{
+    // pastikan model ter-load; biasanya sudah di __construct, tapi aman kita load
+    $this->load->model('Administrator/RKAPP/Rkapp_model');
+
+    $id_program = $this->input->post('id_program');
+    if (empty($id_program)) {
+        echo json_encode([
+            'status' => 'error',
+            'message' => 'ID program tidak ditemukan.',
+            'csrf_token' => $this->security->get_csrf_hash()
+        ]);
+        return;
+    }
+
+    // ambil data dari request
+    $data = [
+        'kode_program' => $this->input->post('kode_program'),
+        'tanggal_program' => $this->input->post('tanggal_program'),
+        'nama_program' => $this->input->post('nama_program'),
+        'unit_kerja' => $this->input->post('unit_kerja'),
+        'lokasi_pekerjaan' => $this->input->post('lokasi_pekerjaan'),
+        'nilai_kontrak' => $this->input->post('nilai_kontrak'),
+        'tanggal_mulai_kontrak' => $this->input->post('tanggal_mulai_kontrak'),
+        'tanggal_selesai_kontrak' => $this->input->post('tanggal_selesai_kontrak'),
+        'durasi_kontrak' => $this->input->post('durasi_kontrak'),
+        'tanggal_mulai_pho' => $this->input->post('tanggal_mulai_pho'),
+        'tanggal_selesai_pho' => $this->input->post('tanggal_selesai_pho'),
+        'durasi_pho' => $this->input->post('durasi_pho'),
+        'date_fho' => $this->input->post('date_fho'),
+        'owner' => $this->input->post('owner'),
+        'pm_pusat' => $this->input->post('pm_pusat'),
+        'gs' => $this->input->post('gs')
+    ];
+
+    // Panggil model (Rkapp_model)
+    $success = $this->Rkapp_model->update_program($id_program, $data);
+
+    if ($success) {
+        echo json_encode([
+            'status' => 'success',
+            'message' => 'Data program berhasil diperbarui!',
+            'csrf_token' => $this->security->get_csrf_hash()
+        ]);
     } else {
-        echo json_encode(['status' => 'error', 'message' => 'Data tidak ditemukan']);
+        echo json_encode([
+            'status' => 'error',
+            'message' => 'Gagal memperbarui data program.',
+            'csrf_token' => $this->security->get_csrf_hash()
+        ]);
     }
 }
+
+
 
 
 	// ======================================================================================
