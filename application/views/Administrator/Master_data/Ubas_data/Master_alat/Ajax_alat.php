@@ -1,5 +1,98 @@
 <script>
-    // tambah 
+    var tbl_alat; // GLOBAL
+
+    $(document).ready(function() {
+
+        function init_alat_table() {
+            tbl_alat = $('.example_ubah').DataTable({ // <-- FIX: SIMPAN INSTANCE
+                destroy: true,
+                responsive: false,
+                processing: true,
+                serverSide: true,
+                lengthChange: false,
+                ordering: false,
+
+                ajax: {
+                    url: "<?= base_url('Administrator/Master_data/Master_alat/Master_data_alat/get_data_alat'); ?>",
+                    type: "POST"
+                },
+
+                columns: [{
+                        data: 0,
+                        className: "text-center",
+                        render: function(data) {
+                            return `
+                          <small>
+                              <span class="d-inline-block text-truncate" style="max-width:250px" title="${data}">
+                                  ${data}
+                              </span>
+                          </small>`;
+                        }
+                    },
+
+                    {
+                        data: 1,
+                        className: "text-start",
+                        render: function(data) {
+                            return `
+                          <small>
+                              <span class="d-inline-block text-truncate" style="max-width:250px" title="${data}">
+                                  ${data}
+                              </span>
+                          </small>`;
+                        }
+                    },
+
+                    {
+                        data: 2,
+                        className: "text-start",
+                        render: function(data) {
+                            return `
+                          <small>
+                              <span class="d-inline-block text-truncate" style="max-width:250px" title="${data}">
+                                  ${data}
+                              </span>
+                          </small>`;
+                        }
+                    },
+
+                    {
+                        data: 3,
+                        className: "text-center"
+                    },
+                    {
+                        data: 4,
+                        className: "text-center"
+                    },
+                    {
+                        data: 5,
+                        className: "text-center"
+                    }
+                ],
+
+                buttons: ['print', 'pdf', 'colvis'],
+
+                initComplete: function() {
+                    this.api().buttons().container()
+                        .appendTo($('.col-md-6:eq(0)', this.api().table().container()));
+                }
+            });
+        }
+
+        // Init pertama kali
+        init_alat_table();
+    });
+
+    // 🔥 Global function untuk reload
+    function reload_alat_table() {
+        if (tbl_alat) {
+            tbl_alat.ajax.reload(null, false);
+        }
+    }
+</script>
+
+<script>
+    // tambahhh 
     $(document).ready(function() {
 
         // === Validasi Input ===
@@ -23,12 +116,13 @@
 
         // === Tombol Simpan Klik ===
         $(document).on('click', '#link-simpan', function(e) {
-            e.preventDefault(); // stop form langsung submit
+            e.preventDefault();
 
             let uraian = $('#uraian_alat').val().trim();
             let satuan = $('#satuan_alat').val().trim();
+            let csrfName = $('#csrf_token_tambah').attr('name');
+            let csrfHash = $('#csrf_token_tambah').val();
 
-            // Validasi manual sebelum swal
             if (uraian === '' || satuan === '') {
                 swal({
                     title: "Data Belum Lengkap",
@@ -44,16 +138,49 @@
                 text: "Data alat akan disimpan ke database.",
                 icon: "info",
                 buttons: ["Batal", "Simpan Data"],
-            })
-            .then((willSave) => {
+            }).then((willSave) => {
                 if (willSave) {
-                    $('#form-tambah-alat').submit();
+
+                    $.ajax({
+                        url: '<?= base_url('Administrator/Master_data/Master_alat/Master_data_alat/tambah') ?>',
+                        type: "POST",
+                        data: {
+                            [csrfName]: csrfHash,
+                            uraian_alat: uraian,
+                            satuan_alat: satuan
+                        },
+                        dataType: "json",
+                        success: function(res) {
+
+                            // Update CSRF token
+                            $('#csrf_token_tambah').val(res.csrf);
+
+                            swal("Berhasil!", "Data alat telah disimpan.", "success");
+
+                            // Reset form
+                            $('#form-tambah-alat')[0].reset();
+
+                            // Reload table
+                            reload_alat_table();
+
+                            // Tutup modal
+                            $('#staticBackdrop-tambah-alat').modal('hide');
+                        },
+                        error: function() {
+                            swal("Gagal!", "Terjadi kesalahan sistem.", "error");
+                        }
+                    });
+
                 } else {
                     swal("Batal Menyimpan", "Silakan periksa kembali data anda.", "error");
                 }
             });
         });
+
     });
+
+
+
 
     //   tombol togglel aktif non aktif
     $(document).on('click', '.btn-toggle-status', function(e) {
@@ -145,7 +272,8 @@
 
                 // Load tabel detail supplier
                 loadTable(data.kode_alat);
-                },
+                reload_alat_table();
+            },
 
             error: function() {
                 swal("Gagal!", "Terjadi kesalahan. Silahkan coba lagi.", "error");
@@ -155,6 +283,7 @@
 
     // Ubah
     $(document).on('click', '#btn-detail-ubah', function(e) {
+
         e.preventDefault();
 
         var idAlat = $('#staticBackdrop-detail-alat').data('id');
@@ -193,8 +322,12 @@
 
     // Simpan 
     $(document).on('click', '#link-ubah', function(e) {
+        $.ajaxSetup({
+            data: {
+                '<?= $this->security->get_csrf_token_name(); ?>': '<?= $this->security->get_csrf_hash(); ?>'
+            }
+        });
         e.preventDefault();
-
         swal({
             title: "Apakah anda yakin data sudah terisi dengan benar?",
             text: "Proses Ubah Data",
@@ -216,7 +349,6 @@
                         id_alat: idAlat,
                         uraian_alat: $('#uraian_ubah_alat').val(),
                         satuan_alat: $('#satuan_ubah_alat').val(),
-                        "<?= $this->security->get_csrf_token_name(); ?>": "<?= $this->security->get_csrf_hash(); ?>"
                     },
                     dataType: "json",
                     success: function(res) {
@@ -229,6 +361,16 @@
                                 $('#uraian-alat').text($('#uraian_ubah_alat').val());
                                 $('#satuan-alat').text($('#satuan_ubah_alat').val());
                             });
+
+                            if (response.csrf_token) {
+                                $('#csrf_token_ubah').val(response.csrf_token);
+                                $.ajaxSetup({
+                                    data: {
+                                        '<?= $this->security->get_csrf_token_name(); ?>': response
+                                            .csrf_token
+                                    }
+                                });
+                            }
                         } else {
                             swal("Gagal!", "Terjadi kesalahan server.", "error");
                         }
@@ -247,51 +389,57 @@
     $(document).on('click', '#btn-tutup-detail', function() {
         // Tutup modal
         $('#staticBackdrop-detail-alat').modal('hide');
-        setTimeout(() => location.reload(), 200);
+        reload_alat_table();
     });
 
- // Saat tombol "Tambah Detail Alat Per-Supplier" diklik
-$(document).on('click', '.btn-detail-alat', function() {
-    const idAlat = $(this).data('id'); // ambil id_alat
-    const kodeAlat = $(this).data('kode');
+    // Saat tombol "Tambah Detail alat Per-Supplier" diklik
+    $(document).on('click', '.btn-detail-alat', function() {
+        const idAlat = $(this).data('id'); // ambil id_alat
+        const kodeAlat = $(this).data('kode');
 
-    // Ambil data master alat via AJAX
-    $.ajax({
-        url: "<?= site_url('Administrator/Master_data/Master_alat/Master_data_alat/get_detail_alat') ?>",
-        type: "GET",
-        data: { id_alat: idAlat },
-        dataType: "json",
-        success: function(data) {
-            if(data.error){
-                swal("Gagal!", data.error, "error");
-                return;
+
+        // Ambil data master alat via AJAX
+        $.ajax({
+            url: "<?= site_url('Administrator/Master_data/Master_alat/Master_data_alat/get_detail_alat') ?>",
+            type: "GET",
+            data: {
+                id_alat: idAlat
+            },
+            dataType: "json",
+            success: function(data) {
+                if (data.error) {
+                    swal("Gagal!", data.error, "error");
+                    return;
+                }
+
+                // Set data di modal
+                $('#hidden_id_alat').val(idAlat);
+                $('#hidden_kode_alat').val(data.kode_alat);
+                $('#kode-alat-suplier').text(data.kode_alat);
+                $('#uraian-alat-suplier').text(data.uraian_alat);
+                $('#satuan-alat-suplier').text(data.satuan_alat);
+
+                // Status
+                const statusBadge = data.status_alat === 'Active' ?
+                    '<span class="badge text-bg-success"><i class="fa-solid fa-recycle fa-lg"></i>&nbsp;Active</span>' :
+                    '<span class="badge text-bg-secondary"><i class="fa-solid fa-ban fa-lg"></i>&nbsp;Non-Active</span>';
+                $('#status-alat-suplier').html(statusBadge);
+
+                // Kode otomatis supplier baru
+                $('#kode_otomatis_persuplier').val(data.kode_alat + ".1");
+
+                // Load tabel detail supplier
+                loadDetailTable(data.kode_alat);
+                reload_alat_table();
+                // Tampilkan modal
+                $('#staticBackdrop-tambah-detail-alat-supplier').modal('show');
+            },
+            error: function() {
+                swal("Error!", "Gagal mengambil data dari server.", "error");
             }
-
-            // Set data di modal
-            $('#kode-alat-suplier').text(data.kode_alat);
-            $('#uraian-alat-suplier').text(data.uraian_alat);
-            $('#satuan-alat-suplier').text(data.satuan_alat);
-
-            // Status
-            const statusBadge = data.status_alat === 'Active' ?
-                '<span class="badge text-bg-success"><i class="fa-solid fa-recycle fa-lg"></i>&nbsp;Active</span>' :
-                '<span class="badge text-bg-secondary"><i class="fa-solid fa-ban fa-lg"></i>&nbsp;Non-Active</span>';
-            $('#status-alat-suplier').html(statusBadge);
-
-            // Kode otomatis supplier baru
-            $('#kode_otomatis_persuplier').val(data.kode_alat + ".1");
-
-            // Load tabel detail supplier
-            loadDetailTable(data.kode_alat);
-
-            // Tampilkan modal
-            $('#staticBackdrop-tambah-detail-alat-supplier').modal('show');
-        },
-        error: function() {
-            swal("Error!", "Gagal mengambil data dari server.", "error");
-        }
+        });
     });
-});
+
 
     // ambil kode supplier dan nama suplier otomatis ketika kode dipilih
     $(document).ready(function() {
@@ -402,7 +550,7 @@ $(document).on('click', '.btn-detail-alat', function() {
 
     });
 
- 
+
     // tambah suplier
     $(document).on('click', '#link-tambah-tabel-persuplier', function(e) {
         const kodeAlat = $('#hidden_kode_alat').val().trim() || $('#kode-alat-suplier').text().trim();
@@ -414,9 +562,9 @@ $(document).on('click', '.btn-detail-alat', function() {
             swal("Data Belum Lengkap", "Harap isi semua kolom sebelum menyimpan!", "warning");
             return;
         }
-
+        // 
         swal({
-            title: "Tambahkan ke tabel?",
+            title: "Tambahkan ke tabel test data?",
             text: "Pastikan data sudah benar.",
             type: "info",
             showCancelButton: true,
@@ -441,8 +589,8 @@ $(document).on('click', '.btn-detail-alat', function() {
 
                             swal("Berhasil!", res.message, "success");
                             loadDetailTable(kodeAlat);
-                            updateSupplierBadge(kodeAlat); // update badge otomatis
-
+                            updateSupplierBadge(); // update badge otomatis
+                            reload_alat_table();
                             // Reset field
                             $('#search_supplier_alat').val('');
                             $('#nama_detail_supplier').val('');
@@ -466,128 +614,135 @@ $(document).on('click', '.btn-detail-alat', function() {
 
     });
 
-// Fungsi load tabel detail supplier
-function loadTable(kodeAlat){
-    $.ajax({
-        url: "<?= site_url('Administrator/Master_data/Master_alat/Master_data_alat/get_detail_tabel_persuplier') ?>",
-        type: "GET",
-        data: { kode_alat: kodeAlat },
-        dataType: "json",
-        success: function(res){
-            let tbody = '';
-            if(res.status === 'success' && res.data.length > 0){
-                res.data.forEach(function(row){
-                    tbody += `
-                        <tr>
-                            <td class="text-center">${row.kode_alat_detail}</td>
-                            <td class="text-center">${row.kode_supplier}</td>
-                            <td>${row.nama_supplier || '-'}</td>
-                            <td class="text-end">${row.harga_satuan}</td>
-                            <td class="text-center">${row.created_at}</td>>
-                        </tr>
-                    `;
-                });
-            } else {
-                tbody = '<tr><td colspan="6" class="text-center text-muted">Belum ada data</td></tr>';
+    // Fungsi load tabel detail supplier
+    function loadTable(kodeAlat) {
+        $.ajax({
+            url: "<?= site_url('Administrator/Master_data/Master_alat/Master_data_alat/get_detail_tabel_persuplier') ?>",
+            type: "GET",
+            data: {
+                kode_alat: kodeAlat
+            },
+            dataType: "json",
+            success: function(res) {
+                let tbody = '';
+                if (res.status === 'success' && res.data.length > 0) {
+                    res.data.forEach(function(row) {
+                        tbody += `
+                            <tr>
+                                <td class="text-center">${row.kd_detail_master_ubas}</td>
+                                <td class="text-center">${row.kode_supplier}</td>
+                                <td>${row.nama_supplier || '-'}</td>
+                                <td class="text-end">${row.harsat_detail_master_ubas}</td>
+                                <td class="text-center">${row.date_detail}</td>
+                            </tr>
+                        `;
+                    });
+                } else {
+                    tbody = '<tr><td colspan="6" class="text-center text-muted">Belum ada data</td></tr>';
+                }
+                $('#tabel-detail').html(tbody);
+            },
+            error: function() {
+                $('#tabel-detail').html('<tr><td colspan="6" class="text-center text-danger">Gagal memuat data</td></tr>');
             }
-            $('#tabel-detail').html(tbody);
-        },
-        error: function(){
-            $('#tabel-detail').html('<tr><td colspan="6" class="text-center text-danger">Gagal memuat data</td></tr>');
-        }
-    });
-}
-
-// Fungsi load tabel detail supplier
-function loadDetailTable(kodeAlat){
-    $.ajax({
-        url: "<?= site_url('Administrator/Master_data/Master_alat/Master_data_alat/get_detail_tabel_persuplier') ?>",
-        type: "GET",
-        data: { kode_alat: kodeAlat },
-        dataType: "json",
-        success: function(res){
-            let tbody = '';
-            if(res.status === 'success' && res.data.length > 0){
-                res.data.forEach(function(row){
-                    tbody += `
-                        <tr>
-                            <td class="text-center">${row.kode_alat_detail}</td>
-                            <td class="text-center">${row.kode_supplier}</td>
-                            <td>${row.nama_supplier || '-'}</td>
-                            <td class="text-end">${row.harga_satuan}</td>
-                            <td class="text-center">${row.created_at}</td>
-                            <td class="text-center">
-                                <button class="btn btn-sm btn-danger hapus-detail" data-id="${row.id_alat_detail}" data-kode="${kodeAlat}">
-                                    <i class="fa-solid fa-trash-can"></i>
-                                </button>
-                            </td>
-                        </tr>
-                    `;
-                });
-            } else {
-                tbody = '<tr><td colspan="6" class="text-center text-muted">Belum ada data</td></tr>';
-            }
-            $('#tabel-detail-persupplier').html(tbody);
-        },
-        error: function(){
-            $('#tabel-detail-persupplier').html('<tr><td colspan="6" class="text-center text-danger">Gagal memuat data</td></tr>');
-        }
-    });
-}
-
-// Tombol hapus detail supplier
-$(document).on('click', '.hapus-detail', function(){
-    const idDetail = $(this).data('id');
-    const kodeAlat = $(this).data('kode'); // untuk reload tabel
-
-    if(!idDetail){
-        swal("Error!", "ID detail tidak ditemukan.", "error");
-        return;
+        });
     }
 
-    swal({
-        title: "Yakin ingin menghapus?",
-        text: "Data yang dihapus tidak bisa dikembalikan!",
-        icon: "warning",
-        buttons: true,
-        dangerMode: true,
-    }).then((willDelete) => {
-        if(willDelete){
-            $.ajax({
-                url: "<?= site_url('Administrator/Master_data/Master_alat/Master_data_alat/hapus_detail_supplier') ?>",
-                type: "POST",
-                data: { id_alat_detail: idDetail },
-                dataType: "json",
-                success: function(res){
-                    if(res.status === 'success'){
-                        swal("Berhasil!", "Data berhasil dihapus.", "success");
-                        loadDetailTable(kodeAlat); // refresh tabel
-                        updateSupplierBadge(kodeAlat); // update badge otomatis
+    // Fungsi load tabel detail supplier
+    function loadDetailTable(kodeAlat) {
+        console.log('angga', kodeAlat);
 
-                    } else {
-                        swal("Gagal!", res.message || "Gagal menghapus data", "error");
-                    }
-                },
-                error: function(err){
-                    swal("Error!", "Terjadi kesalahan server.", "error");
-                    console.log(err);
+        $.ajax({
+            url: "<?= site_url('Administrator/Master_data/Master_alat/Master_data_alat/get_detail_tabel_persuplier') ?>",
+            type: "GET",
+            data: {
+                kode_alat: kodeAlat
+            },
+            dataType: "json",
+            success: function(res) {
+                let tbody = '';
+                if (res.status === 'success' && res.data.length > 0) {
+                    res.data.forEach(function(row) {
+                        tbody += `
+                            <tr>
+                                <td class="text-center">${row.kd_detail_master_ubas}</td>
+                                <td class="text-center">${row.kode_supplier}</td>
+                                <td>${row.nama_supplier || '-'}</td>
+                                <td class="text-end">${row.harsat_detail_master_ubas}</td>
+                                <td class="text-center">${row.date_detail}</td>
+                                <td class="text-center">
+                                    <button class="btn btn-sm btn-danger hapus-detail" data-id="${row.id_detail_master_ubas}" data-kode="${kodeAlat}">
+                                        <i class="fa-solid fa-trash-can"></i>
+                                    </button>
+                                </td>
+                            </tr>
+                        `;
+                    });
+                } else {
+                    tbody = '<tr><td colspan="6" class="text-center text-muted">Belum ada data</td></tr>';
                 }
-            });
-        }
-    });
-});
+                $('#tabel-detail-persupplier').html(tbody);
+            },
+            error: function() {
+                $('#tabel-detail-persupplier').html('<tr><td colspan="6" class="text-center text-danger">Gagal memuat data</td></tr>');
+            }
+        });
+    }
 
-function updateSupplierBadge(kodeAlat) {
-    $.getJSON("<?= site_url('Administrator/Master_data/Master_alat/Master_data_alat/count_supplier/') ?>" + kodeAlat, function(data) {
-        let badge = $('#badge-supplier-' + kodeAlat);
-        if (data.jumlah > 0) {
-            badge.html(`<i class="fa-solid fa-recycle fa-lg"></i> ${data.jumlah} Supplier`);
-            badge.removeClass('text-bg-danger').addClass('text-bg-info');
-        } else {
-            badge.html(`<i class="fa-solid fa-recycle fa-lg"></i> 0 Supplier`);
-            badge.removeClass('text-bg-info').addClass('text-bg-danger');
+    // Tombol hapus detail supplier
+    $(document).on('click', '.hapus-detail', function() {
+        const idDetail = $(this).data('id');
+        const kodeAlat = $(this).data('kode'); // untuk reload tabel
+
+        if (!idDetail) {
+            swal("Error!", "ID detail tidak ditemukan.", "error");
+            return;
         }
+
+        swal({
+            title: "Yakin ingin menghapus?",
+            text: "Data yang dihapus tidak bisa dikembalikan!",
+            icon: "warning",
+            buttons: true,
+            dangerMode: true,
+        }).then((willDelete) => {
+            if (willDelete) {
+                $.ajax({
+                    url: "<?= site_url('Administrator/Master_data/Master_alat/Master_data_alat/hapus_detail_supplier') ?>",
+                    type: "POST",
+                    data: {
+                        id_detail_master_ubas: idDetail
+                    },
+                    dataType: "json",
+                    success: function(res) {
+                        if (res.status === 'success') {
+                            swal("Berhasil!", "Data berhasil dihapus.", "success");
+                            loadDetailTable(kodeAlat); // refresh tabel
+                            updateSupplierBadge(kodeAlat); // update badge otomatis
+                            reload_alat_table();
+                        } else {
+                            swal("Gagal!", res.message || "Gagal menghapus data", "error");
+                        }
+                    },
+                    error: function(err) {
+                        swal("Error!", "Terjadi kesalahan server.", "error");
+                        console.log(err);
+                    }
+                });
+            }
+        });
     });
-}
-  
+
+    function updateSupplierBadge(kodeAlat) {
+        $.getJSON("<?= site_url('Administrator/Master_data/Master_alat/Master_data_alat/count_supplier/') ?>" + kodeAlat, function(data) {
+            let badge = $('#badge-supplier-' + kodeAlat);
+            if (data.jumlah > 0) {
+                badge.html(`<i class="fa-solid fa-recycle fa-lg"></i> ${data.jumlah} Supplier`);
+                badge.removeClass('text-bg-danger').addClass('text-bg-info');
+            } else {
+                badge.html(`<i class="fa-solid fa-recycle fa-lg"></i> 0 Supplier`);
+                badge.removeClass('text-bg-info').addClass('text-bg-danger');
+            }
+        });
+    }
 </script>

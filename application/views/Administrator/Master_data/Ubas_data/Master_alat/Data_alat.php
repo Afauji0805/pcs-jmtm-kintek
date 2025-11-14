@@ -16,8 +16,7 @@
         </h6>
         <div class="pt-3">
             <div class="card shadow-lg">
-                <div class="card-header d-flex justify-content-between align-items-center"
-                    style="background: #373B44;  /* fallback for old browsers */
+                <div class="card-header d-flex justify-content-between align-items-center" style="background: #373B44;  /* fallback for old browsers */
                     background: -webkit-linear-gradient(to right, #4286f4, #373B44);  /* Chrome 10-25, Safari 5.1-6 */
                     background: linear-gradient(to right, #4286f4, #373B44); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */">
                     <div class="flex-grow-1 bd-highlight">
@@ -41,16 +40,14 @@
                                 </small>
                             </td>
                             <td scope="col align-baseline" class="text-end">
-                                <button class="btn btn-sm btn-primary" type="button" data-bs-toggle="modal"
-                                    data-bs-target="#staticBackdrop-tambah-alat">
+                                <button class="btn btn-sm btn-primary" type="button" data-bs-toggle="modal" data-bs-target="#staticBackdrop-tambah-alat">
                                     <i class="fa-solid fa-folder-plus fa-lg"></i>&nbsp;
                                     <small><b>Tambah Data</b></small>
                                 </button>
                             </td>
                         </tr>
                     </table>
-                    <table class="table-bordered table-sm table-hover align-middle border-dark example"
-                        style="width:100%">
+                    <table class="table-bordered table-sm table-hover align-middle border-dark example_ubah" style="width:100%">
                         <thead class="bg-secondary text-white shadow-lg">
                             <tr>
                                 <th scope="col" class="col-1 text-center">
@@ -86,90 +83,14 @@
                             </tr>
                         </thead>
                         <tbody>
-                            <?php foreach ($alat as $b) : ?>
-                                <tr>
-                                    <td scope="col" class="col-1 text-center">
-                                        <small>
-                                            <span class="d-inline-block text-truncate" style="max-width: 250px;">
-                                                <?= $b->kode_alat ?>
-                                            </span>
-                                        </small>
-                                    </td>
-                                    <td scope="col" class="col-3 text-start">
-                                        <small>
-                                            <span class="d-inline-block text-truncate" style="max-width: 250px;">
-                                                <?= $b->uraian_alat ?>
-                                            </span>
-                                        </small>
-                                    </td>
-                                    <td scope="col" class="col-2 text-start">
-                                        <small>
-                                            <span class="d-inline-block text-truncate" style="max-width: 250px;">
-                                                <?= $b->satuan_alat ?>
-                                            </span>
-                                        </small>
-                                    </td>
-                                    <td scope="col" class="col-2 text-center">
-                                        <span id="badge-supplier-<?= $b->kode_alat ?>" class="badge <?= $b->jumlah_supplier > 0 ? 'text-bg-info' : 'text-bg-danger' ?>">
-                                            <i class="fa-solid fa-recycle fa-lg"></i>
-                                            &nbsp;
-                                            <?= $b->jumlah_supplier ?> Supplier
-                                        </span>
-                                    </td>
 
-                                    <!-- status -->
-                                    <td scope="col" class="col-2 text-center">
-                                        <span id="status-<?= $b->id_alat ?>"
-                                            class="badge <?= $b->status_alat == 'Active' ? 'text-bg-success' : 'text-bg-secondary' ?>">
-                                            <i class="fa-solid <?= $b->status_alat == 'Active' ? 'fa-recycle' : 'fa-ban' ?> fa-lg"></i>
-                                            <?= $b->status_alat ?>
-                                        </span>
-                                    </td>
-
-                                    <td scope="col" class="col-2 text-center">
-                                        <small>
-                                            <div class="btn-group" role="group" aria-label="Basic mixed styles example">
-                                                <!-- Tombol Detail & Ubah -->
-                                                <button type="button" class="btn btn-sm btn-warning btn-detail" data-bs-toggle="modal"
-                                                    data-id="<?= $b->id_alat ?>"
-                                                    data-bs-toggle="modal"
-                                                    data-bs-target="#staticBackdrop-detail-alat"
-                                                    data-bs-toggle="tooltip"
-                                                    data-bs-placement="top"
-                                                    title="Detail & Ubah Data">
-                                                    <i class="fa-solid fa-users-viewfinder fa-lg px-1"></i>
-                                                </button>
-                                                <!-- <small>Detail</small> -->
-                                                <button type="button" class="btn btn-sm btn-primary btn-detail-alat" data-bs-toggle="modal" data-bs-target="#staticBackdrop-tambah-detail-alat-supplier" data-id="<?= $b->id_alat ?>" data-kode="<?= $b->kode_alat ?>" data-uraian="<?= $b->uraian_alat ?>">
-                                                    <a data-bs-toggle="tooltip" data-bs-placement="top"
-                                                        title="Tambah Data Supplier Per-Item">
-                                                        <i class="fa-solid fa-user-plus fa-lg px-1"></i>
-                                                    </a>
-                                                </button><!-- <small>Detail</small> -->
-                                                <!-- <small>Hapus</small> -->
-
-                                                <!-- Tombol Toggle Status Active / Non Active -->
-                                                <button class="btn btn-sm btn-toggle-status <?= $b->status_alat == 'Active' ? 'btn-danger' : 'btn-success' ?>"
-                                                    data-id="<?= $b->id_alat ?>"
-                                                    data-status="<?= $b->status_alat ?>"
-                                                    data-bs-toggle="tooltip"
-                                                    data-bs-placement="top"
-                                                    title="<?= $b->status_alat == 'Active' ? 'Non-Aktifkan' : 'Aktifkan' ?>">
-                                                    <i class="fa-solid <?= $b->status_alat == 'Active' ? 'fa-ban' : 'fa-check' ?> fa-lg"></i>
-                                                </button>
-                                            </div>
-                                        </small>
-                                    </td>
-                                </tr>
-                            <?php endforeach; ?>
                         </tbody>
                     </table>
                 </div>
             </div>
         </div>
     </div>
-    <div class="d-flex align-items-center p-3 my-2 text-white rounded shadow-lg"
-        style="background: #44A08D;  /* fallback for old browsers */
+    <div class="d-flex align-items-center p-3 my-2 text-white rounded shadow-lg" style="background: #44A08D;  /* fallback for old browsers */
                                     background: -webkit-linear-gradient(to right, #093637, #44A08D);  /* Chrome 10-25, Safari 5.1-6 */
                                     background: linear-gradient(to right, #093637, #44A08D); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */">
         <div class="lh-1">
@@ -198,13 +119,11 @@
     </div>
 
     <!-- Modal Tambah Alat -->
-    <div class="modal fade" id="staticBackdrop-tambah-alat" data-bs-backdrop="static" data-bs-keyboard="false"
-        tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+    <div class="modal fade" id="staticBackdrop-tambah-alat" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
         <div class="modal-dialog modal-xl modal-dialog-scrollable">
             <div class="modal-content">
                 <div class="modal-body">
-                    <div class="d-flex align-items-center p-2 my-2 text-white rounded shadow-lg"
-                        style="background: #36D1DC;  /* fallback for old browsers */
+                    <div class="d-flex align-items-center p-2 my-2 text-white rounded shadow-lg" style="background: #36D1DC;  /* fallback for old browsers */
                                 background: -webkit-linear-gradient(to right, #5B86E5, #36D1DC);  /* Chrome 10-25, Safari 5.1-6 */
                                 background: linear-gradient(to right, #5B86E5, #36D1DC); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */">
                         <i class="fa-regular fa-folder-open fa-xl px-1"></i>
@@ -220,8 +139,7 @@
                     </div>
                     <div class="my-2 p-2 bg-body rounded shadow-lg">
                         <div class="card shadow-lg">
-                            <div class="card-header d-flex justify-content-between align-items-center"
-                                style="background: #232526;  /* fallback for old browsers */
+                            <div class="card-header d-flex justify-content-between align-items-center" style="background: #232526;  /* fallback for old browsers */
                                         background: -webkit-linear-gradient(to right, #414345, #232526);  /* Chrome 10-25, Safari 5.1-6 */
                                         background: linear-gradient(to right, #414345, #232526); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */">
                                 <div class="flex-grow-1 bd-highlight">
@@ -236,7 +154,7 @@
                             <div class="card-body">
                                 <div class="row align-items-start">
                                     <div class="col-12 col-sm-12">
-                                        <form id="form-tambah-alat" class="row g-1" method="post" action="<?= site_url('Administrator/Master_data/Master_alat/Master_data_alat/tambah') ?>">
+                                        <form id="form-tambah-alat" class="row g-1" method="post">
                                             <input type="hidden" name="<?= $this->security->get_csrf_token_name(); ?>" value="<?= $this->security->get_csrf_hash(); ?>" id="csrf_token_tambah" />
 
                                             <div class="col-md-3">
@@ -245,9 +163,7 @@
                                                         <i class="fa-regular fa-pen-to-square fa-lg"></i>
                                                     </span>
                                                     <div class="form-floating">
-                                                        <input type="text" class="form-control form-control-sm"
-                                                            id="kode_alat" name="kode_alat"
-                                                            value="<?= isset($kode_otomatis) ? $kode_otomatis : '' ?>" disabled>
+                                                        <input type="text" class="form-control form-control-sm" id="kode_alat" name="kode_alat" value="<?= isset($kode_otomatis) ? $kode_otomatis : '' ?>" disabled>
                                                         <label>
                                                             <i class="fa-solid fa-barcode fa-sm"></i>&nbsp;
                                                             <small>Kode (otomatis)</small>
@@ -262,8 +178,7 @@
                                                         <i class="fa-regular fa-pen-to-square fa-lg"></i>
                                                     </span>
                                                     <div class="form-floating">
-                                                        <input type="text" class="form-control form-control-sm"
-                                                            id="uraian_alat" name="uraian_alat" placeholder="Uraian Alat">
+                                                        <input type="text" class="form-control form-control-sm" id="uraian_alat" name="uraian_alat" placeholder="Uraian alat">
                                                         <label>
                                                             <i class="fa-solid fa-person-digging fa-sm"></i>&nbsp;
                                                             <small>Uraian Item</small>
@@ -278,8 +193,7 @@
                                                         <i class="fa-regular fa-pen-to-square fa-lg"></i>
                                                     </span>
                                                     <div class="form-floating">
-                                                        <input type="text" class="form-control form-control-sm"
-                                                            id="satuan_alat" name="satuan_alat">
+                                                        <input type="text" class="form-control form-control-sm" id="satuan_alat" name="satuan_alat">
                                                         <label>
                                                             <i class="fa-solid fa-recycle fa-sm"></i>&nbsp;
                                                             <small>Satuan Item</small>
@@ -288,8 +202,7 @@
                                                 </div>
                                             </div>
                                             <div class="card-footer">
-                                                <button type="button" class="btn btn-danger btn-sm rounded shadow-lg"
-                                                    data-bs-dismiss="modal">
+                                                <button type="button" class="btn btn-danger btn-sm rounded shadow-lg" data-bs-dismiss="modal">
                                                     <i class="fa-regular fa-rectangle-xmark fa-lg px-1"></i>
                                                     Tutup Halaman
                                                 </button>
@@ -305,8 +218,7 @@
                         </div>
                     </div>
                     <!-- Catatan Pengguna -->
-                    <div class="d-flex align-items-center p-3 my-2 text-white rounded shadow-lg"
-                        style="background: #44A08D;  /* fallback for old browsers */
+                    <div class="d-flex align-items-center p-3 my-2 text-white rounded shadow-lg" style="background: #44A08D;  /* fallback for old browsers */
                                                 background: -webkit-linear-gradient(to right, #093637, #44A08D);  /* Chrome 10-25, Safari 5.1-6 */
                                                 background: linear-gradient(to right, #093637, #44A08D); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */">
                         <div class="lh-1">
@@ -338,13 +250,11 @@
     <!-- End Modal Tambah Alat -->
 
     <!-- Modal Detail Master Data Alat -->
-    <div class="modal fade" id="staticBackdrop-detail-alat" data-bs-backdrop="static" data-bs-keyboard="false"
-        tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+    <div class="modal fade" id="staticBackdrop-detail-alat" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
         <div class="modal-dialog modal-xl modal-dialog-scrollable">
             <div class="modal-content">
                 <div class="modal-body">
-                    <div class="d-flex align-items-center p-2 my-2 text-white rounded shadow-lg"
-                        style="background: #36D1DC;  /* fallback for old browsers */
+                    <div class="d-flex align-items-center p-2 my-2 text-white rounded shadow-lg" style="background: #36D1DC;  /* fallback for old browsers */
                                 background: -webkit-linear-gradient(to right, #5B86E5, #36D1DC);  /* Chrome 10-25, Safari 5.1-6 */
                                 background: linear-gradient(to right, #5B86E5, #36D1DC); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */">
                         <i class="fa-regular fa-folder-open fa-xl px-1"></i>
@@ -360,8 +270,7 @@
                     </div>
                     <div class="my-2 p-2 bg-body rounded shadow-lg">
                         <div class="card shadow-lg">
-                            <div class="card-header d-flex justify-content-between align-items-center"
-                                style="background: #232526;  /* fallback for old browsers */
+                            <div class="card-header d-flex justify-content-between align-items-center" style="background: #232526;  /* fallback for old browsers */
                                                         background: -webkit-linear-gradient(to right, #414345, #232526);  /* Chrome 10-25, Safari 5.1-6 */
                                                         background: linear-gradient(to right, #414345, #232526); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */">
                                 <div class="flex-grow-1 bd-highlight">
@@ -546,9 +455,7 @@
                                             <i class="fa-solid fa-circle-info px-1"></i>
                                             Detail Tabel Data Alat Per Supplier
                                         </h6><br>
-                                        <table
-                                            class="table-bordered table-sm table-hover align-middle border-dark example1"
-                                            style="width:100%">
+                                        <table class="table-bordered table-sm table-hover align-middle border-dark example1" style="width:100%">
                                             <thead class="bg-warning text-dark shadow-lg">
                                                 <tr>
                                                     <th scope="col" class="col-1 text-center">
@@ -603,13 +510,11 @@
     <!-- End Modal Detail Master Data Alat -->
 
     <!-- Modal Ubah Alat -->
-    <div class="modal fade" id="staticBackdrop-ubah-alat" data-bs-backdrop="static" data-bs-keyboard="false"
-        tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+    <div class="modal fade" id="staticBackdrop-ubah-alat" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
         <div class="modal-dialog modal-xl modal-dialog-scrollable">
             <div class="modal-content">
                 <div class="modal-body">
-                    <div class="d-flex align-items-center p-2 my-2 text-white rounded shadow-lg"
-                        style="background: #36D1DC;  /* fallback for old browsers */
+                    <div class="d-flex align-items-center p-2 my-2 text-white rounded shadow-lg" style="background: #36D1DC;  /* fallback for old browsers */
                                 background: -webkit-linear-gradient(to right, #5B86E5, #36D1DC);  /* Chrome 10-25, Safari 5.1-6 */
                                 background: linear-gradient(to right, #5B86E5, #36D1DC); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */">
                         <i class="fa-regular fa-folder-open fa-xl px-1"></i>
@@ -625,8 +530,7 @@
                     </div>
                     <div class="my-2 p-2 bg-body rounded shadow-lg">
                         <div class="card shadow-lg">
-                            <div class="card-header d-flex justify-content-between align-items-center"
-                                style="background: #232526;  /* fallback for old browsers */
+                            <div class="card-header d-flex justify-content-between align-items-center" style="background: #232526;  /* fallback for old browsers */
                                         background: -webkit-linear-gradient(to right, #414345, #232526);  /* Chrome 10-25, Safari 5.1-6 */
                                         background: linear-gradient(to right, #414345, #232526); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */">
                                 <div class="flex-grow-1 bd-highlight">
@@ -643,6 +547,7 @@
                                 <div class="row align-items-start">
                                     <div class="col-12 col-sm-12">
                                         <form class="row g-1" id="form-ubah-alat">
+                                            <input type="hidden" name="<?= $this->security->get_csrf_token_name(); ?>" value="<?= $this->security->get_csrf_hash(); ?>" id="csrf_token_ubah" />
                                             <input type="hidden" id="id_ubah_alat">
                                             <div class="col-md-3">
                                                 <div class="input-group">
@@ -650,8 +555,7 @@
                                                         <i class="fa-regular fa-pen-to-square fa-lg"></i>
                                                     </span>
                                                     <div class="form-floating">
-                                                        <input type="text" class="form-control form-control-sm"
-                                                            id="kode_ubah_alat" placeholder="Kode" disabled>
+                                                        <input type="text" class="form-control form-control-sm" id="kode_ubah_alat" placeholder="Kode" disabled>
                                                         <label>
                                                             <i class="fa-solid fa-barcode fa-sm"></i>&nbsp;
                                                             <small>Kode (automatis)</small>
@@ -665,11 +569,10 @@
                                                         <i class="fa-regular fa-pen-to-square fa-lg"></i>
                                                     </span>
                                                     <div class="form-floating">
-                                                        <input type="text" class="form-control form-control-sm"
-                                                            id="uraian_ubah_alat" placeholder="Uraian Item">
+                                                        <input type="text" class="form-control form-control-sm" id="uraian_ubah_alat" placeholder="Uraian Item">
                                                         <label>
                                                             <i class="fa-solid fa-person-digging fa-sm"></i>&nbsp;
-                                                            <small>Uraian Item</small>
+                                                            <small>Uraian Item aada</small>
                                                         </label>
                                                     </div>
                                                 </div>
@@ -680,8 +583,7 @@
                                                         <i class="fa-regular fa-pen-to-square fa-lg"></i>
                                                     </span>
                                                     <div class="form-floating">
-                                                        <input type="text" class="form-control form-control-sm"
-                                                            id="satuan_ubah_alat" placeholder="Satuan Item">
+                                                        <input type="text" class="form-control form-control-sm" id="satuan_ubah_alat" placeholder="Satuan Item">
                                                         <label>
                                                             <i class="fa-solid fa-recycle fa-sm"></i>&nbsp;
                                                             <small>Satuan Item</small>
@@ -693,13 +595,11 @@
                                     </div>
                                 </div>
                                 <div class="card-footer">
-                                    <button type="button" class="btn btn-danger btn-sm rounded shadow-lg"
-                                        data-bs-dismiss="modal">
+                                    <button type="button" class="btn btn-danger btn-sm rounded shadow-lg" data-bs-dismiss="modal">
                                         <i class="fa-regular fa-rectangle-xmark fa-lg px-1"></i>
                                         Tutup Halaman
                                     </button>
-                                    <button id="link-ubah" type="submit"
-                                        class="btn btn-success btn-sm rounded shadow-lg">
+                                    <button id="link-ubah" type="submit" class="btn btn-success btn-sm rounded shadow-lg">
                                         <i class="fa-regular fa-floppy-disk fa-lg px-1"></i>
                                         Simpan Perubahan Data
                                     </button>
@@ -708,8 +608,7 @@
                         </div>
                     </div>
                     <!-- Catatan Pengguna -->
-                    <div class="d-flex align-items-center p-3 my-2 text-white rounded shadow-lg"
-                        style="background: #44A08D;  /* fallback for old browsers */
+                    <div class="d-flex align-items-center p-3 my-2 text-white rounded shadow-lg" style="background: #44A08D;  /* fallback for old browsers */
                             background: -webkit-linear-gradient(to right, #093637, #44A08D);  /* Chrome 10-25, Safari 5.1-6 */
                             background: linear-gradient(to right, #093637, #44A08D); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */">
                         <div class="lh-1">
@@ -739,16 +638,14 @@
             </div>
         </div>
     </div>
-    <!-- End Modal Ubah ALat -->
+    <!-- End Modal Ubah Alat -->
 
     <!-- Modal Tambah Detil Alat Per-Supplier -->
-    <div class="modal fade" id="staticBackdrop-tambah-detail-alat-supplier" data-bs-backdrop="static"
-        data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+    <div class="modal fade" id="staticBackdrop-tambah-detail-alat-supplier" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
         <div class="modal-dialog modal-xl modal-dialog-scrollable">
             <div class="modal-content">
                 <div class="modal-body">
-                    <div class="d-flex align-items-center p-2 my-2 text-white rounded shadow-lg"
-                        style="background: #36D1DC;  /* fallback for old browsers */
+                    <div class="d-flex align-items-center p-2 my-2 text-white rounded shadow-lg" style="background: #36D1DC;  /* fallback for old browsers */
                                 background: -webkit-linear-gradient(to right, #5B86E5, #36D1DC);  /* Chrome 10-25, Safari 5.1-6 */
                                 background: linear-gradient(to right, #5B86E5, #36D1DC); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */">
                         <i class="fa-regular fa-folder-open fa-xl px-1"></i>
@@ -764,8 +661,7 @@
                     </div>
                     <div class="my-2 p-2 bg-body rounded shadow-lg">
                         <div class="card shadow-lg">
-                            <div class="card-header d-flex justify-content-between align-items-center"
-                                style="background: #232526;  /* fallback for old browsers */
+                            <div class="card-header d-flex justify-content-between align-items-center" style="background: #232526;  /* fallback for old browsers */
                                         background: -webkit-linear-gradient(to right, #414345, #232526);  /* Chrome 10-25, Safari 5.1-6 */
                                         background: linear-gradient(to right, #414345, #232526); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */">
                                 <div class="flex-grow-1 bd-highlight">
@@ -784,7 +680,7 @@
                                             <div class="card-body">
                                                 <h6 class="border-bottom border-dark pb-2 mb-0">
                                                     <i class="fa-solid fa-circle-info px-1"></i>
-                                                    Master Data ALat
+                                                    Master Data Alat
                                                 </h6><br>
                                                 <table class="table table-sm table-striped" id="detail-table">
                                                     <tr>
@@ -889,8 +785,7 @@
                                                         <label class="form-label">
                                                             <small> Kode</small>
                                                         </label>
-                                                        <input type="text" class="form-control form-control-sm"
-                                                            value="Auto" disabled>
+                                                        <input type="text" class="form-control form-control-sm" value="Auto" disabled>
                                                     </div>
                                                     <div class="col-md-2">
                                                         <label class="form-label">
@@ -900,9 +795,7 @@
                                                             <span class="input-group-text">
                                                                 <i class="fa-solid fa-magnifying-glass fa-lg"></i>
                                                             </span>
-                                                            <input class="form-control form-control-sm"
-                                                                list="datalistOptions_supplier"
-                                                                id="search_supplier_alat" placeholder="Ketik kode supplier...">
+                                                            <input class="form-control form-control-sm" list="datalistOptions_supplier" id="search_supplier_alat" placeholder="Ketik kode supplier...">
                                                             <datalist id="datalistOptions_supplier"></datalist>
                                                         </div>
                                                     </div>
@@ -911,8 +804,7 @@
                                                         <label class="form-label">
                                                             <small>Nama Supplier</small>
                                                         </label>
-                                                        <input type="text" class="form-control form-control-sm text-truncate"
-                                                            id="nama_detail_supplier" readonly>
+                                                        <input type="text" class="form-control form-control-sm text-truncate" id="nama_detail_supplier" readonly>
                                                     </div>
                                                     <div class="col-md-2">
                                                         <label class="form-label">
@@ -922,28 +814,24 @@
                                                             <span class="input-group-text">
                                                                 <i class="fa-regular fa-pen-to-square fa-lg"></i>
                                                             </span>
-                                                            <input type="text" class="form-control form-control-sm"
-                                                                id="harsat_detail_supplier" value="">
+                                                            <input type="text" class="form-control form-control-sm" id="harsat_detail_supplier" value="">
                                                         </div>
                                                     </div>
                                                     <div class="col-md-2">
                                                         <label class="form-label">
                                                             <small>Currency (Rp)</small>
                                                         </label>
-                                                        <input type="text" class="form-control form-control-sm"
-                                                            id="curr_detail_supplier" disabled="">
+                                                        <input type="text" class="form-control form-control-sm" id="curr_detail_supplier" disabled="">
                                                     </div>
                                                     <div class="col-md-2">
                                                         <label class="form-label">
                                                             <small>Date (Now)</small>
                                                         </label>
-                                                        <input type="text" class="form-control form-control-sm"
-                                                            id="date_detail_supplier" value="05/11/2025" readonly>
+                                                        <input type="text" class="form-control form-control-sm" id="date_detail_supplier" value="05/11/2025" readonly>
                                                     </div>
                                                     <div class="card-footer">
                                                         <div class="text-end">
-                                                            <button id="link-tambah-tabel-persuplier" class="btn btn-sm btn-primary"
-                                                                type="button">
+                                                            <button id="link-tambah-tabel-persuplier" class="btn btn-sm btn-primary" type="button">
                                                                 <i class="fa-solid fa-folder-plus fa-lg"></i>&nbsp;
                                                                 <small><b>Tambah Data Tabel Supplier</b></small>
                                                             </button>
@@ -965,9 +853,7 @@
                                                         </td>
                                                     </tr>
                                                 </table>
-                                                <table
-                                                    class="table-bordered table-sm table-hover align-middle border-dark example1"
-                                                    style="width:100%">
+                                                <table class="table-bordered table-sm table-hover align-middle border-dark example1" style="width:100%">
                                                     <thead class="bg-warning text-dark shadow-lg">
                                                         <tr>
                                                             <th scope="col" class="col-1 text-center">
@@ -1012,16 +898,14 @@
                                 </div>
                             </div>
                             <div class="card-footer">
-                                <button type="button" class="btn btn-danger btn-sm rounded shadow-lg"
-                                    data-bs-dismiss="modal">
+                                <button type="button" class="btn btn-danger btn-sm rounded shadow-lg" data-bs-dismiss="modal">
                                     <i class="fa-regular fa-rectangle-xmark fa-lg px-1"></i>
                                     Tutup Halaman
                                 </button>
                             </div>
                         </div>
                         <!-- Catatan Pengguna -->
-                        <div class="d-flex align-items-center p-3 my-2 text-white rounded shadow-lg"
-                            style="background: #44A08D;  /* fallback for old browsers */
+                        <div class="d-flex align-items-center p-3 my-2 text-white rounded shadow-lg" style="background: #44A08D;  /* fallback for old browsers */
                             background: -webkit-linear-gradient(to right, #093637, #44A08D);  /* Chrome 10-25, Safari 5.1-6 */
                             background: linear-gradient(to right, #093637, #44A08D); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */">
                             <div class="lh-1">

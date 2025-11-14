@@ -1,4 +1,97 @@
 <script>
+    var tbl_subkon; // GLOBAL
+
+    $(document).ready(function() {
+
+        function init_subkon_table() {
+            tbl_subkon = $('.example_ubah').DataTable({ // <-- FIX: SIMPAN INSTANCE
+                destroy: true,
+                responsive: false,
+                processing: true,
+                serverSide: true,
+                lengthChange: false,
+                ordering: false,
+
+                ajax: {
+                    url: "<?= base_url('Administrator/Master_data/Master_subkon/Master_data_subkon/get_data_subkon'); ?>",
+                    type: "POST"
+                },
+
+                columns: [{
+                        data: 0,
+                        className: "text-center",
+                        render: function(data) {
+                            return `
+                          <small>
+                              <span class="d-inline-block text-truncate" style="max-width:250px" title="${data}">
+                                  ${data}
+                              </span>
+                          </small>`;
+                        }
+                    },
+
+                    {
+                        data: 1,
+                        className: "text-start",
+                        render: function(data) {
+                            return `
+                          <small>
+                              <span class="d-inline-block text-truncate" style="max-width:250px" title="${data}">
+                                  ${data}
+                              </span>
+                          </small>`;
+                        }
+                    },
+
+                    {
+                        data: 2,
+                        className: "text-start",
+                        render: function(data) {
+                            return `
+                          <small>
+                              <span class="d-inline-block text-truncate" style="max-width:250px" title="${data}">
+                                  ${data}
+                              </span>
+                          </small>`;
+                        }
+                    },
+
+                    {
+                        data: 3,
+                        className: "text-center"
+                    },
+                    {
+                        data: 4,
+                        className: "text-center"
+                    },
+                    {
+                        data: 5,
+                        className: "text-center"
+                    }
+                ],
+
+                buttons: ['print', 'pdf', 'colvis'],
+
+                initComplete: function() {
+                    this.api().buttons().container()
+                        .appendTo($('.col-md-6:eq(0)', this.api().table().container()));
+                }
+            });
+        }
+
+        // Init pertama kali
+        init_subkon_table();
+    });
+
+    // 🔥 Global function untuk reload
+    function reload_subkon_table() {
+        if (tbl_subkon) {
+            tbl_subkon.ajax.reload(null, false);
+        }
+    }
+</script>
+
+<script>
     // tambahhh 
     $(document).ready(function() {
 
@@ -23,12 +116,13 @@
 
         // === Tombol Simpan Klik ===
         $(document).on('click', '#link-simpan', function(e) {
-            e.preventDefault(); // stop form langsung submit
+            e.preventDefault();
 
             let uraian = $('#uraian_subkon').val().trim();
             let satuan = $('#satuan_subkon').val().trim();
+            let csrfName = $('#csrf_token_tambah').attr('name');
+            let csrfHash = $('#csrf_token_tambah').val();
 
-            // Validasi manual sebelum swal
             if (uraian === '' || satuan === '') {
                 swal({
                     title: "Data Belum Lengkap",
@@ -44,16 +138,49 @@
                 text: "Data subkon akan disimpan ke database.",
                 icon: "info",
                 buttons: ["Batal", "Simpan Data"],
-            })
-            .then((willSave) => {
+            }).then((willSave) => {
                 if (willSave) {
-                    $('#form-tambah-subkon').submit();
+
+                    $.ajax({
+                        url: '<?= base_url('Administrator/Master_data/Master_subkon/Master_data_subkon/tambah') ?>',
+                        type: "POST",
+                        data: {
+                            [csrfName]: csrfHash,
+                            uraian_subkon: uraian,
+                            satuan_subkon: satuan
+                        },
+                        dataType: "json",
+                        success: function(res) {
+
+                            // Update CSRF token
+                            $('#csrf_token_tambah').val(res.csrf);
+
+                            swal("Berhasil!", "Data subkon telah disimpan.", "success");
+
+                            // Reset form
+                            $('#form-tambah-subkon')[0].reset();
+
+                            // Reload table
+                            reload_subkon_table();
+
+                            // Tutup modal
+                            $('#staticBackdrop-tambah-subkon').modal('hide');
+                        },
+                        error: function() {
+                            swal("Gagal!", "Terjadi kesalahan sistem.", "error");
+                        }
+                    });
+
                 } else {
                     swal("Batal Menyimpan", "Silakan periksa kembali data anda.", "error");
                 }
             });
         });
+
     });
+
+
+
 
     //   tombol togglel aktif non aktif
     $(document).on('click', '.btn-toggle-status', function(e) {
@@ -145,7 +272,8 @@
 
                 // Load tabel detail supplier
                 loadTable(data.kode_subkon);
-                },
+                reload_subkon_table();
+            },
 
             error: function() {
                 swal("Gagal!", "Terjadi kesalahan. Silahkan coba lagi.", "error");
@@ -155,6 +283,7 @@
 
     // Ubah
     $(document).on('click', '#btn-detail-ubah', function(e) {
+
         e.preventDefault();
 
         var idSubkon = $('#staticBackdrop-detail-subkon').data('id');
@@ -193,8 +322,12 @@
 
     // Simpan 
     $(document).on('click', '#link-ubah', function(e) {
+        $.ajaxSetup({
+            data: {
+                '<?= $this->security->get_csrf_token_name(); ?>': '<?= $this->security->get_csrf_hash(); ?>'
+            }
+        });
         e.preventDefault();
-
         swal({
             title: "Apakah anda yakin data sudah terisi dengan benar?",
             text: "Proses Ubah Data",
@@ -216,7 +349,6 @@
                         id_subkon: idSubkon,
                         uraian_subkon: $('#uraian_ubah_subkon').val(),
                         satuan_subkon: $('#satuan_ubah_subkon').val(),
-                        "<?= $this->security->get_csrf_token_name(); ?>": "<?= $this->security->get_csrf_hash(); ?>"
                     },
                     dataType: "json",
                     success: function(res) {
@@ -229,6 +361,16 @@
                                 $('#uraian-subkon').text($('#uraian_ubah_subkon').val());
                                 $('#satuan-subkon').text($('#satuan_ubah_subkon').val());
                             });
+
+                            if (response.csrf_token) {
+                                $('#csrf_token_ubah').val(response.csrf_token);
+                                $.ajaxSetup({
+                                    data: {
+                                        '<?= $this->security->get_csrf_token_name(); ?>': response
+                                            .csrf_token
+                                    }
+                                });
+                            }
                         } else {
                             swal("Gagal!", "Terjadi kesalahan server.", "error");
                         }
@@ -247,51 +389,56 @@
     $(document).on('click', '#btn-tutup-detail', function() {
         // Tutup modal
         $('#staticBackdrop-detail-subkon').modal('hide');
-        setTimeout(() => location.reload(), 200);
+        reload_subkon_table();
     });
 
- // Saat tombol "Tambah Detail Subkon Per-Supplier" diklik
-$(document).on('click', '.btn-detail-subkon', function() {
-    const idSubkon = $(this).data('id'); // ambil id_subkon
-    const kodeSubkon = $(this).data('kode');
+    // Saat tombol "Tambah Detail Subkon Per-Supplier" diklik
+    $(document).on('click', '.btn-detail-subkon', function() {
+        const idSubkon = $(this).data('id'); // ambil id_subkon
+        const kodeSubkon = $(this).data('kode');
 
-    // Ambil data master subkon via AJAX
-    $.ajax({
-        url: "<?= site_url('Administrator/Master_data/Master_subkon/Master_data_subkon/get_detail_subkon') ?>",
-        type: "GET",
-        data: { id_subkon: idSubkon },
-        dataType: "json",
-        success: function(data) {
-            if(data.error){
-                swal("Gagal!", data.error, "error");
-                return;
+
+        // Ambil data master subkon via AJAX
+        $.ajax({
+            url: "<?= site_url('Administrator/Master_data/Master_subkon/Master_data_subkon/get_detail_subkon') ?>",
+            type: "GET",
+            data: {
+                id_subkon: idSubkon
+            },
+            dataType: "json",
+            success: function(data) {
+                if (data.error) {
+                    swal("Gagal!", data.error, "error");
+                    return;
+                }
+
+                // Set data di modal
+                $('#hidden_id_subkon').val(idSubkon);
+                $('#hidden_kode_subkon').val(data.kode_subkon);
+                $('#kode-subkon-suplier').text(data.kode_subkon);
+                $('#uraian-subkon-suplier').text(data.uraian_subkon);
+                $('#satuan-subkon-suplier').text(data.satuan_subkon);
+
+                // Status
+                const statusBadge = data.status_subkon === 'Active' ?
+                    '<span class="badge text-bg-success"><i class="fa-solid fa-recycle fa-lg"></i>&nbsp;Active</span>' :
+                    '<span class="badge text-bg-secondary"><i class="fa-solid fa-ban fa-lg"></i>&nbsp;Non-Active</span>';
+                $('#status-subkon-suplier').html(statusBadge);
+
+                // Kode otomatis supplier baru
+                $('#kode_otomatis_persuplier').val(data.kode_subkon + ".1");
+
+                // Load tabel detail supplier
+                loadDetailTable(data.kode_subkon);
+                reload_subkon_table();
+                // Tampilkan modal
+                $('#staticBackdrop-tambah-detail-subkon-supplier').modal('show');
+            },
+            error: function() {
+                swal("Error!", "Gagal mengambil data dari server.", "error");
             }
-
-            // Set data di modal
-            $('#kode-subkon-suplier').text(data.kode_subkon);
-            $('#uraian-subkon-suplier').text(data.uraian_subkon);
-            $('#satuan-subkon-suplier').text(data.satuan_subkon);
-
-            // Status
-            const statusBadge = data.status_subkon === 'Active' ?
-                '<span class="badge text-bg-success"><i class="fa-solid fa-recycle fa-lg"></i>&nbsp;Active</span>' :
-                '<span class="badge text-bg-secondary"><i class="fa-solid fa-ban fa-lg"></i>&nbsp;Non-Active</span>';
-            $('#status-subkon-suplier').html(statusBadge);
-
-            // Kode otomatis supplier baru
-            $('#kode_otomatis_persuplier').val(data.kode_subkon + ".1");
-
-            // Load tabel detail supplier
-            loadDetailTable(data.kode_subkon);
-
-            // Tampilkan modal
-            $('#staticBackdrop-tambah-detail-subkon-supplier').modal('show');
-        },
-        error: function() {
-            swal("Error!", "Gagal mengambil data dari server.", "error");
-        }
+        });
     });
-});
 
 
     // ambil kode supplier dan nama suplier otomatis ketika kode dipilih
@@ -403,7 +550,7 @@ $(document).on('click', '.btn-detail-subkon', function() {
 
     });
 
- 
+
     // tambah suplier
     $(document).on('click', '#link-tambah-tabel-persuplier', function(e) {
         const kodeSubkon = $('#hidden_kode_subkon').val().trim() || $('#kode-subkon-suplier').text().trim();
@@ -415,9 +562,9 @@ $(document).on('click', '.btn-detail-subkon', function() {
             swal("Data Belum Lengkap", "Harap isi semua kolom sebelum menyimpan!", "warning");
             return;
         }
-
+        // 
         swal({
-            title: "Tambahkan ke tabel?",
+            title: "Tambahkan ke tabel test data?",
             text: "Pastikan data sudah benar.",
             type: "info",
             showCancelButton: true,
@@ -442,8 +589,8 @@ $(document).on('click', '.btn-detail-subkon', function() {
 
                             swal("Berhasil!", res.message, "success");
                             loadDetailTable(kodeSubkon);
-                            updateSupplierBadge(kodeSubkon); // update badge otomatis
-
+                            updateSupplierBadge(); // update badge otomatis
+                            reload_subkon_table();
                             // Reset field
                             $('#search_supplier_subkon').val('');
                             $('#nama_detail_supplier').val('');
@@ -467,128 +614,136 @@ $(document).on('click', '.btn-detail-subkon', function() {
 
     });
 
-// Fungsi load tabel detail supplier
-function loadTable(kodeSubkon){
-    $.ajax({
-        url: "<?= site_url('Administrator/Master_data/Master_subkon/Master_data_subkon/get_detail_tabel_persuplier') ?>",
-        type: "GET",
-        data: { kode_subkon: kodeSubkon },
-        dataType: "json",
-        success: function(res){
-            let tbody = '';
-            if(res.status === 'success' && res.data.length > 0){
-                res.data.forEach(function(row){
-                    tbody += `
-                        <tr>
-                            <td class="text-center">${row.kode_subkon_detail}</td>
-                            <td class="text-center">${row.kode_supplier}</td>
-                            <td>${row.nama_supplier || '-'}</td>
-                            <td class="text-end">${row.harga_satuan}</td>
-                            <td class="text-center">${row.created_at}</td>>
-                        </tr>
-                    `;
-                });
-            } else {
-                tbody = '<tr><td colspan="6" class="text-center text-muted">Belum ada data</td></tr>';
+    // Fungsi load tabel detail supplier
+    function loadTable(kodeSubkon) {
+        $.ajax({
+            url: "<?= site_url('Administrator/Master_data/Master_subkon/Master_data_subkon/get_detail_tabel_persuplier') ?>",
+            type: "GET",
+            data: {
+                kode_subkon: kodeSubkon
+            },
+            dataType: "json",
+            success: function(res) {
+                let tbody = '';
+                if (res.status === 'success' && res.data.length > 0) {
+                    res.data.forEach(function(row) {
+                        tbody += `
+                            <tr>
+                                <td class="text-center">${row.kd_detail_master_ubas}</td>
+                                <td class="text-center">${row.kode_supplier}</td>
+                                <td>${row.nama_supplier || '-'}</td>
+                                <td class="text-end">${row.harsat_detail_master_ubas}</td>
+                                <td class="text-center">${row.date_detail}</td>
+                            </tr>
+                        `;
+                    });
+                } else {
+                    tbody = '<tr><td colspan="6" class="text-center text-muted">Belum ada data</td></tr>';
+                }
+                $('#tabel-detail').html(tbody);
+            },
+            error: function() {
+                $('#tabel-detail').html('<tr><td colspan="6" class="text-center text-danger">Gagal memuat data</td></tr>');
             }
-            $('#tabel-detail').html(tbody);
-        },
-        error: function(){
-            $('#tabel-detail').html('<tr><td colspan="6" class="text-center text-danger">Gagal memuat data</td></tr>');
-        }
-    });
-}
-
-// Fungsi load tabel detail supplier
-function loadDetailTable(kodeSubkon){
-    $.ajax({
-        url: "<?= site_url('Administrator/Master_data/Master_subkon/Master_data_subkon/get_detail_tabel_persuplier') ?>",
-        type: "GET",
-        data: { kode_subkon: kodeSubkon },
-        dataType: "json",
-        success: function(res){
-            let tbody = '';
-            if(res.status === 'success' && res.data.length > 0){
-                res.data.forEach(function(row){
-                    tbody += `
-                        <tr>
-                            <td class="text-center">${row.kode_subkon_detail}</td>
-                            <td class="text-center">${row.kode_supplier}</td>
-                            <td>${row.nama_supplier || '-'}</td>
-                            <td class="text-end">${row.harga_satuan}</td>
-                            <td class="text-center">${row.created_at}</td>
-                            <td class="text-center">
-                                <button class="btn btn-sm btn-danger hapus-detail" data-id="${row.id_subkon_detail}" data-kode="${kodeSubkon}">
-                                    <i class="fa-solid fa-trash-can"></i>
-                                </button>
-                            </td>
-                        </tr>
-                    `;
-                });
-            } else {
-                tbody = '<tr><td colspan="6" class="text-center text-muted">Belum ada data</td></tr>';
-            }
-            $('#tabel-detail-persupplier').html(tbody);
-        },
-        error: function(){
-            $('#tabel-detail-persupplier').html('<tr><td colspan="6" class="text-center text-danger">Gagal memuat data</td></tr>');
-        }
-    });
-}
-
-// Tombol hapus detail supplier
-$(document).on('click', '.hapus-detail', function(){
-    const idDetail = $(this).data('id');
-    const kodeSubkon = $(this).data('kode'); // untuk reload tabel
-
-    if(!idDetail){
-        swal("Error!", "ID detail tidak ditemukan.", "error");
-        return;
+        });
     }
 
-    swal({
-        title: "Yakin ingin menghapus?",
-        text: "Data yang dihapus tidak bisa dikembalikan!",
-        icon: "warning",
-        buttons: true,
-        dangerMode: true,
-    }).then((willDelete) => {
-        if(willDelete){
-            $.ajax({
-                url: "<?= site_url('Administrator/Master_data/Master_subkon/Master_data_subkon/hapus_detail_supplier') ?>",
-                type: "POST",
-                data: { id_subkon_detail: idDetail },
-                dataType: "json",
-                success: function(res){
-                    if(res.status === 'success'){
-                        swal("Berhasil!", "Data berhasil dihapus.", "success");
-                        loadDetailTable(kodeSubkon); // refresh tabel
-                        updateSupplierBadge(kodeSubkon); // update badge otomatis
+    // Fungsi load tabel detail supplier
+    function loadDetailTable(kodeSubkon) {
 
-                    } else {
-                        swal("Gagal!", res.message || "Gagal menghapus data", "error");
-                    }
-                },
-                error: function(err){
-                    swal("Error!", "Terjadi kesalahan server.", "error");
-                    console.log(err);
+        $.ajax({
+            url: "<?= site_url('Administrator/Master_data/Master_subkon/Master_data_subkon/get_detail_tabel_persuplier') ?>",
+            type: "GET",
+            data: {
+                kode_subkon: kodeSubkon
+            },
+            dataType: "json",
+            success: function(res) {
+                let tbody = '';
+                if (res.status === 'success' && res.data.length > 0) {
+                    res.data.forEach(function(row) {
+                        console.log(row);
+
+                        tbody += `
+                            <tr>
+                                <td class="text-center">${row.kd_detail_master_ubas}</td>
+                                <td class="text-center">${row.kode_supplier}</td>
+                                <td>${row.nama_supplier || '-'}</td>
+                                <td class="text-end">${row.harsat_detail_master_ubas}</td>
+                                <td class="text-center">${row.date_detail}</td>
+                                <td class="text-center">
+                                    <button class="btn btn-sm btn-danger hapus-detail" data-id="${row.id_detail_master_ubas}" data-kode="${kodeSubkon}">
+                                        <i class="fa-solid fa-trash-can"></i>
+                                    </button>
+                                </td>
+                            </tr>
+                        `;
+                    });
+                } else {
+                    tbody = '<tr><td colspan="6" class="text-center text-muted">Belum ada data</td></tr>';
                 }
-            });
-        }
-    });
-});
+                $('#tabel-detail-persupplier').html(tbody);
+            },
+            error: function() {
+                $('#tabel-detail-persupplier').html('<tr><td colspan="6" class="text-center text-danger">Gagal memuat data</td></tr>');
+            }
+        });
+    }
 
-function updateSupplierBadge(kodeSubkon) {
-    $.getJSON("<?= site_url('Administrator/Master_data/Master_subkon/Master_data_subkon/count_supplier/') ?>" + kodeSubkon, function(data) {
-        let badge = $('#badge-supplier-' + kodeSubkon);
-        if (data.jumlah > 0) {
-            badge.html(`<i class="fa-solid fa-recycle fa-lg"></i> ${data.jumlah} Supplier`);
-            badge.removeClass('text-bg-danger').addClass('text-bg-info');
-        } else {
-            badge.html(`<i class="fa-solid fa-recycle fa-lg"></i> 0 Supplier`);
-            badge.removeClass('text-bg-info').addClass('text-bg-danger');
+    // Tombol hapus detail supplier
+    $(document).on('click', '.hapus-detail', function() {
+        const idDetail = $(this).data('id');
+        const kodeSubkon = $(this).data('kode'); // untuk reload tabel
+
+        if (!idDetail) {
+            swal("Error!", "ID detail tidak ditemukan.", "error");
+            return;
         }
+
+        swal({
+            title: "Yakin ingin menghapus?",
+            text: "Data yang dihapus tidak bisa dikembalikan!",
+            icon: "warning",
+            buttons: true,
+            dangerMode: true,
+        }).then((willDelete) => {
+            if (willDelete) {
+                $.ajax({
+                    url: "<?= site_url('Administrator/Master_data/Master_subkon/Master_data_subkon/hapus_detail_supplier') ?>",
+                    type: "POST",
+                    data: {
+                        id_detail_master_ubas: idDetail
+                    },
+                    dataType: "json",
+                    success: function(res) {
+                        if (res.status === 'success') {
+                            swal("Berhasil!", "Data berhasil dihapus.", "success");
+                            loadDetailTable(kodeSubkon); // refresh tabel
+                            updateSupplierBadge(kodeSubkon); // update badge otomatis
+                            reload_subkon_table();
+                        } else {
+                            swal("Gagal!", res.message || "Gagal menghapus data", "error");
+                        }
+                    },
+                    error: function(err) {
+                        swal("Error!", "Terjadi kesalahan server.", "error");
+                        console.log(err);
+                    }
+                });
+            }
+        });
     });
-}
-  
+
+    function updateSupplierBadge(kodeSubkon) {
+        $.getJSON("<?= site_url('Administrator/Master_data/Master_subkon/Master_data_subkon/count_supplier/') ?>" + kodeSubkon, function(data) {
+            let badge = $('#badge-supplier-' + kodeSubkon);
+            if (data.jumlah > 0) {
+                badge.html(`<i class="fa-solid fa-recycle fa-lg"></i> ${data.jumlah} Supplier`);
+                badge.removeClass('text-bg-danger').addClass('text-bg-info');
+            } else {
+                badge.html(`<i class="fa-solid fa-recycle fa-lg"></i> 0 Supplier`);
+                badge.removeClass('text-bg-info').addClass('text-bg-danger');
+            }
+        });
+    }
 </script>
