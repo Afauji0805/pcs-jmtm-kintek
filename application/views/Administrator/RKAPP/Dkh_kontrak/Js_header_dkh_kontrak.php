@@ -148,7 +148,7 @@
     }
     </style>
 
-    <style>
+    <!-- <style>
     /* ==========================================
    NAV-TAB PUTIH MINIMALIS (ACTIVE ONLY BORDER)
    ========================================== */
@@ -247,5 +247,5 @@
         opacity: 1;
         transform: translateY(0);
     }
-    </style>
+    </style> -->
 </head>

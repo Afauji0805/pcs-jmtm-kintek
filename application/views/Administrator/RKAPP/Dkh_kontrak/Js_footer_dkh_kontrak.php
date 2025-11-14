@@ -544,9 +544,10 @@ $(document).on('keypress', 'input[placeholder="Qty"]', function(e) {
 </script>
 
 
+
 <script>
 /* =============================================================
-   TOMBOL TAMBAH DATA DALAM MODAL REKAP UBAS (FINAL & RAPI)
+   TOMBOL TAMBAH + HAPUS DATA DALAM MODAL REKAP UBAS
    ============================================================= */
 let tableRekapUBAS = $('#tableRekapUBAS').DataTable({
     lengthChange: false,
@@ -565,17 +566,14 @@ let tableRekapUBAS = $('#tableRekapUBAS').DataTable({
 function addRowRekapUBAS() {
     const newRow = $(`
         <tr>
-            <td><input type="text" placeholder="Kategori" style="width:100%;"></td>
-            <td><input type="text" placeholder="Uraian Pekerjaan" style="width:100%;"></td>
-            <td><input type="text" placeholder="Sat" style="width:100%; text-align:center;"></td>
+            <td scope="col" class="col-5 text-start"><input type="text" placeholder="Kategori" value="Upah" style="width:20%; background-color:#E5E7EB;"readonly>&nbsp;
+            <input type="text" placeholder="Uraian Pekerjaan" style="width:78%;"></td>
+            <td class="text-start"><input type="text" placeholder="Sat" style="width:100%; text-align:start;"></td>
             <td><input type="text" placeholder="Qty" class="rekap-qty" style="width:100%; text-align:right;"></td>
-            <td><input type="text" placeholder="Unit Price" class="rekap-unit-price" style="width:100%; text-align:right;"></td>
-            <td><input type="text" placeholder="Jumlah" class="rekap-jumlah" style="width:100%; text-align:right; background-color:#E5E7EB;" readonly></td>
-            <td class="text-center">
-            <button class="btn btn-danger btn-sm btn-hapus-rekap" type="button">
-    <i class="fa-solid fa-trash-can"></i>
-</button>
-
+            <td scope="col" class="col-2"><input type="text" placeholder="Unit Price" class="rekap-unit-price" style="width:100%; text-align:right;"></td>
+            <td scope="col" class="col-2"><input type="text" placeholder="Jumlah" class="rekap-jumlah" style="width:100%; text-align:right; background-color:#E5E7EB;" readonly></td>
+            <td scope="col" class="col-1 text-center">
+                <button type="button" class="btn btn-sm btn-danger btn-hapus-rekap">✕</button>
             </td>
         </tr>
     `);
@@ -587,11 +585,21 @@ function addRowRekapUBAS() {
 // 🔹 Event tombol "Tambah Data" di tab Rekap
 $(document).on('click', '#btnAddRowRekap', function() {
     addRowRekapUBAS();
+});
 
+// 🔹 Event tombol "Hapus" sederhana tanpa SweetAlert
+$(document).on('click', '.btn-hapus-rekap', function() {
+    $(this).closest('tr').fadeOut(150, function() {
+        $(this).remove();
+    });
 });
 </script>
 
 <script>
+// =============================================================
+//   HITUNG & FORMAT OTOMATIS
+// =============================================================
+
 // 🔹 Konversi "Rp 1.234,56" → angka 1234.56
 function parseRupiahToNumberRekap(str) {
     if (!str) return 0;
@@ -624,37 +632,29 @@ $(document).on('input', '.rekap-unit-price', function(e) {
     const input = this;
     let value = input.value;
 
-    // Simpan posisi kursor agar tidak loncat
     const cursorPos = input.selectionStart;
     const oldLength = value.length;
 
-    // Biarkan user nulis koma dulu
     if (value.endsWith(',')) return;
 
-    // Bersihkan semua selain angka dan koma
     let clean = value.replace(/[^0-9,]/g, '');
-
-    // Kalau ada lebih dari 1 koma → keep yang pertama
     if ((clean.match(/,/g) || []).length > 1) {
         const parts = clean.split(',');
         clean = parts[0] + ',' + parts[1];
     }
 
-    // Pisahkan ribuan dan desimal
     let [intPart, decPart] = clean.split(',');
     let num = parseInt(intPart || '0', 10);
     if (isNaN(num)) num = 0;
 
     let formatted = new Intl.NumberFormat('id-ID').format(num);
-
     if (typeof decPart !== 'undefined') {
-        formatted += ',' + decPart.substring(0, 2); // maksimal 2 digit di belakang koma
+        formatted += ',' + decPart.substring(0, 2);
     }
 
     input.value = 'Rp ' + formatted;
     hitungJumlahRekap($(input).closest('tr'));
 
-    // Kembalikan posisi kursor biar halus
     const newLength = input.value.length;
     const diff = newLength - oldLength;
     input.setSelectionRange(cursorPos + diff, cursorPos + diff);
@@ -677,86 +677,8 @@ $(document).on('DOMNodeInserted', '#tableRekapUBAS tbody tr', function() {
 });
 </script>
 
-<script>
-$(document).on('click', '.btn-hapus-rekap', function(e) {
-    e.preventDefault();
 
-    const $row = $(this).closest('tr');
 
-    Swal.fire({
-        title: 'Hapus Baris Rekap?',
-        text: 'Apakah kamu yakin ingin menghapus baris ini?',
-        icon: 'warning',
-        showCancelButton: true,
-        confirmButtonColor: '#d33',
-        cancelButtonColor: '#6c757d',
-        confirmButtonText: 'Ya, Hapus',
-        cancelButtonText: 'Batal'
-    }).then((result) => {
-        if (result.isConfirmed) {
-            $row.fadeOut(200, function() {
-                $(this).remove();
-            });
-
-            Swal.fire({
-                icon: 'success',
-                title: 'Baris dihapus!',
-                text: 'Data rekap berhasil dihapus.',
-                timer: 1200,
-                showConfirmButton: false
-            });
-        }
-    });
-});
-</script>
-
-<!-- ===================== HAPUS ROW REKAP UBAS ===================== -->
-<script>
-// =======================================================
-// ✅ FIX: Tombol Hapus Row di Modal Tab Rekap UBAS
-//     — Kompatibel dengan DataTables
-// =======================================================
-
-// Pastikan tabel punya tbody
-if ($('#tableRekapUBAS tbody').length === 0) {
-    $('#tableRekapUBAS').append('<tbody></tbody>');
-}
-
-// Event handler tombol hapus (pakai delegation dari tbody)
-$('#tableRekapUBAS tbody').on('click', '.btn-hapus-rekap', function(e) {
-    e.preventDefault();
-
-    const $row = $(this).closest('tr');
-
-    Swal.fire({
-        title: 'Hapus Baris Rekap?',
-        text: 'Apakah kamu yakin ingin menghapus baris ini?',
-        icon: 'warning',
-        showCancelButton: true,
-        confirmButtonColor: '#d33',
-        cancelButtonColor: '#6c757d',
-        confirmButtonText: 'Ya, Hapus',
-        cancelButtonText: 'Batal'
-    }).then((result) => {
-        if (result.isConfirmed) {
-            // Hapus baris dengan efek fade
-            $row.css('background-color', '#f8d7da');
-            $row.fadeOut(250, function() {
-                $(this).remove();
-            });
-
-            Swal.fire({
-                icon: 'success',
-                title: 'Baris Dihapus!',
-                text: 'Data rekap berhasil dihapus.',
-                timer: 1200,
-                showConfirmButton: false
-            });
-        }
-    });
-});
-</script>
-<!-- ===================== END HAPUS ROW REKAP UBAS ===================== -->
 
 
 

@@ -360,7 +360,8 @@
                                                 <h6 class="border-bottom border-white pb-2 mb-0"></h6>
 
                                                 <!-- NavTab Modal -->
-                                                <ul class="nav nav-tabs border-dark" id="myTab" role="tablist">
+                                                <ul class="nav nav-tabs border-dark" id="myTab" role="tablist"
+                                                    style="background: linear-gradient(to right, #ffa751, #ffe259);">
                                                     <li class="nav-item border_dark" role="presentation">
                                                         <button class="nav-link active text-dark border-dark"
                                                             id="rekap-tab" data-bs-toggle="tab"
@@ -370,7 +371,7 @@
                                                                 <b>
                                                                     <i
                                                                         class="fa-regular fa-folder-open fa-lg"></i>&nbsp;
-                                                                    Rekap
+                                                                    Data Rekap UBAS
                                                                 </b>
                                                             </small>
                                                         </button>
@@ -382,9 +383,8 @@
                                                             aria-selected="true">
                                                             <small>
                                                                 <b>
-                                                                    <i
-                                                                        class="fa-regular fa-folder-open fa-lg"></i>&nbsp;
-                                                                    Upah
+                                                                    <i class="fa-solid fa-money-bill fa-lg"></i> &nbsp;
+                                                                    Data Upah
                                                                 </b>
                                                             </small>
                                                         </button>
@@ -422,7 +422,7 @@
                                                                                     List Data Rekap UBAS
                                                                                 </small>
                                                                             </td>
-                                                                            <td scope="col" class="text-end">
+                                                                            <!-- <td scope="col" class="text-end">
                                                                                 <button id="btnAddRowRekap"
                                                                                     class="btn btn-sm btn-primary"
                                                                                     type="button">
@@ -430,10 +430,10 @@
                                                                                         class="fa-solid fa-folder-plus fa-lg"></i>&nbsp;
                                                                                     <small><b>Tambah Row</b></small>
                                                                                 </button>
-                                                                            </td>
+                                                                            </td> -->
                                                                         </tr>
                                                                     </table>
-                                                                    <table id="tableRekapUBAS"
+                                                                    <!-- <table id="tableRekapUBAS"
                                                                         class="table-bordered table-sm table-hover align-middle border-dark"
                                                                         style="width:100%">
                                                                         <thead
@@ -483,14 +483,101 @@
                                                                                 </th>
                                                                             </tr>
                                                                         </thead>
-                                                                    </table>
+                                                                    </table> -->
                                                                 </div>
                                                             </div>
                                                         </div>
                                                     </div>
                                                     <div class="tab-pane fade" id="upah-tab-pane" role="tabpanel"
                                                         aria-labelledby="upah-tab" tabindex="0">
-
+                                                        <div class="pt-3">
+                                                            <div class="card shadow-lg">
+                                                                <div class="card-header d-flex justify-content-between align-items-center"
+                                                                    style="background: #373B44;  /* fallback for old browsers */
+                                                                            background: -webkit-linear-gradient(to right, #4286f4, #373B44);  /* Chrome 10-25, Safari 5.1-6 */
+                                                                            background: linear-gradient(to right, #4286f4, #373B44); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */">
+                                                                    <div class="flex-grow-1 bd-highlight">
+                                                                        <span class="text-white">
+                                                                            <i
+                                                                                class="fa-solid fa-newspaper fa-lg px-1"></i>
+                                                                            <small>
+                                                                                <strong>
+                                                                                    Informasi Data Upah
+                                                                                </strong>
+                                                                            </small>
+                                                                        </span>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="card-body">
+                                                                    <table class="table table-sm align-middle">
+                                                                        <tr>
+                                                                            <td scope="col"
+                                                                                class="text-start text-muted">
+                                                                                <small>
+                                                                                    <i
+                                                                                        class="fa-solid fa-table fa-lg px-1"></i>
+                                                                                    List Data Upah
+                                                                                </small>
+                                                                            </td>
+                                                                            <td scope="col" class="text-end">
+                                                                                <button id="btnAddRowRekap"
+                                                                                    class="btn btn-sm btn-primary"
+                                                                                    type="button">
+                                                                                    <i
+                                                                                        class="fa-solid fa-folder-plus fa-lg"></i>&nbsp;
+                                                                                    <small><b>Tambah Row</b></small>
+                                                                                </button>
+                                                                            </td>
+                                                                        </tr>
+                                                                    </table>
+                                                                    <table id="tableRekapUBAS"
+                                                                        class="table-bordered table-sm table-hover align-middle border-dark"
+                                                                        style="width:100%">
+                                                                        <thead
+                                                                            class="bg-secondary text-white shadow-lg">
+                                                                            <tr>
+                                                                                <th scope="col"
+                                                                                    class="col-5 text-center">
+                                                                                    <small>
+                                                                                        Kategori | Uraian Pekerjaan
+                                                                                    </small>
+                                                                                </th>
+                                                                                <th scope="col"
+                                                                                    class="col-1 text-center">
+                                                                                    <small>
+                                                                                        Satuan
+                                                                                    </small>
+                                                                                </th>
+                                                                                <th scope="col"
+                                                                                    class="col-1 text-center">
+                                                                                    <small>
+                                                                                        Qty
+                                                                                    </small>
+                                                                                </th>
+                                                                                <th scope="col"
+                                                                                    class="col-2 text-center">
+                                                                                    <small>
+                                                                                        Unit Price
+                                                                                    </small>
+                                                                                </th>
+                                                                                <th scope="col"
+                                                                                    class="col-2 text-center">
+                                                                                    <small>
+                                                                                        Jumlah
+                                                                                    </small>
+                                                                                </th>
+                                                                                <th scope="col"
+                                                                                    class="col-1 text-center">
+                                                                                    <small>
+                                                                                        .:: Aksi ::.
+                                                                                    </small>
+                                                                                </th>
+                                                                            </tr>
+                                                                        </thead>
+                                                                    </table>
+                                                                </div>
+                                                            </div>
+                                                        </div>
                                                     </div>
                                                 </div>
                                                 <!-- End NavTab Modal -->
@@ -499,7 +586,7 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="card-footer">
+                            <div class="card-footer text-end">
                                 <button type="button" class="btn btn-danger btn-sm rounded shadow-lg"
                                     data-bs-dismiss="modal">
                                     <i class="fa-regular fa-rectangle-xmark fa-lg px-1"></i>
