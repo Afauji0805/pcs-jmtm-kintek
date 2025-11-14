@@ -148,4 +148,104 @@
     }
     </style>
 
+    <!-- <style>
+    /* ==========================================
+   NAV-TAB PUTIH MINIMALIS (ACTIVE ONLY BORDER)
+   ========================================== */
+    .nav-tabs {
+        border-bottom: none !important;
+        /* hilangkan garis default Bootstrap */
+    }
+
+    .nav-tabs .nav-link {
+        color: #000 !important;
+        /* teks hitam */
+        background-color: #fff !important;
+        /* latar putih bersih */
+        border: none !important;
+        /* tidak ada border sama sekali saat nonaktif */
+        font-weight: 600;
+        border-radius: 0.4rem 0.4rem 0 0;
+        transition: all 0.25s ease;
+    }
+
+    /* Hover efek lembut */
+    .nav-tabs .nav-link:hover {
+        background-color: #f8f9fa !important;
+        /* abu muda saat hover */
+    }
+
+    /* Saat tab aktif (diklik) */
+    .nav-tabs .nav-link.active {
+        color: #000 !important;
+        background-color: #fff !important;
+        border: 2px solid #212529 !important;
+        /* border hitam hanya untuk aktif */
+        border-bottom: none !important;
+        /* biar nyatu dengan konten di bawah */
+        font-weight: 700;
+        position: relative;
+        z-index: 2;
+    }
+
+    /* Biar tab-content nyatu halus di bawah */
+    .tab-content {
+        border-top: 2px solid #212529 !important;
+        margin-top: -2px;
+    }
+    </style>
+
+    <style>
+    /* ==========================================
+   NAV-TAB PUTIH MINIMALIS + ANIMASI SMOOTH
+   ========================================== */
+    .nav-tabs {
+        border-bottom: none !important;
+    }
+
+    .nav-tabs .nav-link {
+        color: #000 !important;
+        background-color: #fff !important;
+        border: none !important;
+        font-weight: 600;
+        border-radius: 0.4rem 0.4rem 0 0;
+        transition: all 0.25s ease;
+    }
+
+    .nav-tabs .nav-link:hover {
+        background-color: #f8f9fa !important;
+    }
+
+    /* Tab aktif (yang diklik) */
+    .nav-tabs .nav-link.active {
+        color: #000 !important;
+        background-color: #fff !important;
+        border: 2px solid #212529 !important;
+        border-bottom: none !important;
+        font-weight: 700;
+        position: relative;
+        z-index: 2;
+    }
+
+    /* Biar tab-content nyatu halus */
+    .tab-content {
+        border-top: 2px solid #212529 !important;
+        margin-top: -2px;
+        background-color: #fff;
+        border-radius: 0 0 0.4rem 0.4rem;
+        overflow: hidden;
+    }
+
+    /* 🔹 ANIMASI FADE + SLIDE */
+    .tab-pane {
+        opacity: 0;
+        transform: translateY(5px);
+        transition: all 0.4s ease;
+    }
+
+    .tab-pane.show.active {
+        opacity: 1;
+        transform: translateY(0);
+    }
+    </style> -->
 </head>
