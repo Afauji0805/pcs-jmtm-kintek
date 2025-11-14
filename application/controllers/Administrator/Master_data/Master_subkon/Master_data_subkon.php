@@ -40,7 +40,6 @@ class Master_data_subkon extends CI_Controller
 			$sk->jumlah_supplier = $this->Detail_subkon_model->count_supplier($sk->kode_subkon);
 		}
 
-
 		$this->load->view('Administrator/Master_data/Ubas_data/Master_subkon/Js_header_subkon');
 		$this->load->view('Administrator/Master_data/template_menu/Navbar_ubas');
 		$this->load->view('Administrator/Master_data/Ubas_data/Master_subkon/Data_subkon', $data);
@@ -48,6 +47,109 @@ class Master_data_subkon extends CI_Controller
 		$this->load->view('Administrator/Master_data/Ubas_data/Master_subkon/Js_footer_subkon');
 		$this->load->view('Administrator/Master_data/Ubas_data/Master_subkon/Ajax_subkon');
 	}
+
+
+	public function get_data_subkon()
+	{
+		$draw   = intval($this->input->post('draw'));
+		$start  = intval($this->input->post('start'));
+
+		// Data utama untuk datatables
+		$list = $this->Subkon_model->get_datatables_subkon();
+
+		// Siapkan array final
+		$data = [];
+		$no = $start;
+
+		// Load model detail supplier (biar tidak load di dalam loop berkali-kali)
+		$this->load->model('Administrator/Master_data/Ubas_model/Subkon/Detail_subkon_model');
+
+		foreach ($list as $b) {
+
+			// Hitung jumlah supplier berdasarkan kode_subkon
+			$jumlah_supplier = $this->Detail_subkon_model->count_supplier($b->kode_subkon);
+
+			// === Badge supplier ===
+			$badge_supplier = '
+            <span id="badge-supplier-' . $b->kode_subkon . '" 
+                class="badge ' . ($jumlah_supplier > 0 ? 'text-bg-info' : 'text-bg-danger') . '">
+                <i class="fa-solid fa-recycle fa-lg"></i>&nbsp;'
+				. $jumlah_supplier . ' Supplier
+            </span>
+        ';
+
+			// === Status Active / Non ===
+			$status_badge = '
+            <span id="status-' . $b->id_subkon . '"  
+                class="badge ' . ($b->status_subkon == "Active" ? "text-bg-success" : "text-bg-secondary") . '">
+                <i class="fa-solid ' . ($b->status_subkon == "Active" ? "fa-recycle" : "fa-ban") . ' fa-lg"></i>
+                ' . $b->status_subkon . '
+            </span>
+        ';
+
+			// === Tombol Aksi ===
+			$aksi_btn = '
+            <div class="btn-group" role="group">
+
+                <!-- Detail -->
+                <button type="button"
+                    class="btn btn-sm btn-warning btn-detail"
+                    data-id="' . $b->id_subkon . '"
+                    data-bs-toggle="modal"
+                    data-bs-target="#staticBackdrop-detail-subkon"
+                    title="Detail & Ubah Data">
+                    <i class="fa-solid fa-users-viewfinder fa-lg px-1"></i>
+                </button>
+
+                <!-- Tambah Supplier -->
+                <button type="button"
+                    class="btn btn-sm btn-primary btn-detail-subkon"
+                    data-id="' . $b->id_subkon . '"
+                    data-kode="' . $b->kode_subkon . '"
+                    data-uraian="' . $b->uraian_subkon . '"
+                    data-bs-toggle="modal"
+                    data-bs-target="#staticBackdrop-tambah-detail-subkon-supplier"
+                    title="Tambah Data Supplier Per-Item">
+                    <i class="fa-solid fa-user-plus fa-lg px-1"></i>
+                </button>
+
+                <!-- Toggle Status -->
+                <button class="btn btn-sm btn-toggle-status ' . ($b->status_subkon == "Active" ? "btn-danger" : "btn-success") . '"
+                    data-id="' . $b->id_subkon . '"
+                    data-status="' . $b->status_subkon . '"
+                    title="' . ($b->status_subkon == "Active" ? "Non-Aktifkan" : "Aktifkan") . '">
+                    <i class="fa-solid ' . ($b->status_subkon == "Active" ? "fa-ban" : "fa-check") . ' fa-lg"></i>
+                </button>
+
+            </div>
+        ';
+
+			// === ROW ===
+			$row = [
+				$b->kode_subkon,
+				$b->uraian_subkon,
+				$b->satuan_subkon,
+				$badge_supplier,
+				$status_badge,
+				$aksi_btn
+			];
+
+			$data[] = $row;
+		}
+
+		$output = [
+			"draw" => $draw,
+			"recordsTotal" => $this->Subkon_model->count_all_subkon(),
+			"recordsFiltered" => $this->Subkon_model->count_filtered_subkon(),
+			"data" => $data
+		];
+
+		$this->output
+			->set_content_type('application/json')
+			->set_output(json_encode($output));
+	}
+
+
 
 	// tambah
 	public function tambah()
@@ -64,8 +166,15 @@ class Master_data_subkon extends CI_Controller
 		];
 
 		$this->Subkon_model->insert_subkon($data);
-		redirect('Administrator/Master_data/Master_subkon/Master_data_subkon');
+
+		// Kirim respon JSON (untuk AJAX)
+		echo json_encode([
+			'status' => 'success',
+			'message' => 'Data subkon berhasil disimpan',
+			'csrf' => $this->security->get_csrf_hash()
+		]);
 	}
+
 
 	// togle aktif non aktif
 	public function toggle_status()
@@ -93,7 +202,9 @@ class Master_data_subkon extends CI_Controller
 			return;
 		}
 
-		$data = $this->db->get_where('tb_subkon', ['id_subkon' => $id])->row_array();
+		$data = $this->db->get_where('vw_master_subkon', ['id_subkon' => $id])->row_array();
+		// var_dump($data);
+		// die;
 
 		if ($data) {
 			echo json_encode($data);
@@ -215,21 +326,21 @@ class Master_data_subkon extends CI_Controller
 			return;
 		}
 
-		$kode_detail_subkon = $this->Detail_subkon_model->generate_kode_detail_subkon($kode_subkon);
+		$kd_detail_master_ubas = $this->Detail_subkon_model->generate_kode_detail_subkon($kode_subkon);
 
 		$data = [
 			'kode_subkon'         => $kode_subkon,
-			'kode_subkon_detail'  => $kode_detail_subkon,
+			'kd_detail_master_ubas'  => $kd_detail_master_ubas,
 			'kode_supplier'     => $kode_supplier,
-			'harga_satuan'      => $harga_satuan,
+			'harsat_detail_master_ubas'      => $harga_satuan,
 		];
 
 		$this->Detail_subkon_model->insert($data);
 
 		$supplier = $this->db->get_where(
-			'vw_detail_master_subkon',
+			'vw_detail_master_ubas',
 			[
-				'kode_subkon_detail' => $kode_detail_subkon,
+				'kd_detail_master_ubas' => $kd_detail_master_ubas,
 				'kode_subkon' => $kode_subkon,
 				'kode_supplier' => $kode_supplier,
 			]
@@ -239,8 +350,8 @@ class Master_data_subkon extends CI_Controller
 			'status' => 'success',
 			'message' => 'Data berhasil disimpan.',
 			'data' => [
-				'id_subkon_detail' => $supplier->id_subkon_detail,
-				'kode_subkon_detail' => $kode_detail_subkon,
+				'id_subkon_detail' => $supplier->kd_detail_master_ubas,
+				'kode_subkon_detail' => $kd_detail_master_ubas,
 				'kode_supplier' => $kode_supplier,
 				'nama_supplier' => $nama_supplier,
 				'harga_satuan' => $harga_satuan,
@@ -267,15 +378,15 @@ class Master_data_subkon extends CI_Controller
 
 	public function hapus_detail_supplier()
 	{
-		$id_subkon_detail = $this->input->post('id_subkon_detail');
+		$id_detail_master_ubas = $this->input->post('id_detail_master_ubas');
 
-		if (!$id_subkon_detail) {
+		if (!$id_detail_master_ubas) {
 			echo json_encode(['status' => 'error', 'message' => 'ID detail tidak dikirim']);
 			return;
 		}
 
 
-		$deleted = $this->Detail_subkon_model->hapus_detail($id_subkon_detail);
+		$deleted = $this->Detail_subkon_model->hapus_detail($id_detail_master_ubas);
 
 		if ($deleted) {
 			echo json_encode(['status' => 'success']);

@@ -40,7 +40,6 @@ class Master_data_bahan extends CI_Controller
 			$bh->jumlah_supplier = $this->Detail_bahan_model->count_supplier($bh->kode_bahan);
 		}
 
-
 		$this->load->view('Administrator/Master_data/Ubas_data/Master_bahan/Js_header_bahan');
 		$this->load->view('Administrator/Master_data/template_menu/Navbar_ubas');
 		$this->load->view('Administrator/Master_data/Ubas_data/Master_bahan/Data_bahan', $data);
@@ -48,6 +47,109 @@ class Master_data_bahan extends CI_Controller
 		$this->load->view('Administrator/Master_data/Ubas_data/Master_bahan/Js_footer_bahan');
 		$this->load->view('Administrator/Master_data/Ubas_data/Master_bahan/Ajax_bahan');
 	}
+
+
+	public function get_data_bahan()
+	{
+		$draw   = intval($this->input->post('draw'));
+		$start  = intval($this->input->post('start'));
+
+		// Data utama untuk datatables
+		$list = $this->Bahan_model->get_datatables_bahan();
+
+		// Siapkan array final
+		$data = [];
+		$no = $start;
+
+		// Load model detail supplier (biar tidak load di dalam loop berkali-kali)
+		$this->load->model('Administrator/Master_data/Ubas_model/Bahan/Detail_bahan_model');
+
+		foreach ($list as $b) {
+
+			// Hitung jumlah supplier berdasarkan kode_bahan
+			$jumlah_supplier = $this->Detail_bahan_model->count_supplier($b->kode_bahan);
+
+			// === Badge supplier ===
+			$badge_supplier = '
+            <span id="badge-supplier-' . $b->kode_bahan . '" 
+                class="badge ' . ($jumlah_supplier > 0 ? 'text-bg-info' : 'text-bg-danger') . '">
+                <i class="fa-solid fa-recycle fa-lg"></i>&nbsp;'
+				. $jumlah_supplier . ' Supplier
+            </span>
+        ';
+
+			// === Status Active / Non ===
+			$status_badge = '
+            <span id="status-' . $b->id_bahan . '"  
+                class="badge ' . ($b->status_bahan == "Active" ? "text-bg-success" : "text-bg-secondary") . '">
+                <i class="fa-solid ' . ($b->status_bahan == "Active" ? "fa-recycle" : "fa-ban") . ' fa-lg"></i>
+                ' . $b->status_bahan . '
+            </span>
+        ';
+
+			// === Tombol Aksi ===
+			$aksi_btn = '
+            <div class="btn-group" role="group">
+
+                <!-- Detail -->
+                <button type="button"
+                    class="btn btn-sm btn-warning btn-detail"
+                    data-id="' . $b->id_bahan . '"
+                    data-bs-toggle="modal"
+                    data-bs-target="#staticBackdrop-detail-bahan"
+                    title="Detail & Ubah Data">
+                    <i class="fa-solid fa-users-viewfinder fa-lg px-1"></i>
+                </button>
+
+                <!-- Tambah Supplier -->
+                <button type="button"
+                    class="btn btn-sm btn-primary btn-detail-bahan"
+                    data-id="' . $b->id_bahan . '"
+                    data-kode="' . $b->kode_bahan . '"
+                    data-uraian="' . $b->uraian_bahan . '"
+                    data-bs-toggle="modal"
+                    data-bs-target="#staticBackdrop-tambah-detail-bahan-supplier"
+                    title="Tambah Data Supplier Per-Item">
+                    <i class="fa-solid fa-user-plus fa-lg px-1"></i>
+                </button>
+
+                <!-- Toggle Status -->
+                <button class="btn btn-sm btn-toggle-status ' . ($b->status_bahan == "Active" ? "btn-danger" : "btn-success") . '"
+                    data-id="' . $b->id_bahan . '"
+                    data-status="' . $b->status_bahan . '"
+                    title="' . ($b->status_bahan == "Active" ? "Non-Aktifkan" : "Aktifkan") . '">
+                    <i class="fa-solid ' . ($b->status_bahan == "Active" ? "fa-ban" : "fa-check") . ' fa-lg"></i>
+                </button>
+
+            </div>
+        ';
+
+			// === ROW ===
+			$row = [
+				$b->kode_bahan,
+				$b->uraian_bahan,
+				$b->satuan_bahan,
+				$badge_supplier,
+				$status_badge,
+				$aksi_btn
+			];
+
+			$data[] = $row;
+		}
+
+		$output = [
+			"draw" => $draw,
+			"recordsTotal" => $this->Bahan_model->count_all_bahan(),
+			"recordsFiltered" => $this->Bahan_model->count_filtered_bahan(),
+			"data" => $data
+		];
+
+		$this->output
+			->set_content_type('application/json')
+			->set_output(json_encode($output));
+	}
+
+
 
 	// tambah
 	public function tambah()
@@ -64,8 +166,15 @@ class Master_data_bahan extends CI_Controller
 		];
 
 		$this->Bahan_model->insert_bahan($data);
-		redirect('Administrator/Master_data/Master_bahan/Master_data_bahan');
+
+		// Kirim respon JSON (untuk AJAX)
+		echo json_encode([
+			'status' => 'success',
+			'message' => 'Data bahan berhasil disimpan',
+			'csrf' => $this->security->get_csrf_hash()
+		]);
 	}
+
 
 	// togle aktif non aktif
 	public function toggle_status()
@@ -93,7 +202,9 @@ class Master_data_bahan extends CI_Controller
 			return;
 		}
 
-		$data = $this->db->get_where('tb_bahan', ['id_bahan' => $id])->row_array();
+		$data = $this->db->get_where('vw_master_bahan', ['id_bahan' => $id])->row_array();
+		// var_dump($data);
+		// die;
 
 		if ($data) {
 			echo json_encode($data);
@@ -239,7 +350,7 @@ class Master_data_bahan extends CI_Controller
 			'status' => 'success',
 			'message' => 'Data berhasil disimpan.',
 			'data' => [
-				'id_bahan_detail' => $supplier->id_bahan_detail,
+				'id_bahan_detail' => $supplier->kd_detail_master_ubas,
 				'kode_bahan_detail' => $kd_detail_master_ubas,
 				'kode_supplier' => $kode_supplier,
 				'nama_supplier' => $nama_supplier,
@@ -267,15 +378,15 @@ class Master_data_bahan extends CI_Controller
 
 	public function hapus_detail_supplier()
 	{
-		$id_bahan_detail = $this->input->post('id_bahan_detail');
+		$id_detail_master_ubas = $this->input->post('id_detail_master_ubas');
 
-		if (!$id_bahan_detail) {
+		if (!$id_detail_master_ubas) {
 			echo json_encode(['status' => 'error', 'message' => 'ID detail tidak dikirim']);
 			return;
 		}
 
 
-		$deleted = $this->Detail_bahan_model->hapus_detail($id_bahan_detail);
+		$deleted = $this->Detail_bahan_model->hapus_detail($id_detail_master_ubas);
 
 		if ($deleted) {
 			echo json_encode(['status' => 'success']);

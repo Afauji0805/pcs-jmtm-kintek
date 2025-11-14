@@ -108,7 +108,7 @@ class Upah_model extends CI_Model
 
     public function insert_upah($data)
     {
-        $sql = "CALL sp_insert_tb_master_upah(?, ?, ?)";
+        $sql = "CALL sp_insert_master_upah(?, ?, ?)";
         $this->db->query($sql, [
             $data['kode_upah'],
             $data['uraian_upah'],
@@ -209,10 +209,10 @@ class Detail_upah_model extends CI_Model
         return $this->db->get()->result_array();
     }
 
-    public function hapus_detail($kd_detail_master_ubas)
+    public function hapus_detail($id)
     {
-        $this->db->where('kd_detail_master_ubas', $kd_detail_master_ubas);
-        return $this->db->delete('vw_detail_master_ubas');
+        $this->db->where('id_detail_master_ubas', $id);
+        return $this->db->delete('tb_detail_master_ubas');
     }
 
     public function count_supplier($kode_upah)

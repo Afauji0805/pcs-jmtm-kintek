@@ -378,15 +378,15 @@ class Master_data_upah extends CI_Controller
 
 	public function hapus_detail_supplier()
 	{
-		$id_upah_detail = $this->input->post('id_upah_detail');
+		$id_detail_master_ubas = $this->input->post('id_detail_master_ubas');
 
-		if (!$id_upah_detail) {
+		if (!$id_detail_master_ubas) {
 			echo json_encode(['status' => 'error', 'message' => 'ID detail tidak dikirim']);
 			return;
 		}
 
 
-		$deleted = $this->Detail_upah_model->hapus_detail($id_upah_detail);
+		$deleted = $this->Detail_upah_model->hapus_detail($id_detail_master_ubas);
 
 		if ($deleted) {
 			echo json_encode(['status' => 'success']);

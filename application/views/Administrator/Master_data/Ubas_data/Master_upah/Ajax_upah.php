@@ -671,7 +671,7 @@
                                 <td class="text-end">${row.harsat_detail_master_ubas}</td>
                                 <td class="text-center">${row.date_detail}</td>
                                 <td class="text-center">
-                                    <button class="btn btn-sm btn-danger hapus-detail" data-id="${row.kd_detail_master_ubas}" data-kode="${kodeUpah}">
+                                    <button class="btn btn-sm btn-danger hapus-detail" data-id="${row.id_detail_master_ubas}" data-kode="${kodeUpah}">
                                         <i class="fa-solid fa-trash-can"></i>
                                     </button>
                                 </td>
@@ -711,7 +711,7 @@
                     url: "<?= site_url('Administrator/Master_data/Master_upah/Master_data_upah/hapus_detail_supplier') ?>",
                     type: "POST",
                     data: {
-                        id_upah_detail: idDetail
+                        id_detail_master_ubas: idDetail
                     },
                     dataType: "json",
                     success: function(res) {
