@@ -70,7 +70,7 @@ class Data_program extends CI_Controller
                 <i class="fa-solid fa-users-viewfinder"></i>
             </button>
 
-            <a href="' . base_url('Administrator/Rkapp/Data_dkh_kontrak/Data_dkh_kontrak') . '"
+            <a href="' . base_url('Administrator/Rkapp/Data_dkh_kontrak/Data_dkh_kontrak/dkh_kontrak/' . $rs->kode_program) . '"
                 class="btn btn-sm btn-success">
                 <i class="fa-solid fa-share-from-square"></i>
             </a>
@@ -86,19 +86,15 @@ class Data_program extends CI_Controller
 				"<small>" . (
 					(!empty($rs->tanggal_mulai_kontrak) && $rs->tanggal_mulai_kontrak != '0000-00-00'
 						? date('d/m/Y', strtotime($rs->tanggal_mulai_kontrak))
-						: '-'
-					) . " || {$rs->durasi_kontrak} Hari"
-				) . "</small>",
+						: '-') . " || {$rs->durasi_kontrak} Hari") . "</small>",
 				"<small>" . (
 					(!empty($rs->tanggal_mulai_pho) && $rs->tanggal_mulai_pho != '0000-00-00'
 						? date('d/m/Y', strtotime($rs->tanggal_mulai_pho))
-						: '-'
-					) . " || {$rs->durasi_pho} Hari"
-				) . "</small>",
+						: '-') . " || {$rs->durasi_pho} Hari") . "</small>",
 				"{$status}",
 				"<small>{$aksi}</small>"
-			];			
-			
+			];
+
 
 			$data[] = $row;
 		}
